@@ -1,0 +1,34 @@
+{
+  "code": 0,
+  "data": {
+    "current": {
+      "comfort": 32,
+      "dewpoint": -20.0,
+      "get_time": "2024-12-02 19:45:02",
+      "humidity": 21,
+      "icon": 30,
+      "mslp": 1022,
+      "obs_time": "2024-12-02 20:00:08",
+      "precip_1h": 0.0,
+      "real_feel": -3.0,
+      "sun_down": "2024-12-02 16:50:00",
+      "sun_rise": "2024-12-02 07:18:00",
+      "temp": 1.0,
+      "tips": "天气干冷，穿厚一点吧！",
+      "uvi": 1,
+      "vis": 23300,
+      "weather": "Clear",
+      "weather_id": 5,
+      "wind_degrees": 180,
+      "wind_dir": "S",
+      "wind_dir_id": 9,
+      "wind_level": 2,
+      "wspd": 2.0
+    }
+  },
+  "msg": "success",
+  "rc": {
+    "c": 0,
+    "p": "success"
+  }
+}

@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "hiagent-plugin-vectorizer-ai"
+version = "0.2.0"
+description = "一个将 PNG 和 JPG 图像快速轻松地转换为 SVG 矢量图的工具。"
+authors = ["fuyihong <fuyihong.1@bytedance.com>"]
+include = [
+  "hiagent_plugin_vectorizer_ai/icon.png",
+  "hiagent_plugin_vectorizer_ai/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_vectorizer_ai:VectorizerAIPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.11.9"
+
+[tool.poetry.group.dev.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"Vectorizer.AI" = "hiagent_plugin_vectorizer_ai:VectorizerAIPlugin"

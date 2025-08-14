@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "hiagent-plugin-regex"
+version = "0.2.1"
+description = ""
+authors = ["wangbin.35 <wangbin.35@bytedance.com>"]
+include = [
+  "hiagent_plugin_regex/icon.png",
+  "hiagent_plugin_regex/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_regex:RegexPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"正则表达式提取" = "hiagent_plugin_regex:RegexPlugin"

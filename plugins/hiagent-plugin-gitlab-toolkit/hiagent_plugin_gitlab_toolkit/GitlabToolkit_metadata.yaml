@@ -1,0 +1,766 @@
+category: Productivity
+config_schema:
+  properties:
+    personal_access_token:
+      title: Personal Access Token
+      type: string
+      x-hiagent-secret: true
+    url:
+      description: 'The URL hosted Gitlab, eg: https://gitlab.example.org'
+      title: Url
+      type: string
+      x-description-en: 'The URL hosted Gitlab, eg: https://gitlab.example.org'
+      x-description-zh-hans: 托管在URL上的GitLab，例如：https://gitlab.example.org
+      x-description-zh-hant: 託管於URL的Gitlab，例如：https://gitlab.example.org
+  required:
+  - url
+  - personal_access_token
+  title: InModel
+  type: object
+description: GitLab是一个提供代码仓库管理、代码审查、项目管理和CI/CD（持续集成/持续部署）等功能的一体化开发平台。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-gitlab-toolkit/hiagent_plugin_gitlab_toolkit/icon.png
+labels:
+  description_en: GitLab is an integrated development platform that offers features
+    such as code repository management, code review, project management, and CI/CD
+    (Continuous Integration/Continuous Deployment).
+  description_zh_hans: GitLab是一个提供代码仓库管理、代码审查、项目管理和CI/CD（持续集成/持续部署）等功能的一体化开发平台。
+  description_zh_hant: GitLab是一個提供代碼倉庫管理、代碼審查、項目管理和CI/CD（持續集成/持續部署）等功能的一體化開發平台。
+  name_en: GitlabToolkit
+  name_zh_hans: GitLab工具包
+  name_zh_hant: GitLab工具包
+meta_version: v1
+metadata_path: GitlabToolkit_metadata.yaml
+name: GitlabToolkit
+package_info:
+  name: hiagent_plugin_gitlab_toolkit
+  version: ''
+tools:
+  comment_on_issue:
+    description: "Adds a comment to a gitlab issue"
+    func_name: comment_on_issue
+    input_schema:
+      properties:
+        comment:
+          title: Comment
+          type: string
+        issue_number:
+          title: Issue Number
+          type: integer
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab 仓库的名称。必须遵循 {用户名}/{仓库名称} 的格式。
+          x-description-zh-hant: Gitlab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+      required:
+      - repository
+      - issue_number
+      - comment
+      title: InModel
+      type: object
+    labels:
+      description_en: Adds a comment to a gitlab issue
+      description_zh_hans: 为GitLab议题添加一条评论
+      description_zh_hant: 在GitLab議題中添加评论
+      name_en: comment_on_issue
+      name_zh_hans: 对议题进行评论
+      name_zh_hant: 對議題發表評論
+    name: comment_on_issue
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: A success or failure message.
+              title: Result
+              type: string
+              x-description-en: A success or failure message.
+              x-description-zh-hans: 一条成功或失败的消息。
+              x-description-zh-hant: 一則成功或失敗的訊息。
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_file:
+    description: "Creates a new file on the gitlab repo"
+    func_name: create_file
+    input_schema:
+      properties:
+        branch:
+          description: The branch of the Gitlab repository.
+          title: Branch
+          type: string
+          x-description-en: The branch of the Gitlab repository.
+          x-description-zh-hans: GitLab仓库的分支。
+          x-description-zh-hant: GitLab儲存庫的分支。
+        file_content:
+          description: The new file contents.
+          title: File Content
+          type: string
+          x-description-en: The new file contents.
+          x-description-zh-hans: 新文件内容。
+          x-description-zh-hant: 新的檔案內容。
+        file_path:
+          title: File Path
+          type: string
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab 仓库的名称。必须遵循 {用户名}/{仓库名称} 的格式。
+          x-description-zh-hant: GitLab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+      required:
+      - repository
+      - branch
+      - file_path
+      - file_content
+      title: InModel
+      type: object
+    labels:
+      description_en: Creates a new file on the gitlab repo
+      description_zh_hans: 在GitLab仓库上创建一个新文件
+      description_zh_hant: 在 GitLab 儲存庫上創建一個新檔案
+      name_en: create_file
+      name_zh_hans: 创建文件
+      name_zh_hant: 創建檔案
+    name: create_file
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: A success or failure message.
+              title: Result
+              type: string
+              x-description-en: A success or failure message.
+              x-description-zh-hans: 一条成功或失败的消息。
+              x-description-zh-hant: 一條成功或失敗的訊息。
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_pull_request:
+    description: "Makes a pull request to the target branch"
+    func_name: create_pull_request
+    input_schema:
+      properties:
+        description:
+          description: The description of the pull request.
+          title: Description
+          type: string
+          x-description-en: The description of the pull request.
+          x-description-zh-hans: 该拉取请求的描述。
+          x-description-zh-hant: 該拉取請求的描述。
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab仓库的名称。必须遵循{用户名}/{仓库名称}的格式。
+          x-description-zh-hant: Gitlab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+        source_branch:
+          description: The source branch of the pull request.
+          title: Source Branch
+          type: string
+          x-description-en: The source branch of the pull request.
+          x-description-zh-hans: 拉取请求的源分支。
+          x-description-zh-hant: 拉取請求的來源分支。
+        target_branch:
+          description: The target branch of the pull request.
+          title: Target Branch
+          type: string
+          x-description-en: The target branch of the pull request.
+          x-description-zh-hans: 拉取请求的目标分支。
+          x-description-zh-hant: 拉取請求的目標分支。
+        title:
+          description: The title of the pull request.
+          title: Title
+          type: string
+          x-description-en: The title of the pull request.
+          x-description-zh-hans: 拉取请求的标题。
+          x-description-zh-hant: 拉取請求的標題。
+      required:
+      - repository
+      - source_branch
+      - target_branch
+      - title
+      - description
+      title: InModel
+      type: object
+    labels:
+      description_en: Makes a pull request to the target branch
+      description_zh_hans: 向目标分支发起拉取请求
+      description_zh_hant: 向目標分支發起拉取請求
+      name_en: create_pull_request
+      name_zh_hans: 创建拉取请求
+      name_zh_hant: 建立拉取請求
+    name: create_pull_request
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: A success or failure message.
+              title: Result
+              type: string
+              x-description-en: A success or failure message.
+              x-description-zh-hans: 一条成功或失败的消息。
+              x-description-zh-hant: 一條成功或失敗的訊息。
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  delete_file:
+    description: "Deletes a file from the repo"
+    func_name: delete_file
+    input_schema:
+      properties:
+        branch:
+          description: The branch of the Gitlab repository.
+          title: Branch
+          type: string
+          x-description-en: The branch of the Gitlab repository.
+          x-description-zh-hans: GitLab仓库的分支。
+          x-description-zh-hant: GitLab 儲存庫的分支。
+        file_path:
+          title: File Path
+          type: string
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab仓库的名称。必须遵循{用户名}/{仓库名称}的格式。
+          x-description-zh-hant: GitLab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+      required:
+      - repository
+      - branch
+      - file_path
+      title: InModel
+      type: object
+    labels:
+      description_en: Deletes a file from the repo
+      description_zh_hans: 从仓库中删除一个文件
+      description_zh_hant: 從倉庫中刪除一個文件
+      name_en: delete_file
+      name_zh_hans: 删除文件
+      name_zh_hant: 刪除檔案
+    name: delete_file
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: A success or failure message.
+              title: Result
+              type: string
+              x-description-en: A success or failure message.
+              x-description-zh-hans: 一条成功或失败的消息。
+              x-description-zh-hant: 一則成功或失敗的訊息。
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_issue:
+    description: "Fetches a specific issue and its first 10 comments"
+    func_name: get_issue
+    input_schema:
+      properties:
+        issue_number:
+          description: The number for the gitlab issue.
+          title: Issue Number
+          type: integer
+          x-description-en: The number for the gitlab issue.
+          x-description-zh-hans: GitLab议题的编号。
+          x-description-zh-hant: GitLab議題的編號。
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab仓库的名称。必须遵循{用户名}/{仓库名称}的格式。
+          x-description-zh-hant: GitLab 儲存庫的名稱。必須遵循 {使用者名稱}/{儲存庫名稱} 的格式。
+      required:
+      - repository
+      - issue_number
+      title: InModel
+      type: object
+    labels:
+      description_en: Fetches a specific issue and its first 10 comments
+      description_zh_hans: 获取特定议题及其前 10 条评论
+      description_zh_hant: 提取特定議題及其前 10 条评论
+      name_en: get_issue
+      name_zh_hans: 获取议题
+      name_zh_hant: 获取議題
+    name: get_issue
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        IssueResult:
+          properties:
+            comments:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Comments
+            description:
+              title: Description
+              type: string
+            title:
+              title: Title
+              type: string
+          required:
+          - title
+          - description
+          title: IssueResult
+          type: object
+        OutModel:
+          $ref: '#/$defs/IssueResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_issues:
+    description: "\n        Fetches all open issues from the repo excluding pull requests\n\
+      \        "
+    func_name: get_issues
+    input_schema:
+      properties:
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab 仓库的名称。必须遵循 {用户名}/{仓库名称} 的格式。
+          x-description-zh-hant: GitLab 儲存庫的名稱。必須遵循 {使用者名稱}/{儲存庫名稱} 的格式。
+      required:
+      - repository
+      title: InModel
+      type: object
+    labels:
+      description_en: Fetches all open issues from the repo excluding pull requests
+      description_zh_hans: 从仓库中获取所有未解决的议题（不包括拉取请求）
+      description_zh_hant: 從倉庫中提取所有未解決的議題，排除拉取請求
+      name_en: get_issues
+      name_zh_hans: 获取议题
+      name_zh_hant: 取得議題
+    name: get_issues
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        IssueResults:
+          properties:
+            issues:
+              description: A plaintext report containing the number of issues and
+                each issue's title and number.
+              title: Issues
+              type: string
+              x-description-en: A plaintext report containing the number of issues
+                and each issue's title and number.
+              x-description-zh-hans: 一份包含议题数量以及每个议题的标题和编号的纯文本报告。
+              x-description-zh-hant: 一份純文字報告，當中載有議題數量，以及每個議題的標題和編號。
+          required:
+          - issues
+          title: IssueResults
+          type: object
+        OutModel:
+          $ref: '#/$defs/IssueResults'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  read_file:
+    description: "\n        Reads a file from the gitlab repo\n        "
+    func_name: read_file
+    input_schema:
+      properties:
+        branch:
+          description: The branch of the Gitlab repository.
+          title: Branch
+          type: string
+          x-description-en: The branch of the Gitlab repository.
+          x-description-zh-hans: GitLab 代码仓库的分支。
+          x-description-zh-hant: GitLab 儲存庫的分支。
+        file_path:
+          title: File Path
+          type: string
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab 仓库的名称。必须遵循 {用户名}/{仓库名称} 的格式。
+          x-description-zh-hant: Gitlab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+      required:
+      - repository
+      - branch
+      - file_path
+      title: InModel
+      type: object
+    labels:
+      description_en: Reads a file from the gitlab repo
+      description_zh_hans: 从GitLab仓库中读取一个文件
+      description_zh_hant: 從GitLab倉庫讀取一個文件
+      name_en: read_file
+      name_zh_hans: 读取文件
+      name_zh_hant: 讀取檔案
+    name: read_file
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ReadFileResult'
+          title: OutModel
+        ReadFileResult:
+          properties:
+            content:
+              description: file content.
+              title: Content
+              type: string
+              x-description-en: file content.
+              x-description-zh-hans: 文件内容。
+              x-description-zh-hant: 檔案內容。
+          required:
+          - content
+          title: ReadFileResult
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  update_file:
+    description: "\n        Updates a file with new content.\n        "
+    func_name: update_file
+    input_schema:
+      properties:
+        branch:
+          description: The branch of the Gitlab repository.
+          title: Branch
+          type: string
+          x-description-en: The branch of the Gitlab repository.
+          x-description-zh-hans: GitLab仓库的分支。
+          x-description-zh-hant: GitLab 儲存庫的分支。
+        file_content:
+          description: The new file contents.
+          title: File Content
+          type: string
+          x-description-en: The new file contents.
+          x-description-zh-hans: 新文件内容。
+          x-description-zh-hant: 新檔案內容。
+        file_path:
+          title: File Path
+          type: string
+        repository:
+          description: The name of the Gitlab repository. Must follow the format {username}/{repo-name}.
+          title: Repository
+          type: string
+          x-description-en: The name of the Gitlab repository. Must follow the format
+            {username}/{repo-name}.
+          x-description-zh-hans: GitLab仓库的名称。必须遵循{用户名}/{仓库名称}的格式。
+          x-description-zh-hant: GitLab儲存庫的名稱。必須遵循{使用者名稱}/{儲存庫名稱}的格式。
+      required:
+      - repository
+      - branch
+      - file_path
+      - file_content
+      title: InModel
+      type: object
+    labels:
+      description_en: Updates a file with new content.
+      description_zh_hans: 用新内容更新文件。
+      description_zh_hant: 使用新內容更新檔案。
+      name_en: update_file
+      name_zh_hans: 更新文件
+      name_zh_hant: 更新檔案
+    name: update_file
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: A success or failure message.
+              title: Result
+              type: string
+              x-description-en: A success or failure message.
+              x-description-zh-hans: 一条成功或失败的消息。
+              x-description-zh-hant: 一條成功或失敗的訊息。
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

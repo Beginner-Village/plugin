@@ -1,0 +1,112 @@
+category: ImageProcessing
+config_schema:
+  properties:
+    api_key_name:
+      description: '如何获取: https://vectorizer.ai/api'
+      title: Vectorizer.AI API Name
+      type: string
+      x-description-en: 'How to access: https://vectorizer.ai/api'
+      x-description-zh-hans: 如何获取：https://vectorizer.ai/api
+      x-description-zh-hant: 如何獲取：https://vectorizer.ai/api
+    api_key_value:
+      description: '如何获取: https://vectorizer.ai/api'
+      title: Vectorizer.AI API Key
+      type: string
+      x-description-en: 'How to access: https://vectorizer.ai/api'
+      x-description-zh-hans: 如何获取：https://vectorizer.ai/api
+      x-description-zh-hant: 如何獲取：https://vectorizer.ai/api
+      x-hiagent-secret: true
+    mode:
+      default: test
+      description: test：测试模式（默认，可以免费测试API），test_preview：测试预览模式，production：生产模式，preview：预览模式
+      title: 模式
+      type: string
+      x-description-en: 'test: Test mode (default, can test the API for free), test_preview:
+        Test preview mode, production: Production mode, preview: Preview mode'
+      x-description-zh-hans: test：测试模式（默认，可以免费测试API），test_preview：测试预览模式，production：生产模式，preview：预览模式
+      x-description-zh-hant: test：測試模式（預設，可免費測試API），test_preview：測試預覽模式，production：生產模式，preview：預覽模式
+  required:
+  - api_key_name
+  - api_key_value
+  title: InModel
+  type: object
+description: 一个将 PNG 和 JPG 图像快速轻松地转换为 SVG 矢量图的工具。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-vectorizer-ai/hiagent_plugin_vectorizer_ai/icon.png
+labels:
+  description_en: A tool for quickly and easily converting PNG and JPG images into
+    SVG vector graphics.
+  description_zh_hans: 一个将 PNG 和 JPG 图像快速轻松地转换为 SVG 矢量图的工具。
+  description_zh_hant: 一個能快速輕鬆地將 PNG 和 JPG 圖像轉換為 SVG 矢量圖的工具。
+  name_en: Vectorizer.AI
+  name_zh_hans: Vectorizer.AI
+  name_zh_hant: Vectorizer.AI
+meta_version: v1
+metadata_path: Vectorizer.AI_metadata.yaml
+name: Vectorizer.AI
+package_info:
+  name: hiagent_plugin_vectorizer_ai
+  version: ''
+tools:
+  vectorize:
+    description: 一个将 PNG 和 JPG 图像快速轻松地转换为 SVG 矢量图的工具。
+    func_name: vectorize
+    input_schema:
+      properties:
+        image_url:
+          description: 要转换图片的URL
+          title: 图片URL
+          type: string
+          x-description-en: Need to convert the URL of the picture.
+          x-description-zh-hans: 要转换图片的URL
+          x-description-zh-hant: 要轉換圖片的URL
+      required:
+      - image_url
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool that quickly and easily converts PNG and JPG images into
+        SVG vector graphics.
+      description_zh_hans: 一个将 PNG 和 JPG 图像快速轻松地转换为 SVG 矢量图的工具。
+      description_zh_hant: 一個能快速輕鬆地將PNG和JPG圖像轉換為SVG矢量圖的工具。
+      name_en: vectorize
+      name_zh_hans: 向量化
+      name_zh_hant: 向量化
+    name: vectorize
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        NullModel:
+          title: NullModel
+          type: 'null'
+      properties:
+        data:
+          $ref: '#/$defs/NullModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

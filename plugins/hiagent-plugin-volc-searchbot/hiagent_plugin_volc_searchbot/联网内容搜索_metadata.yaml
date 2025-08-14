@@ -1,0 +1,282 @@
+category: WebSearch
+config_schema:
+  properties:
+    access_key:
+      description: 联网内容搜索功能由火山内容团队提供，背靠豆包大模型与联网内容智能体，请联系您的专属售前获取相关授权。
+      title: Access Key
+      type: string
+      x-description-en: The online content search function is provided by the Volcano
+        Content Team, backed by the Doubao large model and the online content intelligent
+        agent. Please contact your dedicated pre-sales representative to obtain relevant
+        authorization.
+      x-description-zh-hans: 联网内容搜索功能由火山内容团队提供，背靠豆包大模型与联网内容智能体，请联系您的专属售前获取相关授权。
+      x-description-zh-hant: 聯網內容搜索功能由火山內容團隊提供，背靠豆包大模型與聯網內容智能體，請聯繫您的專屬售前獲取相關授權。
+    bot_id:
+      title: 智能体ID
+      type: string
+    secret_key:
+      description: 联网内容搜索功能由火山内容团队提供，背靠豆包大模型与联网内容智能体，请联系您的专属售前获取相关授权。
+      title: Secret Key
+      type: string
+      x-description-en: The online content search function is provided by the Volcano
+        Content Team, backed by the Doubao large model and the online content intelligent
+        agent. Please contact your dedicated pre-sales representative to obtain relevant
+        authorization.
+      x-description-zh-hans: 联网内容搜索功能由火山内容团队提供，背靠豆包大模型与联网内容智能体，请联系您的专属售前获取相关授权。
+      x-description-zh-hant: 聯網內容搜索功能由火山內容團隊提供，背靠豆包大模型與聯網內容智能體，請聯繫您的專屬售前獲取相關授權。
+      x-hiagent-secret: true
+  required:
+  - access_key
+  - secret_key
+  - bot_id
+  title: InModel
+  type: object
+description: 火山内容团队提供的联网内容搜索插件，背靠豆包大模型与联网内容智能体，适用于联网问答、新闻播报、行程规划等场景。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-volc-searchbot/hiagent_plugin_volc_searchbot/icon.png
+labels:
+  description_en: The internet content search plugin provided by the Volcano Content
+    Team relies on the Doubao large model and the internet content intelligent agent,
+    and is suitable for scenarios such as internet Q&A, news broadcasting, and itinerary
+    planning.
+  description_zh_hans: 火山内容团队提供的联网内容搜索插件，背靠豆包大模型与联网内容智能体，适用于联网问答、新闻播报、行程规划等场景。
+  description_zh_hant: 火山內容團隊提供的聯網內容搜索插件，背靠豆包大模型與聯網內容智能體，適用於聯網問答、新聞播報、行程規劃等場景。
+  name_en: Online content search
+  name_zh_hans: 联网内容搜索
+  name_zh_hant: 聯網內容搜尋
+meta_version: v1
+metadata_path: 联网内容搜索_metadata.yaml
+name: 联网内容搜索
+package_info:
+  name: hiagent_plugin_volc_searchbot
+  version: ''
+tools:
+  SmartSearch:
+    description: 根据用户query，进行联网内容搜索
+    func_name: SmartSearch
+    input_schema:
+      properties:
+        query:
+          description: 查询文本
+          title: Query
+          type: string
+          x-description-en: Query text
+          x-description-zh-hans: 查询文本
+          x-description-zh-hant: 查詢文本
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for online content based on the user's query.
+      description_zh_hans: 根据用户查询，进行联网内容搜索
+      description_zh_hant: 根據用戶query，進行聯網內容搜索
+      name_en: SmartSearch
+      name_zh_hans: 智能搜索
+      name_zh_hant: 智慧搜尋
+    name: SmartSearch
+    output_schema:
+      $defs:
+        AgentIntention:
+          description: 智能体意图
+          properties:
+            cards:
+              default: []
+              items:
+                $ref: '#/$defs/Card'
+              title: Cards
+              type: array
+            intention:
+              default: SmartSearch
+              title: Intention
+              type: string
+            references:
+              default: []
+              items:
+                $ref: '#/$defs/Result'
+              title: References
+              type: array
+          title: AgentIntention
+          type: object
+          x-description-en: Agent intention
+          x-description-zh-hans: 智能体意图
+          x-description-zh-hant: 智慧體意圖
+        Card:
+          properties:
+            card_type:
+              title: Card Type
+              type: string
+            image_card:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Image Card
+            timeline_card:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Timeline Card
+            video_card:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Video Card
+            weather_card:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Weather Card
+          required:
+          - card_type
+          title: Card
+          type: object
+        CoverImage:
+          description: 封面图
+          properties:
+            height:
+              title: Height
+              type: integer
+            url:
+              title: Url
+              type: string
+            width:
+              title: Width
+              type: integer
+          required:
+          - url
+          - width
+          - height
+          title: CoverImage
+          type: object
+          x-description-en: Cover image
+          x-description-zh-hans: 封面图
+          x-description-zh-hant: 封面圖
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/SearchResp'
+          title: OutModel
+        Result:
+          description: 搜索结果
+          properties:
+            cover_image:
+              anyOf:
+              - $ref: '#/$defs/CoverImage'
+              - type: 'null'
+              default: null
+            duration:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              title: Duration
+            height:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              title: Height
+            id:
+              default: ''
+              title: Id
+              type: string
+            publish_time:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              title: Publish Time
+            site_name:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Site Name
+            source_type:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Source Type
+            summary:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Summary
+            title:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Title
+            url:
+              default: ''
+              title: Url
+              type: string
+            width:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              title: Width
+          title: Result
+          type: object
+          x-description-en: Search results
+          x-description-zh-hans: 搜索结果
+          x-description-zh-hant: 搜尋結果
+        SearchResp:
+          description: 返回结果
+          properties:
+            agent_intention:
+              anyOf:
+              - $ref: '#/$defs/AgentIntention'
+              - type: 'null'
+              default: null
+            content:
+              title: Content
+              type: string
+          required:
+          - content
+          title: SearchResp
+          type: object
+          x-description-en: Return the result
+          x-description-zh-hans: 返回结果
+          x-description-zh-hant: 返回結果
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features:
+    - agent_intention
+    - stream
+    stream_func_name: SmartSearch_stream

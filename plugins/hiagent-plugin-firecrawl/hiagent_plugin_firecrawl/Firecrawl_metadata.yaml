@@ -1,0 +1,519 @@
+category: WebSearch
+config_schema:
+  properties:
+    api_key:
+      description: '如何获取: https://www.firecrawl.dev/account'
+      title: Firecrawl API 密钥
+      type: string
+      x-description-en: 'How to access: https://www.firecrawl.dev/account'
+      x-description-zh-hans: 如何获取：https://www.firecrawl.dev/account
+      x-description-zh-hant: '如何獲取: https://www.firecrawl.dev/account'
+      x-hiagent-secret: true
+    base_url:
+      default: https://api.firecrawl.dev
+      description: Firecrawl服务器的API URL
+      title: Base Url
+      type: string
+      x-description-en: API URL of the Firecrawl server
+      x-description-zh-hans: Firecrawl服务器的API URL
+      x-description-zh-hant: Firecrawl伺服器的API URL
+  required:
+  - api_key
+  title: InModel
+  type: object
+description: Firecrawl API 集成，用于网页爬取和数据抓取。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-firecrawl/hiagent_plugin_firecrawl/icon.png
+labels:
+  description_en: Firecrawl API integration for web crawling and data scraping.
+  description_zh_hans: Firecrawl API 集成，用于网页爬取和数据抓取。
+  description_zh_hant: Firecrawl API整合，用於網頁爬取和資料抓取。
+  name_en: Firecrawl
+  name_zh_hans: Firecrawl
+  name_zh_hant: Firecrawl
+meta_version: v1
+metadata_path: Firecrawl_metadata.yaml
+name: Firecrawl
+package_info:
+  name: hiagent_plugin_firecrawl
+  version: ''
+tools:
+  crawl:
+    description: 深度爬取。递归爬取一个网址的子域名，并收集内容。
+    func_name: crawl
+    input_schema:
+      properties:
+        url:
+          description: 要抓取并提取数据的网站URL。
+          title: Url
+          type: string
+          x-description-en: The URL of the website from which you want to crawl and
+            extract data.
+          x-description-zh-hans: 要抓取并提取数据的网站URL。
+          x-description-zh-hant: 要抓取並提取資料的網站URL。
+      required:
+      - url
+      title: InModel
+      type: object
+    labels:
+      description_en: Deep crawling. Recursively crawl the subdomains of a website
+        and collect content.
+      description_zh_hans: 深度爬取。递归爬取一个网址的子域名，并收集内容。
+      description_zh_hant: 深度爬取。遞迴爬取一個網址的子域名，並收集內容。
+      name_en: crawl
+      name_zh_hans: 爬取
+      name_zh_hant: 爬取
+    name: crawl
+    output_schema:
+      $defs:
+        CrawlItem:
+          additionalProperties: true
+          properties:
+            content:
+              default: ''
+              description: 内容
+              title: Content
+              type: string
+              x-description-en: Content
+              x-description-zh-hans: 内容
+              x-description-zh-hant: 內容
+            metadata:
+              description: 元数据
+              title: Metadata
+              type: object
+              x-description-en: Metadata
+              x-description-zh-hans: 元数据
+              x-description-zh-hant: 元資料
+          title: CrawlItem
+          type: object
+        CrawlResult:
+          additionalProperties: true
+          properties:
+            current:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 当前数量
+              title: Current
+              x-description-en: Current quantity
+              x-description-zh-hans: 当前数量
+              x-description-zh-hant: 當前數量
+            data:
+              anyOf:
+              - items:
+                  $ref: '#/$defs/CrawlItem'
+                type: array
+              - type: 'null'
+              default: null
+              description: 数据
+              title: Data
+              x-description-en: Data
+              x-description-zh-hans: 数据
+              x-description-zh-hant: 數據
+            status:
+              default: ''
+              description: 状态
+              title: Status
+              type: string
+              x-description-en: Status
+              x-description-zh-hans: 状态
+              x-description-zh-hant: 狀態
+            total:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 总数量
+              title: Total
+              x-description-en: Total quantity
+              x-description-zh-hans: 总数量
+              x-description-zh-hant: 總數量
+          title: CrawlResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/CrawlResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  crawl_job:
+    description: 爬取任务处理。根据爬取任务ID获取爬取结果，或者取消爬取任务
+    func_name: crawl_job
+    input_schema:
+      properties:
+        job_id:
+          description: 在深度爬取工具中将等待爬取结果设置为否可以获取Job ID。
+          title: Job Id
+          type: string
+          x-description-en: In the deep crawling tool, you can obtain the Job ID by
+            setting the option to wait for the crawling results to "No".
+          x-description-zh-hans: 在深度爬取工具中将等待爬取结果设置为否可以获取Job ID。
+          x-description-zh-hant: 在深度爬取工具中，將等待爬取結果設定為否，即可獲取Job ID。
+        operation:
+          description: 操作。get：查询，cancel：取消。
+          title: Operation
+          type: string
+          x-description-en: 'Operations. get: query, cancel: cancel.'
+          x-description-zh-hans: 操作。get：查询，cancel：取消。
+          x-description-zh-hant: 操作。get：查詢，cancel：取消。
+      required:
+      - job_id
+      - operation
+      title: InModel
+      type: object
+    labels:
+      description_en: Crawling task processing. Get the crawling results based on
+        the crawling task ID or cancel the crawling task.
+      description_zh_hans: 爬取任务处理。根据爬取任务ID获取爬取结果，或者取消爬取任务
+      description_zh_hant: 爬取任務處理。根據爬取任務ID獲取爬取結果，或者取消爬取任務
+      name_en: crawl_job
+      name_zh_hans: 爬虫任务
+      name_zh_hant: 爬蟲任務
+    name: crawl_job
+    output_schema:
+      $defs:
+        CrawlItem:
+          additionalProperties: true
+          properties:
+            content:
+              default: ''
+              description: 内容
+              title: Content
+              type: string
+              x-description-en: Content
+              x-description-zh-hans: 内容
+              x-description-zh-hant: 內容
+            metadata:
+              description: 元数据
+              title: Metadata
+              type: object
+              x-description-en: Metadata
+              x-description-zh-hans: 元数据
+              x-description-zh-hant: 元資料
+          title: CrawlItem
+          type: object
+        CrawlResult:
+          additionalProperties: true
+          properties:
+            current:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 当前数量
+              title: Current
+              x-description-en: Current quantity
+              x-description-zh-hans: 当前数量
+              x-description-zh-hant: 當前數量
+            data:
+              anyOf:
+              - items:
+                  $ref: '#/$defs/CrawlItem'
+                type: array
+              - type: 'null'
+              default: null
+              description: 数据
+              title: Data
+              x-description-en: Data
+              x-description-zh-hans: 数据
+              x-description-zh-hant: 數據
+            status:
+              default: ''
+              description: 状态
+              title: Status
+              type: string
+              x-description-en: Status
+              x-description-zh-hans: 状态
+              x-description-zh-hant: 狀態
+            total:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 总数量
+              title: Total
+              x-description-en: Total quantity
+              x-description-zh-hans: 总数量
+              x-description-zh-hant: 總數量
+          title: CrawlResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/CrawlResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  map:
+    description: 地图式爬取。输入一个网站，快速获取网站上的所有网址。
+    func_name: map
+    input_schema:
+      properties:
+        search:
+          default: ''
+          description: 用于映射的搜索查询。在Alpha阶段，搜索功能的“智能”部分限制为最多100个搜索结果。然而，如果地图找到了更多结果，则不施加任何限制。
+          title: Search
+          type: string
+          x-description-en: Search queries for mapping. In the Alpha phase, the "intelligent"
+            part of the search function is limited to a maximum of 100 search results.
+            However, if the map finds more results, there are no restrictions imposed.
+          x-description-zh-hans: 用于映射的搜索查询。在Alpha阶段，搜索功能的“智能”部分限制为最多100个搜索结果。然而，如果地图找到了更多结果，则不施加任何限制。
+          x-description-zh-hant: 用於映射的搜尋查詢。在Alpha階段，搜尋功能的「智能」部分限制為最多100個搜尋結果。然而，如果地圖找到更多結果，則不施加任何限制。
+        url:
+          description: 要抓取并提取数据的网站URL。
+          title: Url
+          type: string
+          x-description-en: The URL of the website from which you want to crawl and
+            extract data.
+          x-description-zh-hans: 要抓取并提取数据的网站URL。
+          x-description-zh-hant: 要抓取並提取資料的網站URL。
+      required:
+      - url
+      title: InModel
+      type: object
+    labels:
+      description_en: Map-style crawling. Input a website and quickly obtain all the
+        URLs on the website.
+      description_zh_hans: 地图式爬取。输入一个网站，快速获取网站上的所有网址。
+      description_zh_hant: 地圖式爬取。輸入一個網站，快速獲取網站上的所有網址。
+      name_en: map
+      name_zh_hans: 地图
+      name_zh_hant: 地圖
+    name: map
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MapResult:
+          additionalProperties: true
+          properties:
+            links:
+              anyOf:
+              - items:
+                  type: string
+                type: array
+              - type: 'null'
+              default: null
+              description: 链接列表
+              title: Links
+              x-description-en: Link list
+              x-description-zh-hans: 链接列表
+              x-description-zh-hant: 連結列表
+            success:
+              default: false
+              description: 是否成功
+              title: Success
+              type: boolean
+              x-description-en: Is it successful?
+              x-description-zh-hans: 是否成功
+              x-description-zh-hant: 是否成功
+          title: MapResult
+          type: object
+        OutModel:
+          $ref: '#/$defs/MapResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  scrape:
+    description: 单页面抓取。将任何网址转换为干净的数据。
+    func_name: scrape
+    input_schema:
+      properties:
+        url:
+          description: 要抓取并提取数据的网站URL。
+          title: Url
+          type: string
+          x-description-en: The URL of the website from which you want to crawl and
+            extract data.
+          x-description-zh-hans: 要抓取并提取数据的网站URL。
+          x-description-zh-hant: 要抓取並提取資料的網站URL。
+      required:
+      - url
+      title: InModel
+      type: object
+    labels:
+      description_en: Single-page scraping. Convert any web URL into clean data.
+      description_zh_hans: 单页面抓取。将任何网址转换为干净的数据。
+      description_zh_hant: 單頁面抓取。將任何網址轉換為乾淨的數據。
+      name_en: scrape
+      name_zh_hans: 抓取
+      name_zh_hant: 抓取
+    name: scrape
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ScrapeResult'
+          title: OutModel
+        ScrapeItem:
+          additionalProperties: true
+          properties:
+            content:
+              default: ''
+              description: 内容
+              title: Content
+              type: string
+              x-description-en: Content
+              x-description-zh-hans: 内容
+              x-description-zh-hant: 內容
+            metadata:
+              description: 元数据
+              title: Metadata
+              type: object
+              x-description-en: Metadata
+              x-description-zh-hans: 元数据
+              x-description-zh-hant: 元資料
+          title: ScrapeItem
+          type: object
+        ScrapeResult:
+          additionalProperties: true
+          properties:
+            data:
+              anyOf:
+              - $ref: '#/$defs/ScrapeItem'
+              - type: 'null'
+              default: null
+              description: 数据
+              x-description-en: Data
+              x-description-zh-hans: 数据
+              x-description-zh-hant: 數據
+            returnCode:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 返回码
+              title: Returncode
+              x-description-en: Return code
+              x-description-zh-hans: 返回码
+              x-description-zh-hant: 返回碼
+            success:
+              default: false
+              description: 是否成功
+              title: Success
+              type: boolean
+              x-description-en: Is it successful?
+              x-description-zh-hans: 是否成功
+              x-description-zh-hant: 是否成功
+          title: ScrapeResult
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

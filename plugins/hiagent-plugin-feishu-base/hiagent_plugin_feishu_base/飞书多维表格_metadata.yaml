@@ -1,0 +1,2407 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.feishu.cn/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.feishu.cn/app>'
+      x-description-zh-hans: '申请链接: <https://open.feishu.cn/app>'
+      x-description-zh-hant: '申請連結: <https://open.feishu.cn/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书多维表格
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-base/hiagent_plugin_feishu_base/icon.png
+labels:
+  description_en: Feishu Multidimensional Tables
+  description_zh_hans: 飞书多维表格
+  description_zh_hant: 飛書多維表格
+  name_en: Feishu Multi-dimensional Table
+  name_zh_hans: 飞书多维表格
+  name_zh_hant: 飛書多維表格
+meta_version: v1
+metadata_path: 飞书多维表格_metadata.yaml
+name: 飞书多维表格
+package_info:
+  name: hiagent_plugin_feishu_base
+  version: ''
+tools:
+  create_base:
+    description: 创建多维表格
+    func_name: create_base
+    input_schema:
+      properties:
+        folder_token:
+          default: ''
+          description: 多维表格 App 归属文件夹。默认为空，表示多维表格将被创建在云空间根目录。
+          title: Folder Token
+          type: string
+          x-description-en: The folder where the Multi-dimensional Table App belongs.
+            It is empty by default, indicating that the multi-dimensional table will
+            be created in the root directory of the cloud space.
+          x-description-zh-hans: 多维表格App归属文件夹。默认为空，意味着多维表格将被创建在云空间根目录。
+          x-description-zh-hant: 多維表格 App 歸屬資料夾。預設為空白，表示多維表格將會被創建在雲空間根目錄。
+        name:
+          description: 多维表格 App 名称。最长为 255 个字符。
+          title: Name
+          type: string
+          x-description-en: Multidimensional table App name. The maximum length is
+            255 characters.
+          x-description-zh-hans: 多维表格App名称。最长为255个字符。
+          x-description-zh-hant: 多維表格 App 名稱。最長為 255 個字符。
+      required:
+      - name
+      title: InModel
+      type: object
+    labels:
+      description_en: create_base
+      description_zh_hans: 创建多维表格
+      description_zh_hant: 創建多維表格
+      name_en: create_base
+      name_zh_hans: 创建表格
+      name_zh_hant: 建立表格
+    name: create_base
+    output_schema:
+      $defs:
+        App:
+          properties:
+            app_token:
+              default: null
+              title: App Token
+              type: string
+            default_table_id:
+              default: null
+              title: Default Table Id
+              type: string
+            folder_token:
+              default: null
+              title: Folder Token
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            revision:
+              default: null
+              title: Revision
+              type: integer
+            time_zone:
+              default: null
+              title: Time Zone
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: App
+          type: object
+        BaseRespModel_CreateAppResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateAppResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateAppResponseBody]
+          type: object
+        CreateAppResponseBody:
+          properties:
+            app:
+              $ref: '#/$defs/App'
+              default: null
+          title: CreateAppResponseBody
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateAppResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_records:
+    description: 新增记录
+    func_name: create_records
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App 的唯一标识。
+          title: App Token
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table app.
+          x-description-zh-hans: 多维表格 App 的唯一标识。
+          x-description-zh-hant: 多維表格 App 的唯一標識。
+        fields_json:
+          description: '要新增的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。比如 `{"col_1":
+            1, "col_2": "hello"}`'
+          title: Fields Json
+          type: string
+          x-description-en: 'The data of the record to be added. You need to first
+            specify the fields (i.e., columns) in the data table, and then pass in
+            the data in the correct format as a single record. For example, `{"col_1":
+            1, "col_2": "hello"}`'
+          x-description-zh-hans: '要新增记录的数据。你需要先指定数据表中的字段（也就是指定列），然后传入格式正确的数据作为一条记录。例如
+            `{"col_1": 1, "col_2": "hello"}`'
+          x-description-zh-hant: '要新增的記錄的數據。你需先指定資料表中的欄位（即指定列），再傳入正確格式的數據作為一條記錄。比如
+            `{"col_1": 1, "col_2": "hello"}`'
+        table_id:
+          description: 多维表格数据表的唯一标识。
+          title: Table Id
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table data
+            sheet.
+          x-description-zh-hans: 多维表格数据表的唯一标识。
+          x-description-zh-hant: 多維表格資料表的唯一標識。
+      required:
+      - app_token
+      - table_id
+      - fields_json
+      title: InModel
+      type: object
+    labels:
+      description_en: Newly added records
+      description_zh_hans: 新增记录
+      description_zh_hant: 新增記錄
+      name_en: create_records
+      name_zh_hans: 创建记录
+      name_zh_hant: 創建記錄
+    name: create_records
+    output_schema:
+      $defs:
+        AppTableRecord:
+          properties:
+            created_by:
+              $ref: '#/$defs/Person'
+              default: null
+            created_time:
+              default: null
+              title: Created Time
+              type: integer
+            fields:
+              default: null
+              title: Fields
+              type: object
+            last_modified_by:
+              $ref: '#/$defs/Person'
+              default: null
+            last_modified_time:
+              default: null
+              title: Last Modified Time
+              type: integer
+            record_id:
+              default: null
+              title: Record Id
+              type: string
+            record_url:
+              default: null
+              title: Record Url
+              type: string
+            shared_url:
+              default: null
+              title: Shared Url
+              type: string
+          title: AppTableRecord
+          type: object
+        BaseRespModel_CreateAppTableRecordResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateAppTableRecordResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateAppTableRecordResponseBody]
+          type: object
+        CreateAppTableRecordResponseBody:
+          properties:
+            record:
+              $ref: '#/$defs/AppTableRecord'
+              default: null
+          title: CreateAppTableRecordResponseBody
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateAppTableRecordResponseBody_'
+          title: OutModel
+        Person:
+          properties:
+            avatar_url:
+              default: null
+              title: Avatar Url
+              type: string
+            email:
+              default: null
+              title: Email
+              type: string
+            en_name:
+              default: null
+              title: En Name
+              type: string
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Person
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_table:
+    description: 创建数据表
+    func_name: create_table
+    input_schema:
+      $defs:
+        AllowedEditModes:
+          properties:
+            manual:
+              default: null
+              title: Manual
+              type: boolean
+            scan:
+              default: null
+              title: Scan
+              type: boolean
+          title: AllowedEditModes
+          type: object
+        AppFieldPropertyAutoSerial:
+          properties:
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/AppFieldPropertyAutoSerialOptions'
+              title: Options
+              type: array
+            type:
+              default: null
+              title: Type
+              type: string
+          title: AppFieldPropertyAutoSerial
+          type: object
+        AppFieldPropertyAutoSerialOptions:
+          properties:
+            type:
+              default: null
+              title: Type
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: AppFieldPropertyAutoSerialOptions
+          type: object
+        AppFieldPropertyLocation:
+          properties:
+            input_type:
+              default: null
+              title: Input Type
+              type: string
+          title: AppFieldPropertyLocation
+          type: object
+        AppTableCreateHeader:
+          properties:
+            description:
+              $ref: '#/$defs/AppTableFieldDescription'
+              default: null
+            field_id:
+              default: null
+              title: Field Id
+              type: string
+            field_name:
+              default: null
+              title: Field Name
+              type: string
+            property:
+              $ref: '#/$defs/AppTableFieldProperty'
+              default: null
+            type:
+              default: null
+              title: Type
+              type: integer
+            ui_type:
+              default: null
+              title: Ui Type
+              type: string
+          title: AppTableCreateHeader
+          type: object
+        AppTableFieldDescription:
+          properties:
+            disable_sync:
+              default: null
+              title: Disable Sync
+              type: boolean
+            text:
+              default: null
+              title: Text
+              type: string
+          title: AppTableFieldDescription
+          type: object
+        AppTableFieldProperty:
+          properties:
+            allowed_edit_modes:
+              $ref: '#/$defs/AllowedEditModes'
+              default: null
+            auto_fill:
+              default: null
+              title: Auto Fill
+              type: boolean
+            auto_serial:
+              $ref: '#/$defs/AppFieldPropertyAutoSerial'
+              default: null
+            back_field_name:
+              default: null
+              title: Back Field Name
+              type: string
+            currency_code:
+              default: null
+              title: Currency Code
+              type: string
+            date_formatter:
+              default: null
+              title: Date Formatter
+              type: string
+            formatter:
+              default: null
+              title: Formatter
+              type: string
+            formula_expression:
+              default: null
+              title: Formula Expression
+              type: string
+            location:
+              $ref: '#/$defs/AppFieldPropertyLocation'
+              default: null
+            max:
+              default: null
+              title: Max
+              type: number
+            min:
+              default: null
+              title: Min
+              type: number
+            multiple:
+              default: null
+              title: Multiple
+              type: boolean
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/AppTableFieldPropertyOption'
+              title: Options
+              type: array
+            range_customize:
+              default: null
+              title: Range Customize
+              type: boolean
+            rating:
+              $ref: '#/$defs/Rating'
+              default: null
+            table_id:
+              default: null
+              title: Table Id
+              type: string
+            table_name:
+              default: null
+              title: Table Name
+              type: string
+          title: AppTableFieldProperty
+          type: object
+        AppTableFieldPropertyOption:
+          properties:
+            color:
+              default: null
+              title: Color
+              type: integer
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+          title: AppTableFieldPropertyOption
+          type: object
+        Rating:
+          properties:
+            symbol:
+              default: null
+              title: Symbol
+              type: string
+          title: Rating
+          type: object
+      properties:
+        app_token:
+          description: 多维表格 App Token。
+          title: App Token
+          type: string
+          x-description-en: Multi-dimensional table App Token.
+          x-description-zh-hans: 多维表格App令牌。
+          x-description-zh-hant: 多維表格 App 令牌。
+        default_view_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: 默认表格视图的名称，不填则默认为“表格视图 1”。
+          title: Default View Name
+          x-description-en: The name of the default table view. If not filled in,
+            it will default to "Table View 1".
+          x-description-zh-hans: 默认表格视图的名称，不填则默认为“表格视图 1”。
+          x-description-zh-hant: 預設表格視圖的名稱，若不填則預設為「表格視圖 1」。
+        fields:
+          default: []
+          description: 数据表的初始字段。
+          items:
+            $ref: '#/$defs/AppTableCreateHeader'
+          title: Fields
+          type: array
+          x-description-en: Initial fields of the data table.
+          x-description-zh-hans: 数据表的初始字段。
+          x-description-zh-hant: 資料表的初始欄位。
+        name:
+          description: 数据表名称。该字段必填。
+          title: Name
+          type: string
+          x-description-en: Data table name. This field is required.
+          x-description-zh-hans: 数据表名称。该字段必填。
+          x-description-zh-hant: 數據表名稱。該欄位為必填。
+      required:
+      - app_token
+      - name
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a data table
+      description_zh_hans: 创建数据表
+      description_zh_hant: 創建資料表
+      name_en: create_table
+      name_zh_hans: 创建表
+      name_zh_hant: 建立資料表
+    name: create_table
+    output_schema:
+      $defs:
+        BaseRespModel_CreateAppTableResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateAppTableResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateAppTableResponseBody]
+          type: object
+        CreateAppTableResponseBody:
+          properties:
+            default_view_id:
+              default: null
+              title: Default View Id
+              type: string
+            field_id_list:
+              default: null
+              items:
+                type: string
+              title: Field Id List
+              type: array
+            table_id:
+              default: null
+              title: Table Id
+              type: string
+          title: CreateAppTableResponseBody
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateAppTableResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  delete_records:
+    description: 删除记录
+    func_name: delete_records
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App 的唯一标识。
+          title: App Token
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table App.
+          x-description-zh-hans: 多维表格App的唯一标识。
+          x-description-zh-hant: 多維表格 App 的唯一標識。
+        record_id:
+          description: 数据表中一条记录的唯一标识。
+          title: Record Id
+          type: string
+          x-description-en: The unique identifier of a record in the data table.
+          x-description-zh-hans: 多维表格App的唯一标识。
+          x-description-zh-hant: 數據表中一條記錄的唯一標識。
+        table_id:
+          description: 多维表格数据表的唯一标识。
+          title: Table Id
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table data
+            sheet.
+          x-description-zh-hans: 多维表格数据表的唯一标识。
+          x-description-zh-hant: 多維表格資料表的唯一標識。
+      required:
+      - app_token
+      - table_id
+      - record_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Delete records
+      description_zh_hans: 删除记录
+      description_zh_hant: 刪除記錄
+      name_en: delete_records
+      name_zh_hans: 删除记录
+      name_zh_hant: 刪除記錄
+    name: delete_records
+    output_schema:
+      $defs:
+        BaseRespModel_DeleteAppTableRecordResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/DeleteAppTableRecordResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[DeleteAppTableRecordResponseBody]
+          type: object
+        DeleteAppTableRecordResponseBody:
+          properties:
+            deleted:
+              default: null
+              title: Deleted
+              type: boolean
+            record_id:
+              default: null
+              title: Record Id
+              type: string
+          title: DeleteAppTableRecordResponseBody
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_DeleteAppTableRecordResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  delete_table:
+    description: 删除一个数据表
+    func_name: delete_table
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App 的唯一标识。
+          title: App Token
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table App.
+          x-description-zh-hans: 多维表格App的唯一标识。
+          x-description-zh-hant: 多維表格App的唯一標識。
+        table_id:
+          description: 多维表格数据表的唯一标识。
+          title: Table Id
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table data sheet.
+          x-description-zh-hans: 多维表格数据表的唯一标识。
+          x-description-zh-hant: 多維表格資料表的唯一標識。
+      required:
+      - app_token
+      - table_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Delete a data table
+      description_zh_hans: 删除一个数据表
+      description_zh_hant: 刪除一個數據表
+      name_en: delete_table
+      name_zh_hans: 删除表
+      name_zh_hant: 刪除表格
+    name: delete_table
+    output_schema:
+      $defs:
+        BaseRespModel_dict_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[dict]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_dict_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_base_info:
+    description: 获取多维表格元数据
+    func_name: get_base_info
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App Token。
+          title: App Token
+          type: string
+          x-description-en: Multidimensional table App Token.
+          x-description-zh-hans: 多维表格应用程序令牌。
+          x-description-zh-hant: 多維表格 App Token。
+      required:
+      - app_token
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the metadata of the multi-dimensional table
+      description_zh_hans: 获取多维表格元数据
+      description_zh_hant: 獲取多維表格元數據
+      name_en: get_base_info
+      name_zh_hans: 获取基础信息
+      name_zh_hant: 獲取基本資訊
+    name: get_base_info
+    output_schema:
+      $defs:
+        BaseRespModel_GetAppResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/GetAppResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[GetAppResponseBody]
+          type: object
+        DisplayApp:
+          properties:
+            app_token:
+              default: null
+              title: App Token
+              type: string
+            is_advanced:
+              default: null
+              title: Is Advanced
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+            revision:
+              default: null
+              title: Revision
+              type: integer
+            time_zone:
+              default: null
+              title: Time Zone
+              type: string
+          title: DisplayApp
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        GetAppResponseBody:
+          properties:
+            app:
+              $ref: '#/$defs/DisplayApp'
+              default: null
+          title: GetAppResponseBody
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_GetAppResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  list_table:
+    description: 列出数据表
+    func_name: list_table
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App Token。
+          title: App Token
+          type: string
+          x-description-en: Multi-dimensional table App Token.
+          x-description-zh-hans: 多维表格应用程序令牌。
+          x-description-zh-hant: 多維表格App Token。
+        page_size:
+          default: 10
+          description: 分页大小
+          title: Page Size
+          type: integer
+          x-description-en: Page size
+          x-description-zh-hans: 分页大小
+          x-description-zh-hant: 分頁大小
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating to start traversing from the beginning.
+          x-description-zh-hans: 分页标记，首次请求无需填写，意味着从开头开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，代表從頭開始遍歷；
+      required:
+      - app_token
+      title: InModel
+      type: object
+    labels:
+      description_en: List the data tables
+      description_zh_hans: 列出数据表
+      description_zh_hant: 列出資料表
+      name_en: list_table
+      name_zh_hans: 列表表格
+      name_zh_hant: 列表表格
+    name: list_table
+    output_schema:
+      $defs:
+        AppTable:
+          properties:
+            name:
+              default: null
+              title: Name
+              type: string
+            revision:
+              default: null
+              title: Revision
+              type: integer
+            table_id:
+              default: null
+              title: Table Id
+              type: string
+          title: AppTable
+          type: object
+        BaseRespModel_ListAppTableResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ListAppTableResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ListAppTableResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ListAppTableResponseBody:
+          properties:
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/AppTable'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+            total:
+              default: null
+              title: Total
+              type: integer
+          title: ListAppTableResponseBody
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ListAppTableResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  search_records:
+    description: 查询记录
+    func_name: search_records
+    input_schema:
+      $defs:
+        ChildrenFilter:
+          properties:
+            conditions:
+              default: null
+              items:
+                $ref: '#/$defs/Condition'
+              title: Conditions
+              type: array
+            conjunction:
+              default: null
+              title: Conjunction
+              type: string
+          title: ChildrenFilter
+          type: object
+        Condition:
+          properties:
+            field_name:
+              default: null
+              title: Field Name
+              type: string
+            operator:
+              default: null
+              title: Operator
+              type: string
+            value:
+              default: null
+              items:
+                type: string
+              title: Value
+              type: array
+          title: Condition
+          type: object
+        FilterInfo:
+          properties:
+            children:
+              default: null
+              items:
+                $ref: '#/$defs/ChildrenFilter'
+              title: Children
+              type: array
+            conditions:
+              default: null
+              items:
+                $ref: '#/$defs/Condition'
+              title: Conditions
+              type: array
+            conjunction:
+              default: null
+              title: Conjunction
+              type: string
+          title: FilterInfo
+          type: object
+        SearchAppTableRecordRequestBody:
+          properties:
+            automatic_fields:
+              default: null
+              title: Automatic Fields
+              type: boolean
+            field_names:
+              default: null
+              items:
+                type: string
+              title: Field Names
+              type: array
+            filter:
+              $ref: '#/$defs/FilterInfo'
+              default: null
+            sort:
+              default: null
+              items:
+                $ref: '#/$defs/Sort'
+              title: Sort
+              type: array
+            view_id:
+              default: null
+              title: View Id
+              type: string
+          title: SearchAppTableRecordRequestBody
+          type: object
+        Sort:
+          properties:
+            desc:
+              default: null
+              title: Desc
+              type: boolean
+            field_name:
+              default: null
+              title: Field Name
+              type: string
+          title: Sort
+          type: object
+      properties:
+        app_token:
+          description: 多维表格 App 的唯一标识。
+          title: App Token
+          type: string
+          x-description-en: The unique identifier of the Multi-dimensional Table App.
+          x-description-zh-hans: 多维表格 App 的唯一标识。
+          x-description-zh-hant: 多維表格 App 的唯一標識。
+        page_size:
+          default: 10
+          description: 分页大小
+          title: Page Size
+          type: integer
+          x-description-en: Page size
+          x-description-zh-hans: 分页大小
+          x-description-zh-hant: 分頁大小
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating traversal starts from the beginning.
+          x-description-zh-hans: 分页标记，首次请求时可不填写，意味着从起始处开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，代表從頭開始遍歷；
+        search:
+          $ref: '#/$defs/SearchAppTableRecordRequestBody'
+          description: 查询条件。
+          x-description-en: Query conditions.
+          x-description-zh-hans: 查询条件
+          x-description-zh-hant: 查詢條件
+        table_id:
+          description: 多维表格数据表的唯一标识。
+          title: Table Id
+          type: string
+          x-description-en: The unique identifier of a multi-dimensional table data
+            sheet.
+          x-description-zh-hans: 多维表格数据表的唯一标识。
+          x-description-zh-hant: 多維表格資料表的唯一標識。
+      required:
+      - app_token
+      - table_id
+      - search
+      title: InModel
+      type: object
+    labels:
+      description_en: Query records
+      description_zh_hans: 查询记录
+      description_zh_hant: 查詢記錄
+      name_en: search_records
+      name_zh_hans: 搜索记录
+      name_zh_hant: 搜索記錄
+    name: search_records
+    output_schema:
+      $defs:
+        AppTableRecord:
+          properties:
+            created_by:
+              $ref: '#/$defs/Person'
+              default: null
+            created_time:
+              default: null
+              title: Created Time
+              type: integer
+            fields:
+              default: null
+              title: Fields
+              type: object
+            last_modified_by:
+              $ref: '#/$defs/Person'
+              default: null
+            last_modified_time:
+              default: null
+              title: Last Modified Time
+              type: integer
+            record_id:
+              default: null
+              title: Record Id
+              type: string
+            record_url:
+              default: null
+              title: Record Url
+              type: string
+            shared_url:
+              default: null
+              title: Shared Url
+              type: string
+          title: AppTableRecord
+          type: object
+        BaseRespModel_SearchAppTableRecordResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/SearchAppTableRecordResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[SearchAppTableRecordResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_SearchAppTableRecordResponseBody_'
+          title: OutModel
+        Person:
+          properties:
+            avatar_url:
+              default: null
+              title: Avatar Url
+              type: string
+            email:
+              default: null
+              title: Email
+              type: string
+            en_name:
+              default: null
+              title: En Name
+              type: string
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Person
+          type: object
+        SearchAppTableRecordResponseBody:
+          properties:
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/AppTableRecord'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+            total:
+              default: null
+              title: Total
+              type: integer
+          title: SearchAppTableRecordResponseBody
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  update_records:
+    description: 更新记录
+    func_name: update_records
+    input_schema:
+      properties:
+        app_token:
+          description: 多维表格 App 的唯一标识。
+          title: App Token
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table App.
+          x-description-zh-hans: 多维表格 App 的唯一标识。
+          x-description-zh-hant: 多維表格 App 的唯一標識。
+        fields_json:
+          description: '要新增的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。比如 `{"col_1": 1, "col_2": "hello"}`'
+          title: Fields Json
+          type: string
+          x-description-en: 'The data of the record to be added. You need to first
+            specify the fields in the data table (i.e., specify the columns), and
+            then pass in data in the correct format as a single record. For example,
+            `{"col_1": 1, "col_2": "hello"}`'
+          x-description-zh-hans: '要新增记录的数据。你需要先指定数据表中的字段（即指定列），然后传入格式正确的数据作为一条记录。例如
+            `{"col_1": 1, "col_2": "hello"}`'
+          x-description-zh-hant: '要新增記錄的數據。你需先指定資料表中的欄位（即指定列），再傳入正確格式的數據作為一條記錄。例如
+            `{"col_1": 1, "col_2": "hello"}`'
+        record_id:
+          description: 数据表中一条记录的唯一标识。
+          title: Record Id
+          type: string
+          x-description-en: The unique identifier of a record in the data table.
+          x-description-zh-hans: 数据表中一条记录的唯一标识。
+          x-description-zh-hant: 資料表中一筆記錄的唯一識別碼。
+        table_id:
+          description: 多维表格数据表的唯一标识。
+          title: Table Id
+          type: string
+          x-description-en: The unique identifier of the multi-dimensional table data
+            sheet.
+          x-description-zh-hans: 多维表格数据表的唯一标识。
+          x-description-zh-hant: 多維表格資料表的唯一標識。
+      required:
+      - app_token
+      - table_id
+      - record_id
+      - fields_json
+      title: InModel
+      type: object
+    labels:
+      description_en: Update records
+      description_zh_hans: 更新记录
+      description_zh_hant: 更新記錄
+      name_en: update_records
+      name_zh_hans: 更新记录
+      name_zh_hant: 更新記錄
+    name: update_records
+    output_schema:
+      $defs:
+        AppTableRecord:
+          properties:
+            created_by:
+              $ref: '#/$defs/Person'
+              default: null
+            created_time:
+              default: null
+              title: Created Time
+              type: integer
+            fields:
+              default: null
+              title: Fields
+              type: object
+            last_modified_by:
+              $ref: '#/$defs/Person'
+              default: null
+            last_modified_time:
+              default: null
+              title: Last Modified Time
+              type: integer
+            record_id:
+              default: null
+              title: Record Id
+              type: string
+            record_url:
+              default: null
+              title: Record Url
+              type: string
+            shared_url:
+              default: null
+              title: Shared Url
+              type: string
+          title: AppTableRecord
+          type: object
+        BaseRespModel_UpdateAppTableRecordResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/UpdateAppTableRecordResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[UpdateAppTableRecordResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_UpdateAppTableRecordResponseBody_'
+          title: OutModel
+        Person:
+          properties:
+            avatar_url:
+              default: null
+              title: Avatar Url
+              type: string
+            email:
+              default: null
+              title: Email
+              type: string
+            en_name:
+              default: null
+              title: En Name
+              type: string
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Person
+          type: object
+        UpdateAppTableRecordResponseBody:
+          properties:
+            record:
+              $ref: '#/$defs/AppTableRecord'
+              default: null
+          title: UpdateAppTableRecordResponseBody
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

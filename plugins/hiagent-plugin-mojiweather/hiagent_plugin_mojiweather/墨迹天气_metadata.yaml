@@ -1,0 +1,719 @@
+category: LifeAssistant
+config_schema:
+  properties:
+    current_weather_password:
+      default: ''
+      description: ''
+      title: 实时天气密码
+      type: string
+      x-hiagent-secret: true
+    current_weather_token:
+      default: ''
+      description: '该插件包含两个工具，请分别填写对应的授权信息, 申请说明: <https://www.mojicb.com/apis>'
+      title: 实时天气Token
+      type: string
+      x-description-en: 'This plugin contains two tools. Please fill in the corresponding
+        authorization information respectively. Application instructions: <https://www.mojicb.com/apis>'
+      x-description-zh-hans: 该插件包含两个工具，请分别填写对应的授权信息，申请说明：<https://www.mojicb.com/apis>
+      x-description-zh-hant: 該插件包含兩個工具，請分別填寫對應的授權資訊，申請說明：<https://www.mojicb.com/apis>
+    latest_40days_weather_password:
+      default: ''
+      description: ''
+      title: 40天天气密码
+      type: string
+      x-hiagent-secret: true
+    latest_40days_weather_token:
+      default: ''
+      description: '该插件包含两个工具，请分别填写对应的授权信息, 申请说明: <https://www.mojicb.com/apis>'
+      title: 40天天气Token
+      type: string
+      x-description-en: 'This plugin contains two tools. Please fill in the corresponding
+        authorization information respectively. Application instructions: <https://www.mojicb.com/apis>'
+      x-description-zh-hans: 该插件包含两个工具，请分别填写对应的授权信息，申请说明：<https://www.mojicb.com/apis>
+      x-description-zh-hant: 該插件包含兩個工具，請分別填寫對應的授權資訊，申請說明：<https://www.mojicb.com/apis>
+  title: InModel
+  type: object
+description: 搜索提供的国家, 省, 市, 区县的天气信息
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-mojiweather/hiagent_plugin_mojiweather/icon.png
+labels:
+  description_en: Search for the weather information of the provided countries, provinces,
+    cities, districts and counties.
+  description_zh_hans: 搜索提供的国家、省、市、区县的天气信息
+  description_zh_hant: 搜尋提供的國家、省、市、區縣的天氣資訊
+  name_en: Moji Weather
+  name_zh_hans: 墨迹天气
+  name_zh_hant: 墨迹天氣
+meta_version: v1
+metadata_path: 墨迹天气_metadata.yaml
+name: 墨迹天气
+package_info:
+  name: hiagent_plugin_mojiweather
+  version: ''
+tools:
+  CurrentWeather:
+    description: 搜索提供的省、市、区县的当前天气
+    func_name: CurrentWeather
+    input_schema:
+      properties:
+        name:
+          description: '查询的城市或者区县名, 中文, 比如: 北京市, 浦东区, 西湖区, 杭州市, 洛杉矶, 纽约'
+          title: Name
+          type: string
+          x-description-en: 'The name of the city or district to be queried, in Chinese.
+            For example: Beijing City, Pudong District, Xihu District, Hangzhou City,
+            Los Angeles, New York'
+          x-description-zh-hans: 查询的城市或者区县名，中文，比如：北京市、浦东区、西湖区、杭州市、洛杉矶、纽约
+          x-description-zh-hant: 查詢的城市或者區縣名，中文，比如：北京市、浦東區、西湖區、杭州市、洛杉磯、紐約
+        parent:
+          default: ''
+          description: 查询的上一级行政区, 中文选填, 比如, 北京市, 上海市, 杭州市, 浙江省, 加利福尼亚州
+          title: Parent
+          type: string
+          x-description-en: The upper-level administrative division for the query,
+            optional in Chinese. For example, Beijing City, Shanghai City, Hangzhou
+            City, Zhejiang Province, California.
+          x-description-zh-hans: 查询的上一级行政区，中文选填，比如，北京市、上海市、杭州市、浙江省、加利福尼亚州
+          x-description-zh-hant: 查詢的上一級行政區，中文選填，比如，北京市、上海市、杭州市、浙江省、加利福尼亞州
+      required:
+      - name
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for the current weather in the provided provinces, cities,
+        districts, and counties.
+      description_zh_hans: 搜索提供的省、市、区县的当前天气
+      description_zh_hant: 搜尋提供的省、市、區縣的當前天氣
+      name_en: CurrentWeather
+      name_zh_hans: 当前天气
+      name_zh_hant: 當前天氣
+    name: CurrentWeather
+    output_schema:
+      $defs:
+        CommonResp_CurrentResp_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              $ref: '#/$defs/CurrentResp'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+            rc:
+              $ref: '#/$defs/RC'
+              default: null
+          title: CommonResp[CurrentResp]
+          type: object
+        Current:
+          properties:
+            comfort:
+              default: 0
+              title: Comfort
+              type: integer
+            day:
+              default: 0
+              description: '当地时间的白天晚上标识, 0: 白天, 1: 晚上'
+              title: Day
+              type: integer
+              x-description-en: 'Local time day and night identifiers, 0: Day, 1:
+                Night'
+              x-description-zh-hans: 当地时间的白天晚上标识，0：白天，1：晚上
+              x-description-zh-hant: '當地時間的白天晚上標識，0: 白天，1: 晚上'
+            dewpoint:
+              default: 0
+              description: 露点温度, 摄氏度(°C)
+              title: Dewpoint
+              type: number
+              x-description-en: Dew point temperature, degrees Celsius (°C)
+              x-description-zh-hans: 露点温度, 摄氏度(°C)
+              x-description-zh-hant: 露點溫度，攝氏度(°C)
+            get_time:
+              default: ''
+              title: Get Time
+              type: string
+            humidity:
+              default: 0
+              description: 相对湿度, %
+              title: Humidity
+              type: integer
+              x-description-en: Relative humidity, %
+              x-description-zh-hans: 相对湿度, %
+              x-description-zh-hant: 相對濕度, %
+            icon:
+              default: 0
+              description: 天气图标
+              title: Icon
+              type: integer
+              x-description-en: Weather icons
+              x-description-zh-hans: 天气图标
+              x-description-zh-hant: 天氣圖標
+            mslp:
+              default: 0
+              description: 气压, hPa
+              title: Mslp
+              type: integer
+              x-description-en: Atmospheric pressure, hPa
+              x-description-zh-hans: '气压，百帕
+
+
+                注：hPa是百帕的英文缩写，是气压的常用单位。'
+              x-description-zh-hant: 氣壓，百帕
+            obs_time:
+              default: ''
+              description: 数据更新时间
+              title: Obs Time
+              type: string
+              x-description-en: Data update time
+              x-description-zh-hans: 数据更新时间
+              x-description-zh-hant: 數據更新時間
+            precip_1h:
+              default: 0
+              description: 1小时降水量, mm/h
+              title: Precip 1H
+              type: number
+              x-description-en: 1-hour precipitation, mm/h
+              x-description-zh-hans: 1小时降水量，毫米/小时
+              x-description-zh-hant: 1小時降水量，毫米/小時
+            real_feel:
+              default: 0
+              description: 体感温度, 摄氏度(°C)
+              title: Real Feel
+              type: number
+              x-description-en: Apparent temperature, Celsius degree (°C)
+              x-description-zh-hans: 体感温度，摄氏度(°C)
+              x-description-zh-hant: 體感溫度，攝氏度(°C)
+            sky:
+              default: 0
+              description: 云覆盖率
+              title: Sky
+              type: integer
+              x-description-en: Cloud coverage
+              x-description-zh-hans: 云覆盖率
+              x-description-zh-hant: 雲覆蓋率
+            sun_down:
+              default: ''
+              title: Sun Down
+              type: string
+            sun_rise:
+              default: ''
+              title: Sun Rise
+              type: string
+            temp:
+              default: 0
+              description: 温度, 摄氏度(°C)
+              title: Temp
+              type: number
+              x-description-en: Temperature, degrees Celsius (°C)
+              x-description-zh-hans: 温度, 摄氏度(°C)
+              x-description-zh-hant: 溫度, 攝氏度(°C)
+            tips:
+              default: ''
+              title: Tips
+              type: string
+            uvi:
+              default: 0
+              description: 紫外线强度
+              title: Uvi
+              type: integer
+              x-description-en: Ultraviolet intensity
+              x-description-zh-hans: 紫外线强度
+              x-description-zh-hant: 紫外線強度
+            vis:
+              default: 0
+              description: 能见度, m
+              title: Vis
+              type: integer
+              x-description-en: Visibility, m
+              x-description-zh-hans: 能见度, 米
+              x-description-zh-hant: 能見度, m
+            weather:
+              default: ''
+              description: 天气现象
+              title: Weather
+              type: string
+              x-description-en: Weather phenomena
+              x-description-zh-hans: 天气现象
+              x-description-zh-hant: 天氣現象
+            weather_id:
+              default: 0
+              description: 天气现象ID
+              title: Weather Id
+              type: integer
+              x-description-en: Weather phenomenon ID
+              x-description-zh-hans: 天气现象ID
+              x-description-zh-hant: 天氣現象ID
+            wind_degrees:
+              default: 0
+              description: 风向角度
+              title: Wind Degrees
+              type: integer
+              x-description-en: Wind direction angle
+              x-description-zh-hans: 风向角度
+              x-description-zh-hant: 風向角度
+            wind_dir:
+              default: ''
+              description: 风向
+              title: Wind Dir
+              type: string
+              x-description-en: Wind direction
+              x-description-zh-hans: 风向
+              x-description-zh-hant: 風向
+            wind_dir_id:
+              default: 0
+              description: 风向id
+              title: Wind Dir Id
+              type: integer
+              x-description-en: Wind direction ID
+              x-description-zh-hans: 风向id
+              x-description-zh-hant: 風向id
+            wind_level:
+              default: 0
+              description: 风力等级
+              title: Wind Level
+              type: integer
+              x-description-en: Wind scale
+              x-description-zh-hans: 风力等级
+              x-description-zh-hant: 風力等級
+            wspd:
+              default: 0
+              description: 风速, m/s
+              title: Wspd
+              type: number
+              x-description-en: Wind speed, m/s
+              x-description-zh-hans: 风速，米/秒
+              x-description-zh-hant: 風速，m/s
+          title: Current
+          type: object
+        CurrentResp:
+          properties:
+            current:
+              $ref: '#/$defs/Current'
+          required:
+          - current
+          title: CurrentResp
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/CommonResp_CurrentResp_'
+          title: OutModel
+        RC:
+          properties:
+            c:
+              title: C
+              type: integer
+            p:
+              title: P
+              type: string
+          required:
+          - c
+          - p
+          title: RC
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  Latest40DayWeather:
+    description: 搜索提供的省、市、区县未来40天的天气情况，包括温度、湿度、日夜风向等。
+    func_name: Latest40DayWeather
+    input_schema:
+      properties:
+        name:
+          description: '查询的城市或者区县名, 中文, 比如: 北京市, 浦东区, 西湖区, 杭州市, 洛杉矶, 纽约'
+          title: Name
+          type: string
+          x-description-en: 'The name of the city, district, or county to be queried,
+            in Chinese. For example: Beijing City, Pudong District, Xihu District,
+            Hangzhou City, Los Angeles, New York.'
+          x-description-zh-hans: 查询的城市或者区县名，中文，比如：北京市、浦东区、西湖区、杭州市、洛杉矶、纽约
+          x-description-zh-hant: 查詢的城市或者區縣名，中文，比如：北京市、浦東區、西湖區、杭州市、洛杉磯、紐約
+        parent:
+          default: ''
+          description: 查询的上一级行政区, 中文选填, 比如, 北京市, 上海市, 杭州市, 浙江省, 加利福尼亚州
+          title: Parent
+          type: string
+          x-description-en: The upper-level administrative region for the query. It's
+            optional in Chinese. For example, Beijing, Shanghai, Hangzhou, Zhejiang
+            Province, California.
+          x-description-zh-hans: 查询的上一级行政区，中文选填，比如，北京市、上海市、杭州市、浙江省、加利福尼亚州
+          x-description-zh-hant: 查詢的上一級行政區，中文選填，比如，北京市、上海市、杭州市、浙江省、加利福尼亞州
+      required:
+      - name
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for the weather conditions in the provided provinces,
+        cities, districts, and counties for the next 40 days, including temperature,
+        humidity, and day and night wind directions.
+      description_zh_hans: 搜索提供的省、市、区县未来40天的天气情况，包括温度、湿度、日夜风向等。
+      description_zh_hant: 搜尋提供的省、市、區縣未來40天的天氣情況，包括溫度、濕度、日夜風向等。
+      name_en: Latest40DayWeather
+      name_zh_hans: 最近40天的天气
+      name_zh_hant: 最新40天天氣
+    name: Latest40DayWeather
+    output_schema:
+      $defs:
+        CommonResp_DailyResp_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              $ref: '#/$defs/DailyResp'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+            rc:
+              $ref: '#/$defs/RC'
+              default: null
+          title: CommonResp[DailyResp]
+          type: object
+        Daily:
+          properties:
+            get_time:
+              default: ''
+              title: Get Time
+              type: string
+            humidity:
+              default: 0
+              description: 相对湿度, %
+              title: Humidity
+              type: integer
+              x-description-en: Relative humidity, %
+              x-description-zh-hans: 相对湿度，%
+              x-description-zh-hant: 相對濕度, %
+            icon_day:
+              default: 0
+              description: 白天天气图标ID
+              title: Icon Day
+              type: integer
+              x-description-en: Daytime weather icon ID
+              x-description-zh-hans: 白天天气图标ID
+              x-description-zh-hant: 白天天氣圖標ID
+            icon_night:
+              default: 0
+              description: 夜晚天气图标ID
+              title: Icon Night
+              type: integer
+              x-description-en: Night weather icon ID
+              x-description-zh-hans: 夜晚天气图标ID
+              x-description-zh-hant: 夜晚天氣圖標ID
+            moon_down:
+              default: ''
+              description: 月落时间
+              title: Moon Down
+              type: string
+              x-description-en: Moonset time
+              x-description-zh-hans: 月落时间
+              x-description-zh-hant: 月落時間
+            moon_phase:
+              default: ''
+              description: 月相
+              title: Moon Phase
+              type: string
+              x-description-en: Lunar phase
+              x-description-zh-hans: 月相
+              x-description-zh-hant: 月相
+            moon_rise:
+              default: ''
+              description: 月升时间
+              title: Moon Rise
+              type: string
+              x-description-en: Moonrise time
+              x-description-zh-hans: 月升时间
+              x-description-zh-hant: 月升時間
+            mslp:
+              default: 0
+              description: 气压, hPa
+              title: Mslp
+              type: integer
+              x-description-en: Atmospheric pressure, hPa
+              x-description-zh-hans: 气压，百帕
+              x-description-zh-hant: 氣壓，百帕
+            pop:
+              default: 0
+              description: 降水概率, %
+              title: Pop
+              type: integer
+              x-description-en: Precipitation probability, %
+              x-description-zh-hans: 降水概率, %
+              x-description-zh-hant: 降水機率, %
+            pop_day:
+              default: 0
+              title: Pop Day
+              type: integer
+            pop_night:
+              default: 0
+              title: Pop Night
+              type: integer
+            predict_date:
+              default: ''
+              description: 预报时间
+              title: Predict Date
+              type: string
+              x-description-en: Forecast time
+              x-description-zh-hans: 预报时间
+              x-description-zh-hant: 預報時間
+            qpf:
+              default: 0
+              description: 预测对应天的日累计降水量, mm
+              title: Qpf
+              type: number
+              x-description-en: Predict the daily cumulative precipitation (mm) for
+                the corresponding day.
+              x-description-zh-hans: 预测对应天的日累计降水量, 毫米
+              x-description-zh-hant: 預測對應天的日累計降水量，毫米
+            sun_down:
+              default: ''
+              description: 日落时间
+              title: Sun Down
+              type: string
+              x-description-en: Sunset time
+              x-description-zh-hans: 日落时间
+              x-description-zh-hant: 日落時間
+            sun_rise:
+              default: ''
+              description: 日出时间
+              title: Sun Rise
+              type: string
+              x-description-en: Sunrise time
+              x-description-zh-hans: 日出时间
+              x-description-zh-hant: 日出時間
+            temp_high:
+              default: 0
+              description: 最高温度, 摄氏度(°C)
+              title: Temp High
+              type: number
+              x-description-en: Maximum temperature, degrees Celsius (°C)
+              x-description-zh-hans: 最高温度, 摄氏度(°C)
+              x-description-zh-hant: 最高溫度，攝氏度(°C)
+            temp_low:
+              default: 0
+              description: 最低温度, 摄氏度(°C)
+              title: Temp Low
+              type: number
+              x-description-en: Minimum temperature, degrees Celsius (°C)
+              x-description-zh-hans: 最低温度, 摄氏度(°C)
+              x-description-zh-hant: 最低溫度，攝氏度(°C)
+            update_time:
+              default: ''
+              title: Update Time
+              type: string
+            uvi:
+              default: 0
+              description: 紫外线强度
+              title: Uvi
+              type: integer
+              x-description-en: Ultraviolet intensity
+              x-description-zh-hans: 紫外线强度
+              x-description-zh-hant: 紫外線強度
+            weather_day:
+              default: ''
+              description: 白天天气现象
+              title: Weather Day
+              type: string
+              x-description-en: Daytime weather phenomena
+              x-description-zh-hans: 白天天气现象
+              x-description-zh-hant: 白天天氣現象
+            weather_id_day:
+              default: 0
+              description: 白天天气现象 id
+              title: Weather Id Day
+              type: integer
+              x-description-en: Daytime weather phenomenon ID
+              x-description-zh-hans: 白天天气现象id
+              x-description-zh-hant: 白天天氣現象id
+            weather_id_night:
+              default: 0
+              description: 夜晚天气现象 id
+              title: Weather Id Night
+              type: integer
+              x-description-en: Night weather phenomenon ID
+              x-description-zh-hans: 夜晚天气现象id
+              x-description-zh-hant: 夜晚天氣現象id
+            weather_night:
+              default: ''
+              description: 夜晚天气现象
+              title: Weather Night
+              type: string
+              x-description-en: Night weather phenomena
+              x-description-zh-hans: 夜晚天气现象
+              x-description-zh-hant: 夜晚天氣現象
+            wind_degrees_day:
+              default: 0
+              description: 白天风向角度
+              title: Wind Degrees Day
+              type: integer
+              x-description-en: Daytime wind direction angle
+              x-description-zh-hans: 白天风向角度
+              x-description-zh-hant: 白天風向角度
+            wind_degrees_night:
+              default: 0
+              description: 夜晚风向角度
+              title: Wind Degrees Night
+              type: integer
+              x-description-en: Night wind direction angle
+              x-description-zh-hans: 夜晚风向角度
+              x-description-zh-hant: 夜晚風向角度
+            wind_dir_day:
+              default: ''
+              description: 白天风向
+              title: Wind Dir Day
+              type: string
+              x-description-en: Daytime wind direction
+              x-description-zh-hans: 白天风向
+              x-description-zh-hant: 白天風向
+            wind_dir_id_day:
+              default: 0
+              description: 白天风向 id
+              title: Wind Dir Id Day
+              type: integer
+              x-description-en: Daytime wind direction
+              x-description-zh-hans: 白天风向（由于“id”可能是特定术语缩写等，在没有更多背景下保留原样）
+              x-description-zh-hant: 白天風向 id
+            wind_dir_id_night:
+              default: 0
+              description: 夜晚风向 id
+              title: Wind Dir Id Night
+              type: integer
+              x-description-en: Night wind direction
+              x-description-zh-hans: '夜晚风向
+
+
+                不过这里“id”似乎不属于句子内容，如果它有特定含义请补充更多信息。'
+              x-description-zh-hant: 夜晚風向
+            wind_dir_night:
+              default: ''
+              description: 夜晚风向
+              title: Wind Dir Night
+              type: string
+              x-description-en: Night wind direction
+              x-description-zh-hans: 夜晚风向
+              x-description-zh-hant: 夜晚風向
+            wind_level_day:
+              default: ''
+              description: 白天平均风力等级
+              title: Wind Level Day
+              type: string
+              x-description-en: Average wind force level during the day
+              x-description-zh-hans: 白天平均风力等级
+              x-description-zh-hant: 白天平均風力等級
+            wind_level_night:
+              default: ''
+              description: 夜晚平均风力等级
+              title: Wind Level Night
+              type: string
+              x-description-en: Average wind force level at night
+              x-description-zh-hans: 夜晚平均风力等级
+              x-description-zh-hant: 夜晚平均風力等級
+            wspd_day:
+              default: 0
+              description: 白天风速, m/s
+              title: Wspd Day
+              type: number
+              x-description-en: Daytime wind speed, m/s
+              x-description-zh-hans: 白天风速, 米/秒
+              x-description-zh-hant: 白天風速, m/s
+            wspd_night:
+              default: 0
+              description: 夜晚风速, m/s
+              title: Wspd Night
+              type: number
+              x-description-en: Night wind speed, m/s
+              x-description-zh-hans: 夜晚风速, 米/秒
+              x-description-zh-hant: 夜晚風速，m/s
+          title: Daily
+          type: object
+        DailyResp:
+          properties:
+            daily:
+              default: []
+              items:
+                $ref: '#/$defs/Daily'
+              title: Daily
+              type: array
+          title: DailyResp
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/CommonResp_DailyResp_'
+          title: OutModel
+        RC:
+          properties:
+            c:
+              title: C
+              type: integer
+            p:
+              title: P
+              type: string
+          required:
+          - c
+          - p
+          title: RC
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

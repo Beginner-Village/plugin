@@ -1,0 +1,58 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: hiagent-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build: .
+    container_name: hiagent-api
+    ports:
+      - "8000:8000"
+    environment:
+      - CONFIG=/app/config.yaml
+      - SERVICE_TYPE=api
+    volumes:
+      - ./extensions:/app/extensions
+      - ./config.yaml:/app/config.yaml
+      - plugin_storage:/tmp/hiagent_storage
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  worker:
+    build: .
+    container_name: hiagent-worker
+    environment:
+      - CONFIG=/app/config.yaml
+      - SERVICE_TYPE=worker
+    volumes:
+      - ./extensions:/app/extensions
+      - ./config.yaml:/app/config.yaml
+      - plugin_storage:/tmp/hiagent_storage
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+    driver: local
+  plugin_storage:
+    driver: local

@@ -1,0 +1,322 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书知识库
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-wiki/hiagent_plugin_feishu_wiki/icon.png
+labels:
+  description_en: Feishu Knowledge Base
+  description_zh_hans: 飞书知识库
+  description_zh_hant: 飛書知識庫
+  name_en: Feishu Knowledge Base
+  name_zh_hans: 飞书知识库
+  name_zh_hant: 飛書知識庫
+meta_version: v1
+metadata_path: 飞书知识库_metadata.yaml
+name: 飞书知识库
+package_info:
+  name: hiagent_plugin_feishu_wiki
+  version: ''
+tools:
+  get_wiki_nodes:
+    description: 获取知识空间子节点列表
+    func_name: get_wiki_nodes
+    input_schema:
+      properties:
+        page_size:
+          default: 10
+          description: 分页大小
+          title: Page Size
+          type: integer
+          x-description-en: Page size
+          x-description-zh-hans: 分页大小
+          x-description-zh-hant: 分頁大小
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating to start traversing from the beginning.
+          x-description-zh-hans: 分页标记，第一次请求不填，表示从头开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，表示從頭開始遍歷；
+        parent_node_token:
+          default: ''
+          description: 父节点token
+          title: Parent Node Token
+          type: string
+          x-description-en: Parent node token
+          x-description-zh-hans: 父节点token
+          x-description-zh-hant: 父節點token
+        space_id:
+          description: 知识空间id
+          title: Space Id
+          type: string
+          x-description-en: Knowledge space ID
+          x-description-zh-hans: 知识空间id
+          x-description-zh-hant: 知識空間ID
+      required:
+      - space_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the list of child nodes of the knowledge space
+      description_zh_hans: 获取知识空间子节点列表
+      description_zh_hant: 獲取知識空間子節點列表
+      name_en: get_wiki_nodes
+      name_zh_hans: 获取知识库节点
+      name_zh_hant: 獲取知識库節點
+    name: get_wiki_nodes
+    output_schema:
+      $defs:
+        BaseRespModel_ListSpaceNodeResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ListSpaceNodeResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ListSpaceNodeResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ListSpaceNodeResponseBody:
+          properties:
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/Node'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+          title: ListSpaceNodeResponseBody
+          type: object
+        Node:
+          properties:
+            creator:
+              default: null
+              title: Creator
+              type: string
+            has_child:
+              default: null
+              title: Has Child
+              type: boolean
+            node_create_time:
+              default: null
+              title: Node Create Time
+              type: integer
+            node_creator:
+              default: null
+              title: Node Creator
+              type: string
+            node_token:
+              default: null
+              title: Node Token
+              type: string
+            node_type:
+              default: null
+              title: Node Type
+              type: string
+            obj_create_time:
+              default: null
+              title: Obj Create Time
+              type: integer
+            obj_edit_time:
+              default: null
+              title: Obj Edit Time
+              type: integer
+            obj_token:
+              default: null
+              title: Obj Token
+              type: string
+            obj_type:
+              default: null
+              title: Obj Type
+              type: string
+            origin_node_token:
+              default: null
+              title: Origin Node Token
+              type: string
+            origin_space_id:
+              default: null
+              title: Origin Space Id
+              type: integer
+            owner:
+              default: null
+              title: Owner
+              type: string
+            parent_node_token:
+              default: null
+              title: Parent Node Token
+              type: string
+            space_id:
+              default: null
+              title: Space Id
+              type: integer
+            title:
+              default: null
+              title: Title
+              type: string
+          title: Node
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ListSpaceNodeResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

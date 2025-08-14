@@ -1,0 +1,215 @@
+category: ''
+config_schema:
+  properties:
+    app_id:
+      description: '申请说明: <https://www.volcengine.com/docs/6561/1354868>'
+      title: app_id
+      type: string
+      x-description-en: 'Application instructions: <https://www.volcengine.com/docs/6561/1354868>'
+      x-description-zh-hans: '申请说明: <https://www.volcengine.com/docs/6561/1354868>'
+      x-description-zh-hant: '申請說明: <https://www.volcengine.com/docs/6561/1354868>'
+    token:
+      title: token
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - token
+  title: InModel
+  type: object
+description: 录音文件识别是一个提取语音文本的插件，仅支持识别 raw / wav / ogg / mp3 格式的音频文件
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-volc-speech2textllm/hiagent_plugin_volc_speech2textllm/icon.png
+labels:
+  description_en: The recording file recognition is a plugin for extracting speech
+    text, which only supports recognizing audio files in raw, wav, ogg, and mp3 formats.
+  description_zh_hans: 录音文件识别是一个提取语音文本的插件，仅支持识别 raw / wav / ogg / mp3 格式的音频文件
+  description_zh_hant: 錄音文件識別是一個提取語音文本的插件，僅支援識別 raw / wav / ogg / mp3 格式的音頻文件
+  name_en: Volcano large model voice recording file recognition
+  name_zh_hans: 火山大模型录音文件识别
+  name_zh_hant: 火山大模型錄音文件識別
+meta_version: v1
+metadata_path: 火山大模型录音文件识别_metadata.yaml
+name: 火山大模型录音文件识别
+package_info:
+  name: hiagent_plugin_volc_speech2textllm
+  version: ''
+tools:
+  SpeechToText:
+    description: 读取音频url链接，并将音频转为文字
+    func_name: SpeechToText
+    input_schema:
+      properties:
+        enable_ddc:
+          default: true
+          description: 启用顺滑, 默认开启
+          title: Enable Ddc
+          type: boolean
+          x-description-en: Enable smoothness. It is enabled by default.
+          x-description-zh-hans: 启用顺滑，默认开启
+          x-description-zh-hant: 啟用順滑，預設開啟
+        enable_itn:
+          default: true
+          description: 启用文本规范化 (ITN), 默认开启
+          title: Enable Itn
+          type: boolean
+          x-description-en: Enable Inverse Text Normalization (ITN), enabled by default.
+          x-description-zh-hans: 启用文本规范化 (ITN)，默认开启
+          x-description-zh-hant: 啟用文本規範化 (ITN)，預設開啟
+        enable_punc:
+          default: true
+          description: 启用标点, 默认开启
+          title: Enable Punc
+          type: boolean
+          x-description-en: Enable punctuation. It is enabled by default.
+          x-description-zh-hans: 启用标点，默认开启
+          x-description-zh-hant: 啟用標點，預設開啟
+        enable_speaker_info:
+          default: false
+          description: 启用说话人聚类分离, 默认不开启
+          title: Enable Speaker Info
+          type: boolean
+          x-description-en: Enable speaker clustering and separation. It is not enabled
+            by default.
+          x-description-zh-hans: 启用说话人聚类分离，默认不开启
+          x-description-zh-hant: 啟用說話人聚類分離，預設不開啟
+        format:
+          description: '录音文件格式, 支持的格式有: raw / wav / ogg / mp3 '
+          enum:
+          - wav, mp3
+          - ogg
+          - raw
+          title: Format
+          type: string
+          x-description-en: 'Recording file formats. Supported formats are: raw /
+            wav / ogg / mp3'
+          x-description-zh-hans: 录音文件格式，支持的格式有：raw / wav / ogg / mp3
+          x-description-zh-hant: 錄音文件格式，支援的格式有：raw / wav / ogg / mp3
+        url:
+          description: 录音文件的url
+          title: Url
+          type: string
+          x-description-en: The URL of the recording file
+          x-description-zh-hans: 录音文件的url
+          x-description-zh-hant: 錄音文件的URL
+      required:
+      - url
+      - format
+      title: InModel
+      type: object
+    labels:
+      description_en: Read the audio URL link and convert the audio into text.
+      description_zh_hans: 读取音频url链接，并将音频转为文字
+      description_zh_hant: 讀取音頻url連結，並將音頻轉為文字
+      name_en: SpeechToText
+      name_zh_hans: 语音转文本
+      name_zh_hant: 語音轉文字
+    name: SpeechToText
+    output_schema:
+      $defs:
+        AudioInfo:
+          properties:
+            duration:
+              default: 0
+              title: Duration
+              type: integer
+          title: AudioInfo
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/Resp'
+          description: 识别到的音频文件文字信息
+          title: OutModel
+          x-description-en: Recognized text information from the audio file
+          x-description-zh-hans: 识别到的音频文件文字信息
+          x-description-zh-hant: 識別到的音頻文件文字資訊
+        Resp:
+          properties:
+            audio_info:
+              anyOf:
+              - $ref: '#/$defs/AudioInfo'
+              - type: 'null'
+              default: null
+            result:
+              anyOf:
+              - $ref: '#/$defs/Result'
+              - type: 'null'
+              default: null
+          title: Resp
+          type: object
+        Result:
+          properties:
+            text:
+              default: ''
+              title: Text
+              type: string
+            utterances:
+              anyOf:
+              - items:
+                  $ref: '#/$defs/Utterances'
+                type: array
+              - type: 'null'
+              default: null
+              title: Utterances
+          title: Result
+          type: object
+        Utterances:
+          properties:
+            additions:
+              anyOf:
+              - $ref: '#/$defs/UtterancesAdditions'
+              - type: 'null'
+              default: null
+            end_time:
+              default: 0
+              title: End Time
+              type: integer
+            start_time:
+              default: 0
+              title: Start Time
+              type: integer
+            text:
+              default: ''
+              title: Text
+              type: string
+          title: Utterances
+          type: object
+        UtterancesAdditions:
+          properties:
+            speaker:
+              default: ''
+              title: Speaker
+              type: string
+          title: UtterancesAdditions
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

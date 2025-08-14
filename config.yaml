@@ -1,0 +1,51 @@
+version: 0.1.0
+max_subprocess: 20
+log_level: INFO
+
+# Redis配置 - Docker容器
+redis:
+  cluster_type: "single"
+  host: "redis:6379"  # Docker服务名
+  port: 6379
+  password: ""
+  db: 0
+  ssl: false
+
+# 存储配置
+storage:
+  backend: "local_path"
+  local_path:
+    base_dir: /tmp/hiagent_storage
+
+# 插件扩展路径
+extensions_path: "/app/extensions"
+
+# 本地下载包文件路径  
+local_storage_path: "/tmp/hiagent_storage"
+
+# Worker作业超时时间
+worker_job_timeout: 300
+
+# 包管理配置
+package:
+  index_url: "https://pypi.org/simple"
+  extra_index_url: ""
+  trusted_host: ""
+  
+# 日志配置
+logger:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# OpenAI配置 (可选)
+openai:
+  base_url: ""
+  api_key: ""
+  model_name: ""
+  rpm: 5
+
+# SSRF代理配置 (可选)  
+ssrf_proxy:
+  http_proxy: ""
+  https_proxy: ""
+  no_proxy: ""

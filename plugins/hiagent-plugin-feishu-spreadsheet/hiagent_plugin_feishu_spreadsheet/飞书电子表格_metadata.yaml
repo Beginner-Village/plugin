@@ -1,0 +1,1803 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书电子表格
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-spreadsheet/hiagent_plugin_feishu_spreadsheet/icon.png
+labels:
+  description_en: Feishu Spreadsheet
+  description_zh_hans: 飞书电子表格
+  description_zh_hant: 飛書電子表格
+  name_en: Feishu Spreadsheet
+  name_zh_hans: 飞书电子表格
+  name_zh_hant: 飛書電子表格
+meta_version: v1
+metadata_path: 飞书电子表格_metadata.yaml
+name: 飞书电子表格
+package_info:
+  name: hiagent_plugin_feishu_spreadsheet
+  version: ''
+tools:
+  add_rows_or_columns:
+    description: 增加行列
+    func_name: add_rows_or_columns
+    input_schema:
+      $defs:
+        Dimension:
+          properties:
+            length:
+              description: 要增加的行数或列数。
+              title: Length
+              type: integer
+              x-description-en: The number of rows or columns to be added.
+              x-description-zh-hans: 要增加的行数或列数。
+              x-description-zh-hant: 要增加的行數或列數。
+            majorDimension:
+              description: 维度。取值范围：ROWS、COLUMNS
+              enum:
+              - ROWS
+              - COLUMNS
+              title: Majordimension
+              type: string
+              x-description-en: 'Dimension. Value range: ROWS, COLUMNS'
+              x-description-zh-hans: 维度。取值范围：行、列
+              x-description-zh-hant: 維度。取值範圍：ROWS、COLUMNS
+            sheetId:
+              description: 电子表格工作表的 ID
+              title: Sheetid
+              type: string
+              x-description-en: ID of the spreadsheet worksheet
+              x-description-zh-hans: 电子表格工作表的 ID
+              x-description-zh-hant: 電子試算表工作表的 ID
+          required:
+          - sheetId
+          - majorDimension
+          - length
+          title: Dimension
+          type: object
+      properties:
+        dimension:
+          $ref: '#/$defs/Dimension'
+          description: 需要增加行列的维度信息
+          x-description-en: It is necessary to add the dimensional information of
+            rows and columns.
+          x-description-zh-hans: 需要增加行列的维度信息
+          x-description-zh-hant: 需要增加行列的維度資訊
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: The token of the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+      required:
+      - spreadsheet_token
+      - dimension
+      title: InModel
+      type: object
+    labels:
+      description_en: Add rows and columns
+      description_zh_hans: 增加行列
+      description_zh_hant: 增加行列
+      name_en: add_rows_or_columns
+      name_zh_hans: 添加行或列
+      name_zh_hant: 新增列或行
+    name: add_rows_or_columns
+    output_schema:
+      $defs:
+        AddRowsOrColumnsRespBody:
+          properties:
+            addCount:
+              description: 增加的行数或列数
+              title: Addcount
+              type: integer
+              x-description-en: The number of added rows or columns
+              x-description-zh-hans: 增加的行数或列数
+              x-description-zh-hant: 增加的行數或列數
+            majorDimension:
+              description: 维度。取值范围：ROWS、COLUMNS
+              enum:
+              - ROWS
+              - COLUMNS
+              title: Majordimension
+              type: string
+              x-description-en: 'Dimension. Value range: ROWS, COLUMNS'
+              x-description-zh-hans: 维度。取值范围：行、列
+              x-description-zh-hant: 維度。取值範圍：ROWS、COLUMNS
+          required:
+          - addCount
+          - majorDimension
+          title: AddRowsOrColumnsRespBody
+          type: object
+        BaseRespModel_AddRowsOrColumnsRespBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/AddRowsOrColumnsRespBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[AddRowsOrColumnsRespBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_AddRowsOrColumnsRespBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_spreadsheet:
+    description: 创建电子表格
+    func_name: create_spreadsheet
+    input_schema:
+      properties:
+        folder_token:
+          description: 文件夹 token
+          title: Folder Token
+          type: string
+          x-description-en: Folder token
+          x-description-zh-hans: 文件夹令牌
+          x-description-zh-hant: 資料夾 token
+        title:
+          default: ''
+          description: 表格标题
+          title: Title
+          type: string
+          x-description-en: Table title
+          x-description-zh-hans: 表格标题
+          x-description-zh-hant: 表格標題
+      required:
+      - folder_token
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a spreadsheet
+      description_zh_hans: 创建电子表格
+      description_zh_hant: 創建電子表格
+      name_en: create_spreadsheet
+      name_zh_hans: 创建电子表格
+      name_zh_hant: 創建電子表格
+    name: create_spreadsheet
+    output_schema:
+      $defs:
+        BaseRespModel_CreateSpreadsheetResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateSpreadsheetResponseBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateSpreadsheetResponseBody]
+          type: object
+        CreateSpreadsheetResponseBody:
+          properties:
+            spreadsheet:
+              $ref: '#/$defs/Spreadsheet'
+              default: null
+          title: CreateSpreadsheetResponseBody
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateSpreadsheetResponseBody_'
+          title: OutModel
+        Spreadsheet:
+          properties:
+            folder_token:
+              default: null
+              title: Folder Token
+              type: string
+            spreadsheet_token:
+              default: null
+              title: Spreadsheet Token
+              type: string
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Spreadsheet
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_sheet:
+    description: 查询工作表
+    func_name: get_sheet
+    input_schema:
+      properties:
+        sheet_id:
+          description: 电子表格的 token。
+          title: Sheet Id
+          type: string
+          x-description-en: The token of the spreadsheet.
+          x-description-zh-hans: 电子表格的令牌。
+          x-description-zh-hant: 電子試算表的 token。
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: Token for the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+      required:
+      - spreadsheet_token
+      - sheet_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Query the worksheet
+      description_zh_hans: 查询工作表
+      description_zh_hant: 查詢工作表
+      name_en: get_sheet
+      name_zh_hans: 查询工作表
+      name_zh_hant: 查詢工作表
+    name: get_sheet
+    output_schema:
+      $defs:
+        BaseRespModel_GetSpreadsheetSheetResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/GetSpreadsheetSheetResponseBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[GetSpreadsheetSheetResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        GetSpreadsheetSheetResponseBody:
+          properties:
+            sheet:
+              $ref: '#/$defs/Sheet'
+              default: null
+          title: GetSpreadsheetSheetResponseBody
+          type: object
+        GridProperties:
+          properties:
+            column_count:
+              default: null
+              title: Column Count
+              type: integer
+            frozen_column_count:
+              default: null
+              title: Frozen Column Count
+              type: integer
+            frozen_row_count:
+              default: null
+              title: Frozen Row Count
+              type: integer
+            row_count:
+              default: null
+              title: Row Count
+              type: integer
+          title: GridProperties
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MergeRange:
+          properties:
+            end_column_index:
+              default: null
+              title: End Column Index
+              type: integer
+            end_row_index:
+              default: null
+              title: End Row Index
+              type: integer
+            start_column_index:
+              default: null
+              title: Start Column Index
+              type: integer
+            start_row_index:
+              default: null
+              title: Start Row Index
+              type: integer
+          title: MergeRange
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_GetSpreadsheetSheetResponseBody_'
+          title: OutModel
+        Sheet:
+          properties:
+            grid_properties:
+              $ref: '#/$defs/GridProperties'
+              default: null
+            hidden:
+              default: null
+              title: Hidden
+              type: boolean
+            index:
+              default: null
+              title: Index
+              type: integer
+            merges:
+              default: null
+              items:
+                $ref: '#/$defs/MergeRange'
+              title: Merges
+              type: array
+            resource_type:
+              default: null
+              title: Resource Type
+              type: string
+            sheet_id:
+              default: null
+              title: Sheet Id
+              type: string
+            title:
+              default: null
+              title: Title
+              type: string
+          title: Sheet
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_spreadsheet:
+    description: 获取电子表格信息
+    func_name: get_spreadsheet
+    input_schema:
+      properties:
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: The token of the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+      required:
+      - spreadsheet_token
+      title: InModel
+      type: object
+    labels:
+      description_en: Get spreadsheet information
+      description_zh_hans: 获取电子表格信息
+      description_zh_hant: 獲取電子表格資訊
+      name_en: get_spreadsheet
+      name_zh_hans: 获取电子表格
+      name_zh_hant: 獲取電子表格
+    name: get_spreadsheet
+    output_schema:
+      $defs:
+        BaseRespModel_GetSpreadsheetResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/GetSpreadsheetResponseBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[GetSpreadsheetResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        GetSpreadsheet:
+          properties:
+            owner_id:
+              default: null
+              title: Owner Id
+              type: string
+            title:
+              default: null
+              title: Title
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: GetSpreadsheet
+          type: object
+        GetSpreadsheetResponseBody:
+          properties:
+            spreadsheet:
+              $ref: '#/$defs/GetSpreadsheet'
+              default: null
+          title: GetSpreadsheetResponseBody
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_GetSpreadsheetResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  list_sheets:
+    description: 获取工作表
+    func_name: list_sheets
+    input_schema:
+      properties:
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: The token of the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+      required:
+      - spreadsheet_token
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the worksheet
+      description_zh_hans: 获取工作表
+      description_zh_hant: 獲取工作表
+      name_en: list_sheets
+      name_zh_hans: 列出工作表
+      name_zh_hant: 列出工作表
+    name: list_sheets
+    output_schema:
+      $defs:
+        BaseRespModel_QuerySpreadsheetSheetResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/QuerySpreadsheetSheetResponseBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[QuerySpreadsheetSheetResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        GridProperties:
+          properties:
+            column_count:
+              default: null
+              title: Column Count
+              type: integer
+            frozen_column_count:
+              default: null
+              title: Frozen Column Count
+              type: integer
+            frozen_row_count:
+              default: null
+              title: Frozen Row Count
+              type: integer
+            row_count:
+              default: null
+              title: Row Count
+              type: integer
+          title: GridProperties
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MergeRange:
+          properties:
+            end_column_index:
+              default: null
+              title: End Column Index
+              type: integer
+            end_row_index:
+              default: null
+              title: End Row Index
+              type: integer
+            start_column_index:
+              default: null
+              title: Start Column Index
+              type: integer
+            start_row_index:
+              default: null
+              title: Start Row Index
+              type: integer
+          title: MergeRange
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_QuerySpreadsheetSheetResponseBody_'
+          title: OutModel
+        QuerySpreadsheetSheetResponseBody:
+          properties:
+            sheets:
+              default: null
+              items:
+                $ref: '#/$defs/Sheet'
+              title: Sheets
+              type: array
+          title: QuerySpreadsheetSheetResponseBody
+          type: object
+        Sheet:
+          properties:
+            grid_properties:
+              $ref: '#/$defs/GridProperties'
+              default: null
+            hidden:
+              default: null
+              title: Hidden
+              type: boolean
+            index:
+              default: null
+              title: Index
+              type: integer
+            merges:
+              default: null
+              items:
+                $ref: '#/$defs/MergeRange'
+              title: Merges
+              type: array
+            resource_type:
+              default: null
+              title: Resource Type
+              type: string
+            sheet_id:
+              default: null
+              title: Sheet Id
+              type: string
+            title:
+              default: null
+              title: Title
+              type: string
+          title: Sheet
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  read_range:
+    description: 读取单个范围
+    func_name: read_range
+    input_schema:
+      properties:
+        range:
+          description: '查询范围。格式为 <sheetId>!<开始位置>:<结束位置>。其中：
+
+            sheetId 为工作表 ID，通过获取工作表 获取
+
+            <开始位置>:<结束位置> 为工作表中单元格的范围，数字表示行索引，字母表示列索引。如 A2:B2 表示该工作表第 2 行的 A 列到 B
+            列。range支持四种写法，详情参考电子表格概述'
+          title: Range
+          type: string
+          x-description-en: 'Query range. The format is <sheetId>!<start position>:<end
+            position>. Where:
+
+            sheetId is the worksheet ID, which can be obtained by getting the worksheet.
+
+            <start position>:<end position> is the range of cells in the worksheet.
+            Numbers represent row indexes, and letters represent column indexes. For
+            example, A2:B2 represents columns A to B in the second row of the worksheet.
+            The range supports four writing methods. For details, refer to the spreadsheet
+            overview.'
+          x-description-zh-hans: '查询范围。格式为<工作表 ID>!<开始位置>:<结束位置>。其中：
+
+            工作表 ID 为工作表的 ID，可通过获取工作表来获取。
+
+            <开始位置>:<结束位置> 是工作表中单元格的范围，数字代表行索引，字母代表列索引。例如 A2:B2 表示该工作表第 2 行的 A 列到 B
+            列。范围支持四种写法，详情参考电子表格概述。'
+          x-description-zh-hant: '查詢範圍。格式為 <工作表ID>!<開始位置>:<結束位置>。其中：
+
+            工作表ID為工作表識別碼，可透過獲取工作表取得
+
+            <開始位置>:<結束位置> 為工作表中儲存格的範圍，數字代表列索引，字母代表欄索引。例如 A2:B2 表示該工作表第 2 列的 A 欄到 B
+            欄。range支援四種寫法，詳情參考電子試算表概述'
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: Token for the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+      required:
+      - spreadsheet_token
+      - range
+      title: InModel
+      type: object
+    labels:
+      description_en: Read a single range
+      description_zh_hans: 读取单个范围
+      description_zh_hant: 讀取單個範圍
+      name_en: read_range
+      name_zh_hans: 读取范围
+      name_zh_hant: 讀取範圍
+    name: read_range
+    output_schema:
+      $defs:
+        BaseRespModel_ValueRangeRespBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ValueRangeRespBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ValueRangeRespBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ValueRangeRespBody_'
+          title: OutModel
+        ValueRange:
+          properties:
+            majorDimension:
+              description: 维度。取值范围：ROWS、COLUMNS
+              enum:
+              - ROWS
+              - COLUMNS
+              title: Majordimension
+              type: string
+              x-description-en: 'Dimension. Value range: ROWS, COLUMNS'
+              x-description-zh-hans: 维度。取值范围：行、列
+              x-description-zh-hant: 維度。取值範圍：ROWS、COLUMNS
+            range:
+              description: 数据的范围。格式为 <sheetId>!<开始位置>:<结束位置>。
+              title: Range
+              type: string
+              x-description-en: The range of the data. The format is <sheetId>!<start
+                position>:<end position>.
+              x-description-zh-hans: 数据的范围。格式为 <工作表 ID>!<起始位置>:<结束位置>。
+              x-description-zh-hant: 數據的範圍。格式為 <工作表ID>!<開始位置>:<結束位置>。
+            revision:
+              description: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              title: Revision
+              type: integer
+              x-description-en: The version number of the worksheet. It starts counting
+                from 0, and the version number is incremented by one each time it
+                is updated.
+              x-description-zh-hans: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              x-description-zh-hant: 工作表的版本號。從 0 開始計數，更新一次版本號加一
+            rowValues:
+              default: null
+              description: 指定范围中的数据
+              items:
+                $ref: '#/$defs/ValueRow'
+              title: Rowvalues
+              type: array
+              x-description-en: Data within the specified range
+              x-description-zh-hans: 指定范围中的数据
+              x-description-zh-hant: 指定範圍中的資料
+          required:
+          - range
+          - majorDimension
+          - revision
+          title: ValueRange
+          type: object
+        ValueRangeRespBody:
+          properties:
+            revision:
+              description: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              title: Revision
+              type: integer
+              x-description-en: The version number of the worksheet. It starts counting
+                from 0, and the version number increases by one each time it is updated.
+              x-description-zh-hans: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              x-description-zh-hant: 工作表的版本號。從 0 開始計數，更新一次版本號加一
+            spreadsheetToken:
+              description: 表格的 token
+              title: Spreadsheettoken
+              type: string
+              x-description-en: Table token
+              x-description-zh-hans: 表格的令牌
+              x-description-zh-hant: 表格的權杖
+            valueRange:
+              $ref: '#/$defs/ValueRange'
+              description: 读取的值与范围
+              x-description-en: Read values and ranges
+              x-description-zh-hans: 读取的值与范围
+              x-description-zh-hant: 讀取的值與範圍
+          required:
+          - revision
+          - spreadsheetToken
+          - valueRange
+          title: ValueRangeRespBody
+          type: object
+        ValueRow:
+          properties:
+            values:
+              description: 行数据
+              items:
+                type: string
+              title: Values
+              type: array
+              x-description-en: Row data
+              x-description-zh-hans: 行数据
+              x-description-zh-hant: 列資料
+          required:
+          - values
+          title: ValueRow
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  write_range:
+    description: 向单个范围写入数据
+    func_name: write_range
+    input_schema:
+      $defs:
+        ValueRangeUpdate:
+          properties:
+            range:
+              description: 数据的范围。格式为 <sheetId>!<开始位置>:<结束位置>。
+              title: Range
+              type: string
+              x-description-en: The range of data. The format is <sheetId>!<start
+                position>:<end position>.
+              x-description-zh-hans: 数据的范围。格式为 <工作表 ID>!<开始位置>:<结束位置>。
+              x-description-zh-hant: 資料的範圍。格式為 <工作表 ID>!<開始位置>:<結束位置>。
+            rowValues:
+              default: null
+              description: 指定范围中的数据
+              items:
+                $ref: '#/$defs/ValueRow'
+              title: Rowvalues
+              type: array
+              x-description-en: Data within the specified range
+              x-description-zh-hans: 指定范围中的数据
+              x-description-zh-hant: 指定範圍中的數據
+          required:
+          - range
+          title: ValueRangeUpdate
+          type: object
+        ValueRow:
+          properties:
+            values:
+              description: 行数据
+              items:
+                type: string
+              title: Values
+              type: array
+              x-description-en: Row data
+              x-description-zh-hans: 行数据
+              x-description-zh-hant: 列資料
+          required:
+          - values
+          title: ValueRow
+          type: object
+      properties:
+        spreadsheet_token:
+          description: 电子表格的 token。
+          title: Spreadsheet Token
+          type: string
+          x-description-en: Token for the spreadsheet.
+          x-description-zh-hans: 电子表格的 token。
+          x-description-zh-hant: 電子試算表的 token。
+        values:
+          $ref: '#/$defs/ValueRangeUpdate'
+          description: 指定工作表的范围和写入的数据。
+          x-description-en: Specify the range of the worksheet and the data to be
+            written.
+          x-description-zh-hans: 指定工作表的范围和写入的数据。
+          x-description-zh-hant: 指定工作表的範圍和寫入的資料。
+      required:
+      - spreadsheet_token
+      - values
+      title: InModel
+      type: object
+    labels:
+      description_en: Write data to a single range
+      description_zh_hans: 向单个范围写入数据
+      description_zh_hant: 向單個範圍寫入資料
+      name_en: write_range
+      name_zh_hans: 写入范围
+      name_zh_hant: 寫入範圍
+    name: write_range
+    output_schema:
+      $defs:
+        BaseRespModel_WriteValueRespBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/WriteValueRespBody'
+              - type: object
+              - type: 'null'
+              default: {}
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[WriteValueRespBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_WriteValueRespBody_'
+          title: OutModel
+        WriteValueRespBody:
+          properties:
+            revision:
+              description: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              title: Revision
+              type: integer
+              x-description-en: The version number of the worksheet. It starts counting
+                from 0, and the version number increases by one each time it is updated.
+              x-description-zh-hans: 工作表的版本号。从 0 开始计数，更新一次版本号加一
+              x-description-zh-hant: 工作表的版本號。從 0 開始計數，更新一次版本號加一
+            spreadsheetToken:
+              description: 表格的 token
+              title: Spreadsheettoken
+              type: string
+              x-description-en: Table token
+              x-description-zh-hans: 表格的令牌
+              x-description-zh-hant: 表格的權杖
+            updatedCells:
+              description: 写入的单元格总数
+              title: Updatedcells
+              type: integer
+              x-description-en: Total number of written cells
+              x-description-zh-hans: 写入的单元格总数
+              x-description-zh-hant: 寫入的儲存格總數
+            updatedColumns:
+              description: 写入的列数
+              title: Updatedcolumns
+              type: integer
+              x-description-en: Number of columns to write
+              x-description-zh-hans: 写入的列数
+              x-description-zh-hant: 寫入的列數
+            updatedRange:
+              description: 数据的范围。格式为 <sheetId>!<开始位置>:<结束位置>。
+              title: Updatedrange
+              type: string
+              x-description-en: The range of data. The format is <sheetId>!<start
+                position>:<end position>.
+              x-description-zh-hans: 数据的范围。格式为 <工作表ID>!<开始位置>:<结束位置>。
+              x-description-zh-hant: 數據的範圍。格式為 <工作表ID>!<開始位置>:<結束位置>。
+            updatedRows:
+              description: 写入的行数
+              title: Updatedrows
+              type: integer
+              x-description-en: Number of lines written
+              x-description-zh-hans: 写入的行数
+              x-description-zh-hant: 寫入的行數
+          required:
+          - revision
+          - spreadsheetToken
+          - updatedCells
+          - updatedColumns
+          - updatedRows
+          - updatedRange
+          title: WriteValueRespBody
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

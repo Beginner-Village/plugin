@@ -1,0 +1,25 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-gitlab-toolkit"
+version = "0.2.6"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_gitlab_toolkit/icon.png",
+  "hiagent_plugin_gitlab_toolkit/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_gitlab_toolkit:GitlabToolkitPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-gitlab = "^5.1.0"
+langchain-community = "^0.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"GitlabToolkit" = "hiagent_plugin_gitlab_toolkit:GitlabToolkitPlugin"

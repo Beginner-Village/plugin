@@ -1,0 +1,31 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-volc-speech2textllm"
+version = "0.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_volc_speech2textllm/icon.png",
+  "hiagent_plugin_volc_speech2textllm/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_volc_speech2textllm:VolcSpeech2Text._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiofiles = "^24.1.0"
+aiohttp = "^3.11.2"
+websockets = "^14.1"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+python-dotenv = "^1.0.1"
+types-aiofiles = "^24.1.0.20240626"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"火山大模型录音文件识别" = "hiagent_plugin_volc_speech2textllm:VolcSpeech2Text"

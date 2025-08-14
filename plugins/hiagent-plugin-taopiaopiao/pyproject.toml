@@ -1,0 +1,27 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-taopiaopiao"
+version = "0.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_taopiaopiao/icon.png",
+  "hiagent_plugin_taopiaopiao/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_taopiaopiao:TaopiaopiaoPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+python = "^3.11"
+aiohttp = "^3.11.2"
+pydantic = "^2.9.2"
+pytz = "^2024.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"淘票票" = "hiagent_plugin_taopiaopiao:TaopiaopiaoPlugin"

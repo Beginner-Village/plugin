@@ -1,0 +1,77 @@
+category: Education
+config_schema: {}
+description: 一个用于数学计算的工具。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-maths/hiagent_plugin_maths/icon.png
+labels:
+  description_en: A tool for mathematical calculations.
+  description_zh_hans: 一个用于数学计算的工具。
+  description_zh_hant: 一個用於數學計算的工具。
+  name_en: Mathematical tools
+  name_zh_hans: 数学工具
+  name_zh_hant: 數學工具
+meta_version: v1
+metadata_path: 数学工具_metadata.yaml
+name: 数学工具
+package_info:
+  name: hiagent_plugin_maths
+  version: ''
+tools:
+  eval_expression:
+    description: 一个用于计算数学表达式的工具，表达式将通过NumExpr本地执行。
+    func_name: eval_expression
+    input_schema:
+      properties:
+        expr:
+          title: Expr
+          type: string
+      required:
+      - expr
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for calculating mathematical expressions. The expressions
+        will be executed locally via NumExpr.
+      description_zh_hans: 一个用于计算数学表达式的工具，表达式将通过NumExpr本地执行。
+      description_zh_hant: 一個用於計算數學表達式的工具，表達式將透過NumExpr本地執行。
+      name_en: eval_expression
+      name_zh_hans: 计算表达式
+      name_zh_hant: 計算表達式
+    name: eval_expression
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

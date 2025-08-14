@@ -1,0 +1,93 @@
+category: Productivity
+config_schema: {}
+description: 一个用于正则表达式内容提取的工具
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-regex/hiagent_plugin_regex/icon.png
+labels:
+  description_en: A tool for extracting content using regular expressions
+  description_zh_hans: 一个用于正则表达式内容提取的工具
+  description_zh_hant: 一個用於正則表達式內容提取的工具
+  name_en: Regular expression extraction
+  name_zh_hans: 正则表达式提取
+  name_zh_hant: 正則表達式提取
+meta_version: v1
+metadata_path: 正则表达式提取_metadata.yaml
+name: 正则表达式提取
+package_info:
+  name: hiagent_plugin_regex
+  version: ''
+tools:
+  regex_extract:
+    description: 一个用于利用正则表达式提取匹配内容结果的工具
+    func_name: regex_extract
+    input_schema:
+      properties:
+        content:
+          description: 内容
+          title: Content
+          type: string
+          x-description-en: Content
+          x-description-zh-hans: 内容
+          x-description-zh-hant: 內容
+        expression:
+          anyOf:
+          - type: string
+          - format: regex
+            type: string
+          description: 正则表达式
+          title: Expression
+          x-description-en: Regular expression
+          x-description-zh-hans: 正则表达式
+          x-description-zh-hant: 正則表達式
+      required:
+      - content
+      - expression
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for extracting matching content results using regular expressions
+      description_zh_hans: 一个用于利用正则表达式提取匹配内容结果的工具
+      description_zh_hant: 一個用於利用正則表達式提取匹配內容結果的工具
+      name_en: regex_extract
+      name_zh_hans: 正则表达式提取
+      name_zh_hant: 正則表達式提取
+    name: regex_extract
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          items:
+            type: string
+          title: OutModel
+          type: array
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

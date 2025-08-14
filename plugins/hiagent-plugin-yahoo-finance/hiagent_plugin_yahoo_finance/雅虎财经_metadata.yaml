@@ -1,0 +1,220 @@
+category: News
+config_schema: {}
+description: 雅虎财经
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-yahoo-finance/hiagent_plugin_yahoo_finance/icon.png
+labels:
+  description_en: Yahoo Finance
+  description_zh_hans: 雅虎财经
+  description_zh_hant: 雅虎財經
+  name_en: Yahoo Finance
+  name_zh_hans: 雅虎财经
+  name_zh_hant: 雅虎財經
+meta_version: v1
+metadata_path: 雅虎财经_metadata.yaml
+name: 雅虎财经
+package_info:
+  name: hiagent_plugin_yahoo_finance
+  version: ''
+tools:
+  analytics:
+    description: "invoke tools"
+    func_name: analytics
+    input_schema:
+      properties:
+        end_date:
+          description: '结束日期, eg: 2020-01-01'
+          title: End Date
+          type: string
+          x-description-en: 'End date, e.g.: 2020-01-01'
+          x-description-zh-hans: '结束日期, 例如: 2020-01-01'
+          x-description-zh-hant: '結束日期, 例如: 2020-01-01'
+        start_date:
+          description: '开始日期, eg: 2019-01-01'
+          title: Start Date
+          type: string
+          x-description-en: 'Start date, e.g.: 2019-01-01'
+          x-description-zh-hans: 开始日期，例如：2019-01-01
+          x-description-zh-hant: '開始日期, 例如: 2019-01-01'
+        symbol:
+          description: 股票代号
+          title: Symbol
+          type: string
+          x-description-en: Stock code
+          x-description-zh-hans: 股票代号
+          x-description-zh-hant: 股票代號
+      required:
+      - symbol
+      - start_date
+      - end_date
+      title: InModel
+      type: object
+    labels:
+      description_en: Invoke tools
+      description_zh_hans: 调用工具
+      description_zh_hant: 調用工具
+      name_en: analytics
+      name_zh_hans: 分析
+      name_zh_hant: 分析
+    name: analytics
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  news:
+    description: "invoke tools"
+    func_name: news
+    input_schema:
+      properties:
+        symbol:
+          description: 股票代号
+          title: Symbol
+          type: string
+          x-description-en: Stock code
+          x-description-zh-hans: 股票代号
+          x-description-zh-hant: 股票代號
+      required:
+      - symbol
+      title: InModel
+      type: object
+    labels:
+      description_en: invoke tools
+      description_zh_hans: 调用工具
+      description_zh_hant: 調用工具
+      name_en: news
+      name_zh_hans: 新闻
+      name_zh_hant: 新聞
+    name: news
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  ticker:
+    description: "invoke tools"
+    func_name: ticker
+    input_schema:
+      properties:
+        symbol:
+          description: 股票代号
+          title: Symbol
+          type: string
+          x-description-en: Stock code
+          x-description-zh-hans: 股票代号
+          x-description-zh-hant: 股票代號
+      required:
+      - symbol
+      title: InModel
+      type: object
+    labels:
+      description_en: invoke tools
+      description_zh_hans: 调用工具
+      description_zh_hant: 調用工具
+      name_en: ticker
+      name_zh_hans: 股票代码
+      name_zh_hant: 股票代號
+    name: ticker
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

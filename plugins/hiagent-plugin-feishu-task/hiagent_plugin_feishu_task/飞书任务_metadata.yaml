@@ -1,0 +1,2627 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书任务
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-task/hiagent_plugin_feishu_task/icon.png
+labels:
+  description_en: Feishu Tasks
+  description_zh_hans: 飞书任务
+  description_zh_hant: 飛書任務
+  name_en: Feishu Tasks
+  name_zh_hans: 飞书任务
+  name_zh_hant: 飛書任務
+meta_version: v1
+metadata_path: 飞书任务_metadata.yaml
+name: 飞书任务
+package_info:
+  name: hiagent_plugin_feishu_task
+  version: ''
+tools:
+  add_members:
+    description: 添加任务成员
+    func_name: add_members
+    input_schema:
+      $defs:
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+      properties:
+        client_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: 幂等token，如果提供则实现幂等行为
+          title: Client Token
+          x-description-en: Idempotent token. If provided, idempotent behavior will
+            be implemented.
+          x-description-zh-hans: 幂等token，如果提供则实现幂等行为
+          x-description-zh-hant: 冪等token，若提供則實現冪等行為
+        members:
+          description: 要添加的members列表，单请求支持最大50个成员（去重后)
+          items:
+            $ref: '#/$defs/Member'
+          title: Members
+          type: array
+          x-description-en: The list of members to be added. A single request supports
+            a maximum of 50 members (after deduplication).
+          x-description-zh-hans: 要添加的成员列表，单个请求最多支持添加50个成员（去重后）
+          x-description-zh-hant: 要添加的成員列表，單一請求最多支援50個成員（去重後）
+        task_guid:
+          description: 要更新的任务全局唯一ID
+          title: Task Guid
+          type: string
+          x-description-en: Globally unique ID of the task to be updated
+          x-description-zh-hans: 要更新的任务全局唯一ID
+          x-description-zh-hant: 要更新的任務全局唯一ID
+      required:
+      - task_guid
+      - members
+      title: InModel
+      type: object
+    labels:
+      description_en: Add task members
+      description_zh_hans: 添加任务成员
+      description_zh_hant: 添加任務成員
+      name_en: add_members
+      name_zh_hans: 添加成员
+      name_zh_hant: 添加成員
+    name: add_members
+    output_schema:
+      $defs:
+        AddMembersTaskResponseBody:
+          properties:
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+          title: AddMembersTaskResponseBody
+          type: object
+        Attachment:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_cover:
+              default: null
+              title: Is Cover
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+            resource:
+              $ref: '#/$defs/Resource'
+              default: null
+            size:
+              default: null
+              title: Size
+              type: integer
+            uploaded_at:
+              default: null
+              title: Uploaded At
+              type: integer
+            uploader:
+              $ref: '#/$defs/Member'
+              default: null
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Attachment
+          type: object
+        BaseRespModel_AddMembersTaskResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/AddMembersTaskResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[AddMembersTaskResponseBody]
+          type: object
+        CustomComplete:
+          properties:
+            android:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            ios:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            pc:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+          title: CustomComplete
+          type: object
+        CustomCompleteItem:
+          properties:
+            href:
+              default: null
+              title: Href
+              type: string
+            tip:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: CustomCompleteItem
+          type: object
+        CustomFieldValue:
+          properties:
+            datetime_value:
+              default: null
+              title: Datetime Value
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            member_value:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Member Value
+              type: array
+            multi_select_value:
+              default: null
+              items:
+                type: string
+              title: Multi Select Value
+              type: array
+            name:
+              default: null
+              title: Name
+              type: string
+            number_value:
+              default: null
+              title: Number Value
+              type: string
+            single_select_value:
+              default: null
+              title: Single Select Value
+              type: string
+            text_value:
+              default: null
+              title: Text Value
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: CustomFieldValue
+          type: object
+        Due:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Due
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        Href:
+          properties:
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Href
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        I18nText:
+          properties:
+            de_de:
+              default: null
+              title: De De
+              type: string
+            en_us:
+              default: null
+              title: En Us
+              type: string
+            es_es:
+              default: null
+              title: Es Es
+              type: string
+            fr_fr:
+              default: null
+              title: Fr Fr
+              type: string
+            it_it:
+              default: null
+              title: It It
+              type: string
+            ja_jp:
+              default: null
+              title: Ja Jp
+              type: string
+            ko_kr:
+              default: null
+              title: Ko Kr
+              type: string
+            ru_ru:
+              default: null
+              title: Ru Ru
+              type: string
+            th_th:
+              default: null
+              title: Th Th
+              type: string
+            zh_cn:
+              default: null
+              title: Zh Cn
+              type: string
+            zh_hk:
+              default: null
+              title: Zh Hk
+              type: string
+            zh_tw:
+              default: null
+              title: Zh Tw
+              type: string
+          title: I18nText
+          type: object
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+        Origin:
+          properties:
+            href:
+              $ref: '#/$defs/Href'
+              default: null
+            platform_i18n_name:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: Origin
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_AddMembersTaskResponseBody_'
+          title: OutModel
+        Reminder:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: integer
+            relative_fire_minute:
+              default: null
+              title: Relative Fire Minute
+              type: integer
+          title: Reminder
+          type: object
+        Resource:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Resource
+          type: object
+        Start:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Start
+          type: object
+        Task:
+          properties:
+            assignee_related:
+              default: null
+              items:
+                $ref: '#/$defs/TaskAssignee'
+              title: Assignee Related
+              type: array
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            created_at:
+              default: null
+              title: Created At
+              type: integer
+            creator:
+              $ref: '#/$defs/Member'
+              default: null
+            custom_complete:
+              $ref: '#/$defs/CustomComplete'
+              default: null
+            custom_fields:
+              default: null
+              items:
+                $ref: '#/$defs/CustomFieldValue'
+              title: Custom Fields
+              type: array
+            dependencies:
+              default: null
+              items:
+                $ref: '#/$defs/TaskDependency'
+              title: Dependencies
+              type: array
+            description:
+              default: null
+              title: Description
+              type: string
+            due:
+              $ref: '#/$defs/Due'
+              default: null
+            extra:
+              default: null
+              title: Extra
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_milestone:
+              default: null
+              title: Is Milestone
+              type: boolean
+            members:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Members
+              type: array
+            mode:
+              default: null
+              title: Mode
+              type: integer
+            origin:
+              $ref: '#/$defs/Origin'
+              default: null
+            parent_task_guid:
+              default: null
+              title: Parent Task Guid
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            repeat_rule:
+              default: null
+              title: Repeat Rule
+              type: string
+            source:
+              default: null
+              title: Source
+              type: integer
+            start:
+              $ref: '#/$defs/Start'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            subtask_count:
+              default: null
+              title: Subtask Count
+              type: integer
+            summary:
+              default: null
+              title: Summary
+              type: string
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+            tasklists:
+              default: null
+              items:
+                $ref: '#/$defs/TaskInTasklistInfo'
+              title: Tasklists
+              type: array
+            updated_at:
+              default: null
+              title: Updated At
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Task
+          type: object
+        TaskAssignee:
+          properties:
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            id:
+              default: null
+              title: Id
+              type: string
+          title: TaskAssignee
+          type: object
+        TaskDependency:
+          properties:
+            task_guid:
+              default: null
+              title: Task Guid
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: TaskDependency
+          type: object
+        TaskInTasklistInfo:
+          properties:
+            section_guid:
+              default: null
+              title: Section Guid
+              type: string
+            tasklist_guid:
+              default: null
+              title: Tasklist Guid
+              type: string
+          title: TaskInTasklistInfo
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_task:
+    description: 创建任务
+    func_name: create_task
+    input_schema:
+      $defs:
+        CustomComplete:
+          properties:
+            android:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            ios:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            pc:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+          title: CustomComplete
+          type: object
+        CustomCompleteItem:
+          properties:
+            href:
+              default: null
+              title: Href
+              type: string
+            tip:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: CustomCompleteItem
+          type: object
+        DocxSource:
+          properties:
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+          title: DocxSource
+          type: object
+        Due:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Due
+          type: object
+        Href:
+          properties:
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Href
+          type: object
+        I18nText:
+          properties:
+            de_de:
+              default: null
+              title: De De
+              type: string
+            en_us:
+              default: null
+              title: En Us
+              type: string
+            es_es:
+              default: null
+              title: Es Es
+              type: string
+            fr_fr:
+              default: null
+              title: Fr Fr
+              type: string
+            it_it:
+              default: null
+              title: It It
+              type: string
+            ja_jp:
+              default: null
+              title: Ja Jp
+              type: string
+            ko_kr:
+              default: null
+              title: Ko Kr
+              type: string
+            ru_ru:
+              default: null
+              title: Ru Ru
+              type: string
+            th_th:
+              default: null
+              title: Th Th
+              type: string
+            zh_cn:
+              default: null
+              title: Zh Cn
+              type: string
+            zh_hk:
+              default: null
+              title: Zh Hk
+              type: string
+            zh_tw:
+              default: null
+              title: Zh Tw
+              type: string
+          title: I18nText
+          type: object
+        InputCustomFieldValue:
+          properties:
+            datetime_value:
+              default: null
+              title: Datetime Value
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            member_value:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Member Value
+              type: array
+            multi_select_value:
+              default: null
+              items:
+                type: string
+              title: Multi Select Value
+              type: array
+            number_value:
+              default: null
+              title: Number Value
+              type: string
+            single_select_value:
+              default: null
+              title: Single Select Value
+              type: string
+            text_value:
+              default: null
+              title: Text Value
+              type: string
+          title: InputCustomFieldValue
+          type: object
+        InputTask:
+          properties:
+            client_token:
+              default: null
+              title: Client Token
+              type: string
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            custom_complete:
+              $ref: '#/$defs/CustomComplete'
+              default: null
+            custom_fields:
+              default: null
+              items:
+                $ref: '#/$defs/InputCustomFieldValue'
+              title: Custom Fields
+              type: array
+            description:
+              default: null
+              title: Description
+              type: string
+            docx_source:
+              $ref: '#/$defs/DocxSource'
+              default: null
+            due:
+              $ref: '#/$defs/Due'
+              default: null
+            extra:
+              default: null
+              title: Extra
+              type: string
+            is_milestone:
+              default: null
+              title: Is Milestone
+              type: boolean
+            members:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Members
+              type: array
+            mode:
+              default: null
+              title: Mode
+              type: integer
+            origin:
+              $ref: '#/$defs/Origin'
+              default: null
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            repeat_rule:
+              default: null
+              title: Repeat Rule
+              type: string
+            start:
+              $ref: '#/$defs/Start'
+              default: null
+            summary:
+              default: null
+              title: Summary
+              type: string
+            tasklists:
+              default: null
+              items:
+                $ref: '#/$defs/TaskInTasklistInfo'
+              title: Tasklists
+              type: array
+          title: InputTask
+          type: object
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+        Origin:
+          properties:
+            href:
+              $ref: '#/$defs/Href'
+              default: null
+            platform_i18n_name:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: Origin
+          type: object
+        Reminder:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: integer
+            relative_fire_minute:
+              default: null
+              title: Relative Fire Minute
+              type: integer
+          title: Reminder
+          type: object
+        Start:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Start
+          type: object
+        TaskInTasklistInfo:
+          properties:
+            section_guid:
+              default: null
+              title: Section Guid
+              type: string
+            tasklist_guid:
+              default: null
+              title: Tasklist Guid
+              type: string
+          title: TaskInTasklistInfo
+          type: object
+      properties:
+        input_task:
+          $ref: '#/$defs/InputTask'
+          description: 任务定义
+          x-description-en: Task definition
+          x-description-zh-hans: 任务定义
+          x-description-zh-hant: 任務定義
+      required:
+      - input_task
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a task
+      description_zh_hans: 创建任务
+      description_zh_hant: 創建任務
+      name_en: create_task
+      name_zh_hans: 创建任务
+      name_zh_hant: 建立任務
+    name: create_task
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_cover:
+              default: null
+              title: Is Cover
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+            resource:
+              $ref: '#/$defs/Resource'
+              default: null
+            size:
+              default: null
+              title: Size
+              type: integer
+            uploaded_at:
+              default: null
+              title: Uploaded At
+              type: integer
+            uploader:
+              $ref: '#/$defs/Member'
+              default: null
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Attachment
+          type: object
+        BaseRespModel_CreateTaskResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateTaskResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateTaskResponseBody]
+          type: object
+        CreateTaskResponseBody:
+          properties:
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+          title: CreateTaskResponseBody
+          type: object
+        CustomComplete:
+          properties:
+            android:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            ios:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            pc:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+          title: CustomComplete
+          type: object
+        CustomCompleteItem:
+          properties:
+            href:
+              default: null
+              title: Href
+              type: string
+            tip:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: CustomCompleteItem
+          type: object
+        CustomFieldValue:
+          properties:
+            datetime_value:
+              default: null
+              title: Datetime Value
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            member_value:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Member Value
+              type: array
+            multi_select_value:
+              default: null
+              items:
+                type: string
+              title: Multi Select Value
+              type: array
+            name:
+              default: null
+              title: Name
+              type: string
+            number_value:
+              default: null
+              title: Number Value
+              type: string
+            single_select_value:
+              default: null
+              title: Single Select Value
+              type: string
+            text_value:
+              default: null
+              title: Text Value
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: CustomFieldValue
+          type: object
+        Due:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Due
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        Href:
+          properties:
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Href
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        I18nText:
+          properties:
+            de_de:
+              default: null
+              title: De De
+              type: string
+            en_us:
+              default: null
+              title: En Us
+              type: string
+            es_es:
+              default: null
+              title: Es Es
+              type: string
+            fr_fr:
+              default: null
+              title: Fr Fr
+              type: string
+            it_it:
+              default: null
+              title: It It
+              type: string
+            ja_jp:
+              default: null
+              title: Ja Jp
+              type: string
+            ko_kr:
+              default: null
+              title: Ko Kr
+              type: string
+            ru_ru:
+              default: null
+              title: Ru Ru
+              type: string
+            th_th:
+              default: null
+              title: Th Th
+              type: string
+            zh_cn:
+              default: null
+              title: Zh Cn
+              type: string
+            zh_hk:
+              default: null
+              title: Zh Hk
+              type: string
+            zh_tw:
+              default: null
+              title: Zh Tw
+              type: string
+          title: I18nText
+          type: object
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+        Origin:
+          properties:
+            href:
+              $ref: '#/$defs/Href'
+              default: null
+            platform_i18n_name:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: Origin
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateTaskResponseBody_'
+          title: OutModel
+        Reminder:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: integer
+            relative_fire_minute:
+              default: null
+              title: Relative Fire Minute
+              type: integer
+          title: Reminder
+          type: object
+        Resource:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Resource
+          type: object
+        Start:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Start
+          type: object
+        Task:
+          properties:
+            assignee_related:
+              default: null
+              items:
+                $ref: '#/$defs/TaskAssignee'
+              title: Assignee Related
+              type: array
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            created_at:
+              default: null
+              title: Created At
+              type: integer
+            creator:
+              $ref: '#/$defs/Member'
+              default: null
+            custom_complete:
+              $ref: '#/$defs/CustomComplete'
+              default: null
+            custom_fields:
+              default: null
+              items:
+                $ref: '#/$defs/CustomFieldValue'
+              title: Custom Fields
+              type: array
+            dependencies:
+              default: null
+              items:
+                $ref: '#/$defs/TaskDependency'
+              title: Dependencies
+              type: array
+            description:
+              default: null
+              title: Description
+              type: string
+            due:
+              $ref: '#/$defs/Due'
+              default: null
+            extra:
+              default: null
+              title: Extra
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_milestone:
+              default: null
+              title: Is Milestone
+              type: boolean
+            members:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Members
+              type: array
+            mode:
+              default: null
+              title: Mode
+              type: integer
+            origin:
+              $ref: '#/$defs/Origin'
+              default: null
+            parent_task_guid:
+              default: null
+              title: Parent Task Guid
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            repeat_rule:
+              default: null
+              title: Repeat Rule
+              type: string
+            source:
+              default: null
+              title: Source
+              type: integer
+            start:
+              $ref: '#/$defs/Start'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            subtask_count:
+              default: null
+              title: Subtask Count
+              type: integer
+            summary:
+              default: null
+              title: Summary
+              type: string
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+            tasklists:
+              default: null
+              items:
+                $ref: '#/$defs/TaskInTasklistInfo'
+              title: Tasklists
+              type: array
+            updated_at:
+              default: null
+              title: Updated At
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Task
+          type: object
+        TaskAssignee:
+          properties:
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            id:
+              default: null
+              title: Id
+              type: string
+          title: TaskAssignee
+          type: object
+        TaskDependency:
+          properties:
+            task_guid:
+              default: null
+              title: Task Guid
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: TaskDependency
+          type: object
+        TaskInTasklistInfo:
+          properties:
+            section_guid:
+              default: null
+              title: Section Guid
+              type: string
+            tasklist_guid:
+              default: null
+              title: Tasklist Guid
+              type: string
+          title: TaskInTasklistInfo
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  delete_task:
+    description: 删除任务
+    func_name: delete_task
+    input_schema:
+      properties:
+        task_guid:
+          description: 要更新的任务全局唯一ID
+          title: Task Guid
+          type: string
+          x-description-en: Globally unique ID of the task to be updated
+          x-description-zh-hans: 要更新的任务全局唯一ID
+          x-description-zh-hant: 要更新的任務全局唯一ID
+      required:
+      - task_guid
+      title: InModel
+      type: object
+    labels:
+      description_en: Delete the task
+      description_zh_hans: 删除任务
+      description_zh_hant: 刪除任務
+      name_en: delete_task
+      name_zh_hans: 删除任务
+      name_zh_hant: 刪除任務
+    name: delete_task
+    output_schema:
+      $defs:
+        BaseRespModel_dict_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[dict]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_dict_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  update_task:
+    description: 更新任务
+    func_name: update_task
+    input_schema:
+      $defs:
+        CustomComplete:
+          properties:
+            android:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            ios:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            pc:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+          title: CustomComplete
+          type: object
+        CustomCompleteItem:
+          properties:
+            href:
+              default: null
+              title: Href
+              type: string
+            tip:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: CustomCompleteItem
+          type: object
+        DocxSource:
+          properties:
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+          title: DocxSource
+          type: object
+        Due:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Due
+          type: object
+        Href:
+          properties:
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Href
+          type: object
+        I18nText:
+          properties:
+            de_de:
+              default: null
+              title: De De
+              type: string
+            en_us:
+              default: null
+              title: En Us
+              type: string
+            es_es:
+              default: null
+              title: Es Es
+              type: string
+            fr_fr:
+              default: null
+              title: Fr Fr
+              type: string
+            it_it:
+              default: null
+              title: It It
+              type: string
+            ja_jp:
+              default: null
+              title: Ja Jp
+              type: string
+            ko_kr:
+              default: null
+              title: Ko Kr
+              type: string
+            ru_ru:
+              default: null
+              title: Ru Ru
+              type: string
+            th_th:
+              default: null
+              title: Th Th
+              type: string
+            zh_cn:
+              default: null
+              title: Zh Cn
+              type: string
+            zh_hk:
+              default: null
+              title: Zh Hk
+              type: string
+            zh_tw:
+              default: null
+              title: Zh Tw
+              type: string
+          title: I18nText
+          type: object
+        InputCustomFieldValue:
+          properties:
+            datetime_value:
+              default: null
+              title: Datetime Value
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            member_value:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Member Value
+              type: array
+            multi_select_value:
+              default: null
+              items:
+                type: string
+              title: Multi Select Value
+              type: array
+            number_value:
+              default: null
+              title: Number Value
+              type: string
+            single_select_value:
+              default: null
+              title: Single Select Value
+              type: string
+            text_value:
+              default: null
+              title: Text Value
+              type: string
+          title: InputCustomFieldValue
+          type: object
+        InputTask:
+          properties:
+            client_token:
+              default: null
+              title: Client Token
+              type: string
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            custom_complete:
+              $ref: '#/$defs/CustomComplete'
+              default: null
+            custom_fields:
+              default: null
+              items:
+                $ref: '#/$defs/InputCustomFieldValue'
+              title: Custom Fields
+              type: array
+            description:
+              default: null
+              title: Description
+              type: string
+            docx_source:
+              $ref: '#/$defs/DocxSource'
+              default: null
+            due:
+              $ref: '#/$defs/Due'
+              default: null
+            extra:
+              default: null
+              title: Extra
+              type: string
+            is_milestone:
+              default: null
+              title: Is Milestone
+              type: boolean
+            members:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Members
+              type: array
+            mode:
+              default: null
+              title: Mode
+              type: integer
+            origin:
+              $ref: '#/$defs/Origin'
+              default: null
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            repeat_rule:
+              default: null
+              title: Repeat Rule
+              type: string
+            start:
+              $ref: '#/$defs/Start'
+              default: null
+            summary:
+              default: null
+              title: Summary
+              type: string
+            tasklists:
+              default: null
+              items:
+                $ref: '#/$defs/TaskInTasklistInfo'
+              title: Tasklists
+              type: array
+          title: InputTask
+          type: object
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+        Origin:
+          properties:
+            href:
+              $ref: '#/$defs/Href'
+              default: null
+            platform_i18n_name:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: Origin
+          type: object
+        Reminder:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: integer
+            relative_fire_minute:
+              default: null
+              title: Relative Fire Minute
+              type: integer
+          title: Reminder
+          type: object
+        Start:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Start
+          type: object
+        TaskInTasklistInfo:
+          properties:
+            section_guid:
+              default: null
+              title: Section Guid
+              type: string
+            tasklist_guid:
+              default: null
+              title: Tasklist Guid
+              type: string
+          title: TaskInTasklistInfo
+          type: object
+      properties:
+        input_task:
+          $ref: '#/$defs/InputTask'
+          description: 任务定义
+          x-description-en: Task definition
+          x-description-zh-hans: 任务定义
+          x-description-zh-hant: 任務定義
+        task_guid:
+          description: 要更新的任务全局唯一ID
+          title: Task Guid
+          type: string
+          x-description-en: Globally unique ID of the task to be updated
+          x-description-zh-hans: 要更新的任务全局唯一ID
+          x-description-zh-hant: 要更新的任務全局唯一ID
+        update_fields:
+          description: 设置需要修改的字段
+          items:
+            type: string
+          title: Update Fields
+          type: array
+          x-description-en: Set the fields to be modified.
+          x-description-zh-hans: 设置需要修改的字段
+          x-description-zh-hant: 設定需要修改的欄位
+      required:
+      - task_guid
+      - update_fields
+      - input_task
+      title: InModel
+      type: object
+    labels:
+      description_en: Update the task
+      description_zh_hans: 更新任务
+      description_zh_hant: 更新任務
+      name_en: update_task
+      name_zh_hans: 更新任务
+      name_zh_hant: 更新任務
+    name: update_task
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_cover:
+              default: null
+              title: Is Cover
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+            resource:
+              $ref: '#/$defs/Resource'
+              default: null
+            size:
+              default: null
+              title: Size
+              type: integer
+            uploaded_at:
+              default: null
+              title: Uploaded At
+              type: integer
+            uploader:
+              $ref: '#/$defs/Member'
+              default: null
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Attachment
+          type: object
+        BaseRespModel_PatchTaskResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/PatchTaskResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[PatchTaskResponseBody]
+          type: object
+        CustomComplete:
+          properties:
+            android:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            ios:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+            pc:
+              $ref: '#/$defs/CustomCompleteItem'
+              default: null
+          title: CustomComplete
+          type: object
+        CustomCompleteItem:
+          properties:
+            href:
+              default: null
+              title: Href
+              type: string
+            tip:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: CustomCompleteItem
+          type: object
+        CustomFieldValue:
+          properties:
+            datetime_value:
+              default: null
+              title: Datetime Value
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            member_value:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Member Value
+              type: array
+            multi_select_value:
+              default: null
+              items:
+                type: string
+              title: Multi Select Value
+              type: array
+            name:
+              default: null
+              title: Name
+              type: string
+            number_value:
+              default: null
+              title: Number Value
+              type: string
+            single_select_value:
+              default: null
+              title: Single Select Value
+              type: string
+            text_value:
+              default: null
+              title: Text Value
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: CustomFieldValue
+          type: object
+        Due:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Due
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        Href:
+          properties:
+            title:
+              default: null
+              title: Title
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Href
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        I18nText:
+          properties:
+            de_de:
+              default: null
+              title: De De
+              type: string
+            en_us:
+              default: null
+              title: En Us
+              type: string
+            es_es:
+              default: null
+              title: Es Es
+              type: string
+            fr_fr:
+              default: null
+              title: Fr Fr
+              type: string
+            it_it:
+              default: null
+              title: It It
+              type: string
+            ja_jp:
+              default: null
+              title: Ja Jp
+              type: string
+            ko_kr:
+              default: null
+              title: Ko Kr
+              type: string
+            ru_ru:
+              default: null
+              title: Ru Ru
+              type: string
+            th_th:
+              default: null
+              title: Th Th
+              type: string
+            zh_cn:
+              default: null
+              title: Zh Cn
+              type: string
+            zh_hk:
+              default: null
+              title: Zh Hk
+              type: string
+            zh_tw:
+              default: null
+              title: Zh Tw
+              type: string
+          title: I18nText
+          type: object
+        Member:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Member
+          type: object
+        Origin:
+          properties:
+            href:
+              $ref: '#/$defs/Href'
+              default: null
+            platform_i18n_name:
+              $ref: '#/$defs/I18nText'
+              default: null
+          title: Origin
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_PatchTaskResponseBody_'
+          title: OutModel
+        PatchTaskResponseBody:
+          properties:
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+          title: PatchTaskResponseBody
+          type: object
+        Reminder:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: integer
+            relative_fire_minute:
+              default: null
+              title: Relative Fire Minute
+              type: integer
+          title: Reminder
+          type: object
+        Resource:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Resource
+          type: object
+        Start:
+          properties:
+            is_all_day:
+              default: null
+              title: Is All Day
+              type: boolean
+            timestamp:
+              default: null
+              title: Timestamp
+              type: integer
+          title: Start
+          type: object
+        Task:
+          properties:
+            assignee_related:
+              default: null
+              items:
+                $ref: '#/$defs/TaskAssignee'
+              title: Assignee Related
+              type: array
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            created_at:
+              default: null
+              title: Created At
+              type: integer
+            creator:
+              $ref: '#/$defs/Member'
+              default: null
+            custom_complete:
+              $ref: '#/$defs/CustomComplete'
+              default: null
+            custom_fields:
+              default: null
+              items:
+                $ref: '#/$defs/CustomFieldValue'
+              title: Custom Fields
+              type: array
+            dependencies:
+              default: null
+              items:
+                $ref: '#/$defs/TaskDependency'
+              title: Dependencies
+              type: array
+            description:
+              default: null
+              title: Description
+              type: string
+            due:
+              $ref: '#/$defs/Due'
+              default: null
+            extra:
+              default: null
+              title: Extra
+              type: string
+            guid:
+              default: null
+              title: Guid
+              type: string
+            is_milestone:
+              default: null
+              title: Is Milestone
+              type: boolean
+            members:
+              default: null
+              items:
+                $ref: '#/$defs/Member'
+              title: Members
+              type: array
+            mode:
+              default: null
+              title: Mode
+              type: integer
+            origin:
+              $ref: '#/$defs/Origin'
+              default: null
+            parent_task_guid:
+              default: null
+              title: Parent Task Guid
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            repeat_rule:
+              default: null
+              title: Repeat Rule
+              type: string
+            source:
+              default: null
+              title: Source
+              type: integer
+            start:
+              $ref: '#/$defs/Start'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            subtask_count:
+              default: null
+              title: Subtask Count
+              type: integer
+            summary:
+              default: null
+              title: Summary
+              type: string
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+            tasklists:
+              default: null
+              items:
+                $ref: '#/$defs/TaskInTasklistInfo'
+              title: Tasklists
+              type: array
+            updated_at:
+              default: null
+              title: Updated At
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Task
+          type: object
+        TaskAssignee:
+          properties:
+            completed_at:
+              default: null
+              title: Completed At
+              type: integer
+            id:
+              default: null
+              title: Id
+              type: string
+          title: TaskAssignee
+          type: object
+        TaskDependency:
+          properties:
+            task_guid:
+              default: null
+              title: Task Guid
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: TaskDependency
+          type: object
+        TaskInTasklistInfo:
+          properties:
+            section_guid:
+              default: null
+              title: Section Guid
+              type: string
+            tasklist_guid:
+              default: null
+              title: Tasklist Guid
+              type: string
+          title: TaskInTasklistInfo
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

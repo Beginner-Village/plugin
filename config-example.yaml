@@ -1,0 +1,24 @@
+
+version: 0.1.0
+max_subprocess: 10
+log_level: DEBUG
+
+redis:
+  cluster_type: "single"
+  host: "localhost"
+  port: 6379
+
+storage:
+  backend: "minio"
+  s3:
+    ak: "xxx"
+    sk: "xxx"
+    endpoint: "http://127.0.0.1"
+    public_endpoint: "http://127.0.0.1"
+    bucket: "xxx"
+    path_style: true
+    region: xxx
+    ssl_verify: false
+
+  local_path:
+    base_dir: /tmp

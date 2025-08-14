@@ -1,0 +1,172 @@
+category: WebSearch
+config_schema:
+  properties:
+    sf_password:
+      description: '申请说明: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+      title: Sf Password
+      type: string
+      x-description-en: 'Application instructions: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+      x-description-zh-hans: 申请说明：<https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>
+      x-description-zh-hant: '申請說明: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+      x-hiagent-secret: true
+    sf_security_token:
+      description: '申请说明: <https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5>'
+      title: Sf Security Token
+      type: string
+      x-description-en: 'Application instructions: <https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5>'
+      x-description-zh-hans: 申请说明：<https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5>
+      x-description-zh-hant: '申請說明: <https://help.salesforce.com/s/articleView?id=xcloud.user_security_token.htm&language=en_US&type=5>'
+      x-hiagent-secret: true
+    sf_username:
+      description: '申请说明: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+      title: Sf Username
+      type: string
+      x-description-en: 'Application instructions: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+      x-description-zh-hans: 申请说明：<https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>
+      x-description-zh-hant: '申請說明: <https://help.salesforce.com/s/articleView?id=sf.rss_login_self_register.htm&type=5>'
+  required:
+  - sf_username
+  - sf_password
+  - sf_security_token
+  title: InModel
+  type: object
+description: Salesforce
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-salesforce/hiagent_plugin_salesforce/icon.png
+labels:
+  description_en: Salesforce
+  description_zh_hans: Salesforce
+  description_zh_hant: Salesforce
+  name_en: Salesforce
+  name_zh_hans: Salesforce
+  name_zh_hant: Salesforce
+meta_version: v1
+metadata_path: Salesforce_metadata.yaml
+name: Salesforce
+package_info:
+  name: hiagent_plugin_salesforce
+  version: ''
+tools:
+  execute_soql:
+    description: ''
+    func_name: execute_soql
+    input_schema:
+      properties:
+        query:
+          description: 搜索项
+          title: Query
+          type: string
+          x-description-en: Search term
+          x-description-zh-hans: 搜索项
+          x-description-zh-hant: 搜索項
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: ''
+      description_zh_hans: ''
+      description_zh_hant: ''
+      name_en: execute_soql
+      name_zh_hans: execute_soql
+      name_zh_hant: execute_soql
+    name: execute_soql
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  execute_sosl:
+    description: ''
+    func_name: execute_sosl
+    input_schema:
+      properties:
+        search:
+          description: 搜索项
+          title: Search
+          type: string
+          x-description-en: Search term
+          x-description-zh-hans: 搜索项
+          x-description-zh-hant: 搜尋項
+      required:
+      - search
+      title: InModel
+      type: object
+    labels:
+      description_en: ''
+      description_zh_hans: ''
+      description_zh_hant: ''
+      name_en: execute_sosl
+      name_zh_hans: execute_sosl
+      name_zh_hant: execute_sosl
+    name: execute_sosl
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

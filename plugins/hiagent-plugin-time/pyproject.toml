@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hiagent-plugin-time"
+version = "0.2.0"
+description = ""
+authors = ["lujinghao <lujinghao@bytedance.com>"]
+include = [
+  "hiagent_plugin_time/icon.png",
+  "hiagent_plugin_time/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_time:TimePlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+python = "^3.11"
+pytz = "^2024.2"
+
+[tool.poetry.group.dev.dependencies]
+types-pytz = "^2024.2.0.20241003"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"时间工具" = "hiagent_plugin_time:TimePlugin"

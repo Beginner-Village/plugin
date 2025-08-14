@@ -1,0 +1,25 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-semantic-scholar"
+version = "1.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_semantic_scholar/icon.png",
+  "hiagent_plugin_semantic_scholar/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_semantic_scholar:SemanticScholarPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+semanticscholar = "^0.5.0" # 不用最新版本是因为最新版会用到nest_asyncio框架，不兼容uvloop
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+SemanticScholar = "hiagent_plugin_semantic_scholar:SemanticScholarPlugin"

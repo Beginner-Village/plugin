@@ -1,0 +1,96 @@
+category: Productivity
+config_schema: {}
+description: 钉钉群机器人
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-dingtalk/hiagent_plugin_dingtalk/icon.png
+labels:
+  description_en: DingTalk group robot
+  description_zh_hans: 钉钉群机器人
+  description_zh_hant: 釘釘群機器人
+  name_en: DingTalk
+  name_zh_hans: 钉钉
+  name_zh_hant: 釘釘
+meta_version: v1
+metadata_path: 钉钉_metadata.yaml
+name: 钉钉
+package_info:
+  name: hiagent_plugin_dingtalk
+  version: ''
+tools:
+  ding_robot_send:
+    description: "Dingtalk custom group robot API docs: https://open.dingtalk.com/document/orgapp/custom-robot-access"
+    func_name: ding_robot_send
+    input_schema:
+      properties:
+        access_token:
+          description: '申请说明: <https://open.dingtalk.com/document/orgapp/custom-robot-access>'
+          title: Access Token
+          type: string
+          x-description-en: 'Application instructions: <https://open.dingtalk.com/document/orgapp/custom-robot-access>'
+          x-description-zh-hans: 申请说明：<https://open.dingtalk.com/document/orgapp/custom-robot-access>
+          x-description-zh-hant: '申請說明: <https://open.dingtalk.com/document/orgapp/custom-robot-access>'
+        content:
+          description: 消息内容
+          title: Content
+          type: string
+          x-description-en: Message content
+          x-description-zh-hans: 消息内容
+          x-description-zh-hant: 消息內容
+        sign_secret:
+          description: '申请说明: <https://open.dingtalk.com/document/robots/customize-robot-security-settings>'
+          title: Sign Secret
+          type: string
+          x-description-en: 'Application instructions: <https://open.dingtalk.com/document/robots/customize-robot-security-settings>'
+          x-description-zh-hans: 申请说明：<https://open.dingtalk.com/document/robots/customize-robot-security-settings>
+          x-description-zh-hant: 申請說明：<https://open.dingtalk.com/document/robots/customize-robot-security-settings>
+      required:
+      - content
+      - access_token
+      - sign_secret
+      title: InModel
+      type: object
+    labels:
+      description_en: 'Dingtalk custom group robot API docs: https://open.dingtalk.com/document/orgapp/custom-robot-access'
+      description_zh_hans: 钉钉自定义群机器人 API 文档：https://open.dingtalk.com/document/orgapp/custom-robot-access
+      description_zh_hant: 釘釘自定義群機器人 API 文件：https://open.dingtalk.com/document/orgapp/custom-robot-access
+      name_en: ding_robot_send
+      name_zh_hans: 钉钉机器人发送
+      name_zh_hant: 钉钉機器人發送
+    name: ding_robot_send
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

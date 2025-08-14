@@ -1,0 +1,31 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-volc-searchbot"
+version = "0.2.1"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_volc_searchbot/icon.png",
+  "hiagent_plugin_volc_searchbot/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_volc_searchbot:VolcSearchBot._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.11.2"
+volcengine-python-sdk = "^1.0.110"
+pydantic = "^2.10.1"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+python-dotenv = "^1.0.1"
+types-aiofiles = "^24.1.0.20240626"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"联网内容搜索" = "hiagent_plugin_volc_searchbot:VolcSearchBot"

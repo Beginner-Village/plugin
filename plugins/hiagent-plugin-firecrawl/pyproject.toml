@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "hiagent-plugin-firecrawl"
+version = "0.2.0"
+description = "Firecrawl API 集成，用于网页爬取和数据抓取。"
+authors = ["fuyihong <fuyihong.1@bytedance.com>"]
+include = [
+  "hiagent_plugin_firecrawl/icon.png",
+  "hiagent_plugin_firecrawl/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_firecrawl:FirecrawlPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.11.9"
+
+[tool.poetry.group.dev.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"Firecrawl" = "hiagent_plugin_firecrawl:FirecrawlPlugin"

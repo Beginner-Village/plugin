@@ -1,0 +1,166 @@
+category: Productivity
+config_schema: {}
+description: Toolkit for interacting with a JSON spec.
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-json-toolkit/hiagent_plugin_json_toolkit/icon.png
+labels:
+  description_en: Toolkit for interacting with a JSON spec.
+  description_zh_hans: 用于与JSON规范进行交互的工具包。
+  description_zh_hant: 用於與JSON規範進行交互的工具包。
+  name_en: JSON tool
+  name_zh_hans: json工具
+  name_zh_hant: JSON工具
+meta_version: v1
+metadata_path: json工具_metadata.yaml
+name: json工具
+package_info:
+  name: hiagent_plugin_json_toolkit
+  version: ''
+tools:
+  json_spec_get_value:
+    description: "Tool for getting a value in a JSON spec. Can be used to see value in string format at a given path. Before calling this you should be SURE that the path to this exists. The input is a text representation of the path to the dict in Python syntax (e.g. data[\"key1\"][0][\"key2\"])."
+    func_name: json_spec_get_value
+    input_schema:
+      properties:
+        json_file_url:
+          description: JSON文件的URL地址
+          title: Json File Url
+          type: string
+          x-description-en: URL address of the JSON file
+          x-description-zh-hans: JSON文件的URL地址
+          x-description-zh-hant: JSON檔案的URL位址
+        path:
+          description: representation of the path to the dict in Python syntax (e.g.
+            data["key1"][0]["key2"]
+          title: Path
+          type: string
+          x-description-en: representation of the path to the dict in Python syntax
+            (e.g. data["key1"][0]["key2"]
+          x-description-zh-hans: 用 Python 语法表示指向字典的路径（例如 data["key1"][0]["key2"]）
+          x-description-zh-hant: 以Python語法表示指向字典的路徑（例如 data["key1"][0]["key2"]）
+      required:
+      - path
+      - json_file_url
+      title: InModel
+      type: object
+    labels:
+      description_en: Tool for getting a value in a JSON spec. Can be used to see
+        value in string format at a given path. Before calling this you should be
+        SURE that the path to this exists. The input is a text representation of the
+        path to the dict in Python syntax (e.g. data["key1"][0]["key2"]).
+      description_zh_hans: '用于获取JSON规范中某个值的工具。可用于查看给定路径下以字符串格式呈现的值。在调用此工具之前，你应确保该路径存在。输入是以Python语法表示的指向字典的路径的文本形式（例如 data["key1"][0]["key2"]）。'
+      description_zh_hant: '用於在JSON規範中取得值的工具。可用於查看指定路徑下以字串格式呈現的值。在呼叫此工具之前，你應確保該路徑存在。輸入是以Python語法表示的字典路徑的文字形式（例如data["key1"][0]["key2"]）。'
+      name_en: json_spec_get_value
+      name_zh_hans: 获取值
+      name_zh_hant: 獲取值
+    name: json_spec_get_value
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  json_spec_list_keys:
+    description: "Tool for listing keys in a JSON spec. Can be used to list all keys at a given path. Before calling this you should be SURE that the path to this exists. The input is a text representation of the path to the dict in Python syntax (e.g. data[\"key1\"][0][\"key2\"]). "
+    func_name: json_spec_list_keys
+    input_schema:
+      properties:
+        json_file_url:
+          description: JSON文件的URL地址
+          title: Json File Url
+          type: string
+          x-description-en: The URL address of the JSON file
+          x-description-zh-hans: JSON文件的URL地址
+          x-description-zh-hant: JSON檔案的URL位址
+        path:
+          description: representation of the path to the dict in Python syntax (e.g. data["key1"][0]["key2"]
+          title: Path
+          type: string
+          x-description-en: representation of the path to the dict in Python syntax (e.g. data["key1"][0]["key2"]
+          x-description-zh-hans: 用Python语法表示指向字典的路径（例如 data["key1"][0]["key2"]）
+          x-description-zh-hant: 以Python語法表示指向字典的路徑（例如data["key1"][0]["key2"]）
+      required:
+      - path
+      - json_file_url
+      title: InModel
+      type: object
+    labels:
+      description_en: Tool for listing keys in a JSON spec. Can be used to list all
+        keys at a given path. Before calling this you should be SURE that the path
+        to this exists. The input is a text representation of the path to the dict
+        in Python syntax (e.g. data["key1"][0]["key2"]).
+      description_zh_hans: 用于列出JSON规范中键的工具。可用于列出给定路径下的所有键。在调用此工具之前，你应确保该路径存在。输入是用Python语法表示的指向字典的路径的文本形式（例如data["key1"][0]["key2"]）。
+      description_zh_hant: 用於列出 JSON 規格中鍵的工具。可用於列出指定路徑下的所有鍵。在調用此工具之前，你應確保該路徑存在。輸入是以 Python 語法表示的字典路徑文本（例如 data["key1"][0]["key2"]）。
+      name_en: json_spec_list_keys
+      name_zh_hans: 获取列表键
+      name_zh_hant: 獲取列表鍵
+    name: json_spec_list_keys
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

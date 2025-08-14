@@ -1,0 +1,27 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-salesforce"
+version = "0.2.1"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_salesforce/icon.png",
+  "hiagent_plugin_salesforce/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_salesforce:SalesforcePlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+simple-salesforce = "^1.12.6"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"Salesforce" = "hiagent_plugin_salesforce:SalesforcePlugin"

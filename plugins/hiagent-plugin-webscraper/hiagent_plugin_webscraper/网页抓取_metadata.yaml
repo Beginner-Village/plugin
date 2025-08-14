@@ -1,0 +1,91 @@
+category: WebSearch
+config_schema: {}
+description: 一个用于抓取网页的工具。支持 html, pdf
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-webscraper/hiagent_plugin_webscraper/icon.png
+labels:
+  description_en: A tool for scraping web pages. Supports HTML and PDF.
+  description_zh_hans: 一个用于抓取网页的工具。支持html、pdf
+  description_zh_hant: 一個用於抓取網頁的工具。支援 html、pdf
+  name_en: Web scraping
+  name_zh_hans: 网页抓取
+  name_zh_hant: 網頁抓取
+meta_version: v1
+metadata_path: 网页抓取_metadata.yaml
+name: 网页抓取
+package_info:
+  name: hiagent_plugin_webscraper
+  version: ''
+tools:
+  get_url:
+    description: A tool for scraping webpages. Input should be a URL. support html,
+      pdf
+    func_name: get_url
+    input_schema:
+      properties:
+        url:
+          description: 访问的 url 地址
+          title: Url
+          type: string
+          x-description-en: The URL address to be accessed
+          x-description-zh-hans: 访问的 url 地址
+          x-description-zh-hant: 訪問的 URL 地址
+        user_agent:
+          default: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+            like Gecko) Chrome/100.0.1000.0 Safari/537.36
+          description: 访问标识
+          title: User Agent
+          type: string
+          x-description-en: Access identifier
+          x-description-zh-hans: 访问标识
+          x-description-zh-hant: 訪問標識
+      required:
+      - url
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for scraping webpages. Input should be a URL. It supports
+        HTML and PDF.
+      description_zh_hans: 一个用于抓取网页的工具。输入应为一个URL，支持HTML、PDF格式。
+      description_zh_hant: 一個用於抓取網頁的工具。輸入應為URL，支援HTML、PDF格式。
+      name_en: get_url
+      name_zh_hans: 获取网址
+      name_zh_hant: 獲取網址
+    name: get_url
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

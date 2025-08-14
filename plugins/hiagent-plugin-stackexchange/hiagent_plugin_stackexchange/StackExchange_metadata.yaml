@@ -1,0 +1,84 @@
+category: WebSearch
+config_schema: {}
+description: Tool that searches the StackOverflow.
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-stackexchange/hiagent_plugin_stackexchange/icon.png
+labels:
+  description_en: Tool that searches the StackOverflow.
+  description_zh_hans: 搜索Stack Overflow的工具。
+  description_zh_hant: 搜尋 StackOverflow 的工具。
+  name_en: StackExchange
+  name_zh_hans: StackExchange
+  name_zh_hant: StackExchange
+meta_version: v1
+metadata_path: StackExchange_metadata.yaml
+name: StackExchange
+package_info:
+  name: hiagent_plugin_stackexchange
+  version: ''
+tools:
+  search:
+    description: ''
+    func_name: search
+    input_schema:
+      properties:
+        max_results:
+          default: 3
+          description: 返回结果数量
+          title: Max Results
+          type: integer
+          x-description-en: Number of returned results
+          x-description-zh-hans: 返回结果数量
+          x-description-zh-hant: 返回結果數量
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: ''
+      description_zh_hans: ''
+      description_zh_hant: ''
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

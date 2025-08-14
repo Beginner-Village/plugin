@@ -1,0 +1,4101 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书云文档
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-docx/hiagent_plugin_feishu_docx/icon.png
+labels:
+  description_en: Feishu Cloud Docs
+  description_zh_hans: 飞书云文档
+  description_zh_hant: 飛書雲文檔
+  name_en: Feishu Cloud Docs
+  name_zh_hans: 飞书云文档
+  name_zh_hant: 飛書雲文檔
+meta_version: v1
+metadata_path: 飞书云文档_metadata.yaml
+name: 飞书云文档
+package_info:
+  name: hiagent_plugin_feishu_docx
+  version: ''
+tools:
+  create_document:
+    description: 创建文档
+    func_name: create_document
+    input_schema:
+      properties:
+        folder_token:
+          default: ''
+          description: 指定文档所在文件夹 的 Token。不传或传空表示根目录。
+          title: Folder Token
+          type: string
+          x-description-en: The token of the folder where the specified document is
+            located. Not passing it or passing an empty value indicates the root directory.
+          x-description-zh-hans: 指定文档所在文件夹的 Token。不传或传空表示根目录。
+          x-description-zh-hant: 指定文件所在資料夾的 Token。不傳或傳空值表示根目錄。
+        title:
+          default: ''
+          description: 文档标题，只支持纯文本
+          title: Title
+          type: string
+          x-description-en: Document title. Only plain text is supported.
+          x-description-zh-hans: 文档标题，只支持纯文本
+          x-description-zh-hant: 文檔標題，只支援純文本
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a document
+      description_zh_hans: 创建文档
+      description_zh_hant: 創建文件
+      name_en: create_document
+      name_zh_hans: 创建文档
+      name_zh_hant: 創建文檔
+    name: create_document
+    output_schema:
+      $defs:
+        BaseRespModel_CreateDocumentResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateDocumentResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateDocumentResponseBody]
+          type: object
+        CreateDocumentResponseBody:
+          properties:
+            document:
+              $ref: '#/$defs/Document'
+              default: null
+          title: CreateDocumentResponseBody
+          type: object
+        Document:
+          properties:
+            cover:
+              $ref: '#/$defs/DocumentCover'
+              default: null
+            display_setting:
+              $ref: '#/$defs/DocumentDisplaySetting'
+              default: null
+            document_id:
+              default: null
+              title: Document Id
+              type: string
+            revision_id:
+              default: null
+              title: Revision Id
+              type: integer
+            title:
+              default: null
+              title: Title
+              type: string
+          title: Document
+          type: object
+        DocumentCover:
+          properties:
+            offset_ratio_x:
+              default: null
+              title: Offset Ratio X
+              type: number
+            offset_ratio_y:
+              default: null
+              title: Offset Ratio Y
+              type: number
+            token:
+              default: null
+              title: Token
+              type: string
+          title: DocumentCover
+          type: object
+        DocumentDisplaySetting:
+          properties:
+            show_authors:
+              default: null
+              title: Show Authors
+              type: boolean
+            show_comment_count:
+              default: null
+              title: Show Comment Count
+              type: boolean
+            show_create_time:
+              default: null
+              title: Show Create Time
+              type: boolean
+            show_like_count:
+              default: null
+              title: Show Like Count
+              type: boolean
+            show_pv:
+              default: null
+              title: Show Pv
+              type: boolean
+            show_related_matters:
+              default: null
+              title: Show Related Matters
+              type: boolean
+            show_uv:
+              default: null
+              title: Show Uv
+              type: boolean
+          title: DocumentDisplaySetting
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateDocumentResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  create_document_block:
+    description: 创建块
+    func_name: create_document_block
+    input_schema:
+      $defs:
+        AddOns:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+            record:
+              default: null
+              title: Record
+              type: string
+          title: AddOns
+          type: object
+        Agenda:
+          properties: {}
+          title: Agenda
+          type: object
+        AgendaItem:
+          properties: {}
+          title: AgendaItem
+          type: object
+        AgendaItemContent:
+          properties: {}
+          title: AgendaItemContent
+          type: object
+        AgendaItemTitle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/AgendaTitleElement'
+              title: Elements
+              type: array
+          title: AgendaItemTitle
+          type: object
+        AgendaTitleElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: AgendaTitleElement
+          type: object
+        Bitable:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: Bitable
+          type: object
+        Block:
+          properties:
+            add_ons:
+              $ref: '#/$defs/AddOns'
+              default: null
+            agenda:
+              $ref: '#/$defs/Agenda'
+              default: null
+            agenda_item:
+              $ref: '#/$defs/AgendaItem'
+              default: null
+            agenda_item_content:
+              $ref: '#/$defs/AgendaItemContent'
+              default: null
+            agenda_item_title:
+              $ref: '#/$defs/AgendaItemTitle'
+              default: null
+            bitable:
+              $ref: '#/$defs/Bitable'
+              default: null
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            block_type:
+              default: null
+              title: Block Type
+              type: integer
+            board:
+              $ref: '#/$defs/Board'
+              default: null
+            bullet:
+              $ref: '#/$defs/Text'
+              default: null
+            callout:
+              $ref: '#/$defs/Callout'
+              default: null
+            chat_card:
+              $ref: '#/$defs/ChatCard'
+              default: null
+            children:
+              default: null
+              items:
+                type: string
+              title: Children
+              type: array
+            code:
+              $ref: '#/$defs/Text'
+              default: null
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            diagram:
+              $ref: '#/$defs/Diagram'
+              default: null
+            divider:
+              $ref: '#/$defs/Divider'
+              default: null
+            equation:
+              $ref: '#/$defs/Text'
+              default: null
+            file:
+              $ref: '#/$defs/File'
+              default: null
+            grid:
+              $ref: '#/$defs/Grid'
+              default: null
+            grid_column:
+              $ref: '#/$defs/GridColumn'
+              default: null
+            heading1:
+              $ref: '#/$defs/Text'
+              default: null
+            heading2:
+              $ref: '#/$defs/Text'
+              default: null
+            heading3:
+              $ref: '#/$defs/Text'
+              default: null
+            heading4:
+              $ref: '#/$defs/Text'
+              default: null
+            heading5:
+              $ref: '#/$defs/Text'
+              default: null
+            heading6:
+              $ref: '#/$defs/Text'
+              default: null
+            heading7:
+              $ref: '#/$defs/Text'
+              default: null
+            heading8:
+              $ref: '#/$defs/Text'
+              default: null
+            heading9:
+              $ref: '#/$defs/Text'
+              default: null
+            iframe:
+              $ref: '#/$defs/Iframe'
+              default: null
+            image:
+              $ref: '#/$defs/Image'
+              default: null
+            isv:
+              $ref: '#/$defs/Isv'
+              default: null
+            jira_issue:
+              $ref: '#/$defs/JiraIssue'
+              default: null
+            link_preview:
+              $ref: '#/$defs/LinkPreview'
+              default: null
+            mindnote:
+              $ref: '#/$defs/Mindnote'
+              default: null
+            okr:
+              $ref: '#/$defs/Okr'
+              default: null
+            okr_key_result:
+              $ref: '#/$defs/OkrKeyResult'
+              default: null
+            okr_objective:
+              $ref: '#/$defs/OkrObjective'
+              default: null
+            okr_progress:
+              $ref: '#/$defs/OkrProgress'
+              default: null
+            ordered:
+              $ref: '#/$defs/Text'
+              default: null
+            page:
+              $ref: '#/$defs/Text'
+              default: null
+            parent_id:
+              default: null
+              title: Parent Id
+              type: string
+            quote:
+              $ref: '#/$defs/Text'
+              default: null
+            quote_container:
+              $ref: '#/$defs/QuoteContainer'
+              default: null
+            sheet:
+              $ref: '#/$defs/Sheet'
+              default: null
+            table:
+              $ref: '#/$defs/Table'
+              default: null
+            table_cell:
+              $ref: '#/$defs/TableCell'
+              default: null
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+            text:
+              $ref: '#/$defs/Text'
+              default: null
+            todo:
+              $ref: '#/$defs/Text'
+              default: null
+            undefined:
+              $ref: '#/$defs/Undefined'
+              default: null
+            view:
+              $ref: '#/$defs/View'
+              default: null
+            wiki_catalog:
+              $ref: '#/$defs/WikiCatalog'
+              default: null
+          title: Block
+          type: object
+        Board:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Board
+          type: object
+        Callout:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            border_color:
+              default: null
+              title: Border Color
+              type: integer
+            emoji_id:
+              default: null
+              title: Emoji Id
+              type: string
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+          title: Callout
+          type: object
+        ChatCard:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            chat_id:
+              default: null
+              title: Chat Id
+              type: integer
+          title: ChatCard
+          type: object
+        CreateDocumentBlockChildrenRequestBody:
+          properties:
+            children:
+              default: null
+              items:
+                $ref: '#/$defs/Block'
+              title: Children
+              type: array
+            index:
+              default: null
+              title: Index
+              type: integer
+          title: CreateDocumentBlockChildrenRequestBody
+          type: object
+        Diagram:
+          properties:
+            diagram_type:
+              default: null
+              title: Diagram Type
+              type: integer
+          title: Diagram
+          type: object
+        Divider:
+          properties: {}
+          title: Divider
+          type: object
+        Equation:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Equation
+          type: object
+        File:
+          properties:
+            name:
+              default: null
+              title: Name
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: File
+          type: object
+        Grid:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+          title: Grid
+          type: object
+        GridColumn:
+          properties:
+            width_ratio:
+              default: null
+              title: Width Ratio
+              type: integer
+          title: GridColumn
+          type: object
+        Iframe:
+          properties:
+            component:
+              $ref: '#/$defs/IframeComponent'
+              default: null
+          title: Iframe
+          type: object
+        IframeComponent:
+          properties:
+            iframe_type:
+              default: null
+              title: Iframe Type
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: IframeComponent
+          type: object
+        Image:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Image
+          type: object
+        InlineBlock:
+          properties:
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineBlock
+          type: object
+        InlineFile:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            source_block_id:
+              default: null
+              title: Source Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineFile
+          type: object
+        Isv:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+          title: Isv
+          type: object
+        JiraIssue:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            key:
+              default: null
+              title: Key
+              type: string
+          title: JiraIssue
+          type: object
+        Link:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Link
+          type: object
+        LinkPreview:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+            url_type:
+              default: null
+              title: Url Type
+              type: string
+          title: LinkPreview
+          type: object
+        MentionDoc:
+          properties:
+            obj_type:
+              default: null
+              title: Obj Type
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            title:
+              default: null
+              title: Title
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: MentionDoc
+          type: object
+        MentionUser:
+          properties:
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: MentionUser
+          type: object
+        Mindnote:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Mindnote
+          type: object
+        ObjectiveIdWithKrId:
+          properties:
+            kr_ids:
+              default: null
+              items:
+                type: integer
+              title: Kr Ids
+              type: array
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+          title: ObjectiveIdWithKrId
+          type: object
+        Okr:
+          properties:
+            objectives:
+              default: null
+              items:
+                $ref: '#/$defs/ObjectiveIdWithKrId'
+              title: Objectives
+              type: array
+            okr_id:
+              default: null
+              title: Okr Id
+              type: integer
+            period_display_status:
+              default: null
+              title: Period Display Status
+              type: string
+            period_name_en:
+              default: null
+              title: Period Name En
+              type: string
+            period_name_zh:
+              default: null
+              title: Period Name Zh
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+            visible_setting:
+              $ref: '#/$defs/OkrVisibleSetting'
+              default: null
+          title: Okr
+          type: object
+        OkrKeyResult:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            kr_id:
+              default: null
+              title: Kr Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrKeyResult
+          type: object
+        OkrObjective:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrObjective
+          type: object
+        OkrProgress:
+          properties: {}
+          title: OkrProgress
+          type: object
+        OkrProgressRate:
+          properties:
+            current:
+              default: null
+              title: Current
+              type: number
+            mode:
+              default: null
+              title: Mode
+              type: string
+            percent:
+              default: null
+              title: Percent
+              type: number
+            progress_status:
+              default: null
+              title: Progress Status
+              type: string
+            start:
+              default: null
+              title: Start
+              type: number
+            status_type:
+              default: null
+              title: Status Type
+              type: string
+            target:
+              default: null
+              title: Target
+              type: number
+          title: OkrProgressRate
+          type: object
+        OkrVisibleSetting:
+          properties:
+            progress_fill_area_visible:
+              default: null
+              title: Progress Fill Area Visible
+              type: boolean
+            progress_status_visible:
+              default: null
+              title: Progress Status Visible
+              type: boolean
+            score_visible:
+              default: null
+              title: Score Visible
+              type: boolean
+          title: OkrVisibleSetting
+          type: object
+        QuoteContainer:
+          properties: {}
+          title: QuoteContainer
+          type: object
+        Reminder:
+          properties:
+            create_user_id:
+              default: null
+              title: Create User Id
+              type: string
+            expire_time:
+              default: null
+              title: Expire Time
+              type: integer
+            is_notify:
+              default: null
+              title: Is Notify
+              type: boolean
+            is_whole_day:
+              default: null
+              title: Is Whole Day
+              type: boolean
+            notify_time:
+              default: null
+              title: Notify Time
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Reminder
+          type: object
+        Sheet:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Sheet
+          type: object
+        Table:
+          properties:
+            cells:
+              default: null
+              items:
+                type: string
+              title: Cells
+              type: array
+            property:
+              $ref: '#/$defs/TableProperty'
+              default: null
+          title: Table
+          type: object
+        TableCell:
+          properties: {}
+          title: TableCell
+          type: object
+        TableMergeInfo:
+          properties:
+            col_span:
+              default: null
+              title: Col Span
+              type: integer
+            row_span:
+              default: null
+              title: Row Span
+              type: integer
+          title: TableMergeInfo
+          type: object
+        TableProperty:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            column_width:
+              default: null
+              items:
+                type: integer
+              title: Column Width
+              type: array
+            header_column:
+              default: null
+              title: Header Column
+              type: boolean
+            header_row:
+              default: null
+              title: Header Row
+              type: boolean
+            merge_info:
+              default: null
+              items:
+                $ref: '#/$defs/TableMergeInfo'
+              title: Merge Info
+              type: array
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+          title: TableProperty
+          type: object
+        Task:
+          properties:
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+          title: Task
+          type: object
+        Text:
+          properties:
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/TextElement'
+              title: Elements
+              type: array
+            style:
+              $ref: '#/$defs/TextStyle'
+              default: null
+          title: Text
+          type: object
+        TextElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: TextElement
+          type: object
+        TextElementStyle:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            bold:
+              default: null
+              title: Bold
+              type: boolean
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            inline_code:
+              default: null
+              title: Inline Code
+              type: boolean
+            italic:
+              default: null
+              title: Italic
+              type: boolean
+            link:
+              $ref: '#/$defs/Link'
+              default: null
+            strikethrough:
+              default: null
+              title: Strikethrough
+              type: boolean
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+            underline:
+              default: null
+              title: Underline
+              type: boolean
+          title: TextElementStyle
+          type: object
+        TextRun:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: TextRun
+          type: object
+        TextStyle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            background_color:
+              default: null
+              title: Background Color
+              type: string
+            done:
+              default: null
+              title: Done
+              type: boolean
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            indentation_level:
+              default: null
+              title: Indentation Level
+              type: string
+            language:
+              default: null
+              title: Language
+              type: integer
+            sequence:
+              default: null
+              title: Sequence
+              type: string
+            wrap:
+              default: null
+              title: Wrap
+              type: boolean
+          title: TextStyle
+          type: object
+        Undefined:
+          properties: {}
+          title: Undefined
+          type: object
+        UndefinedElement:
+          properties: {}
+          title: UndefinedElement
+          type: object
+        View:
+          properties:
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: View
+          type: object
+        WikiCatalog:
+          properties:
+            wiki_token:
+              default: null
+              title: Wiki Token
+              type: string
+          title: WikiCatalog
+          type: object
+      properties:
+        block_id:
+          description: 父块的block_id，表示为其创建一批子块。如果需要对文档树根节点创建子块，可将 document_id 填入此处。
+          title: Block Id
+          type: string
+          x-description-en: The block_id of the parent block, indicating to create
+            a batch of child blocks for it. If you need to create child blocks for
+            the root node of the document tree, you can fill in the document_id here.
+          x-description-zh-hans: 父块的block_id，表示为其创建一批子块。如果需要对文档树根节点创建子块，可将 document_id填入此处。
+          x-description-zh-hant: 父區塊的block_id，代表為其創建一批子區塊。若需對文檔樹根節點創建子區塊，可將document_id填於此處。
+        client_token:
+          default: ''
+          description: 操作的唯一标识，与接口返回值的 client_token 相对应，用于幂等的进行更新操作。此值为空表示将发起一次新的请求，此值非空表示幂等的进行更新操作
+          title: Client Token
+          type: string
+          x-description-en: The unique identifier of the operation, corresponding
+            to the client_token in the interface return value, is used for idempotent
+            update operations. If this value is empty, it means a new request will
+            be initiated. If this value is not empty, it means an idempotent update
+            operation will be performed.
+          x-description-zh-hans: 操作的唯一标识，与接口返回值的 client_token 相对应，用于幂等的进行更新操作。此值为空表示将发起一次新的请求，此值非空表示幂等的进行更新操作
+          x-description-zh-hant: 操作的唯一標識，與介面返回值的 client_token 相對應，用於冪等的進行更新操作。此值為空表示將發起一次新的請求，此值非空表示冪等的進行更新操作
+        content:
+          $ref: '#/$defs/CreateDocumentBlockChildrenRequestBody'
+          description: 块内容
+          x-description-en: Block content
+          x-description-zh-hans: 块内容
+          x-description-zh-hant: 塊內容
+        document_id:
+          description: 文档的唯一标识。
+          title: Document Id
+          type: string
+          x-description-en: The unique identifier of the document.
+          x-description-zh-hans: 文档的唯一标识。
+          x-description-zh-hant: 文檔的唯一標識。
+        document_revision_id:
+          default: -1
+          description: 查询的文档版本，-1 表示文档最新版本。文档创建后，版本为 1。
+          title: Document Revision Id
+          type: integer
+          x-description-en: The version of the queried document. -1 indicates the
+            latest version of the document. After the document is created, the version
+            is 1.
+          x-description-zh-hans: 查询的文档版本，-1 表示文档最新版本。文档创建后，版本为 1。
+          x-description-zh-hant: 查詢的文檔版本，-1 表示文檔最新版本。文檔創建後，版本為 1。
+      required:
+      - document_id
+      - block_id
+      - content
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a block
+      description_zh_hans: 创建块
+      description_zh_hant: 創建塊
+      name_en: create_document_block
+      name_zh_hans: 创建文档块
+      name_zh_hant: 創建文檔塊
+    name: create_document_block
+    output_schema:
+      $defs:
+        AddOns:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+            record:
+              default: null
+              title: Record
+              type: string
+          title: AddOns
+          type: object
+        Agenda:
+          properties: {}
+          title: Agenda
+          type: object
+        AgendaItem:
+          properties: {}
+          title: AgendaItem
+          type: object
+        AgendaItemContent:
+          properties: {}
+          title: AgendaItemContent
+          type: object
+        AgendaItemTitle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/AgendaTitleElement'
+              title: Elements
+              type: array
+          title: AgendaItemTitle
+          type: object
+        AgendaTitleElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: AgendaTitleElement
+          type: object
+        BaseRespModel_CreateDocumentBlockChildrenResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateDocumentBlockChildrenResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateDocumentBlockChildrenResponseBody]
+          type: object
+        Bitable:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: Bitable
+          type: object
+        Block:
+          properties:
+            add_ons:
+              $ref: '#/$defs/AddOns'
+              default: null
+            agenda:
+              $ref: '#/$defs/Agenda'
+              default: null
+            agenda_item:
+              $ref: '#/$defs/AgendaItem'
+              default: null
+            agenda_item_content:
+              $ref: '#/$defs/AgendaItemContent'
+              default: null
+            agenda_item_title:
+              $ref: '#/$defs/AgendaItemTitle'
+              default: null
+            bitable:
+              $ref: '#/$defs/Bitable'
+              default: null
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            block_type:
+              default: null
+              title: Block Type
+              type: integer
+            board:
+              $ref: '#/$defs/Board'
+              default: null
+            bullet:
+              $ref: '#/$defs/Text'
+              default: null
+            callout:
+              $ref: '#/$defs/Callout'
+              default: null
+            chat_card:
+              $ref: '#/$defs/ChatCard'
+              default: null
+            children:
+              default: null
+              items:
+                type: string
+              title: Children
+              type: array
+            code:
+              $ref: '#/$defs/Text'
+              default: null
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            diagram:
+              $ref: '#/$defs/Diagram'
+              default: null
+            divider:
+              $ref: '#/$defs/Divider'
+              default: null
+            equation:
+              $ref: '#/$defs/Text'
+              default: null
+            file:
+              $ref: '#/$defs/File'
+              default: null
+            grid:
+              $ref: '#/$defs/Grid'
+              default: null
+            grid_column:
+              $ref: '#/$defs/GridColumn'
+              default: null
+            heading1:
+              $ref: '#/$defs/Text'
+              default: null
+            heading2:
+              $ref: '#/$defs/Text'
+              default: null
+            heading3:
+              $ref: '#/$defs/Text'
+              default: null
+            heading4:
+              $ref: '#/$defs/Text'
+              default: null
+            heading5:
+              $ref: '#/$defs/Text'
+              default: null
+            heading6:
+              $ref: '#/$defs/Text'
+              default: null
+            heading7:
+              $ref: '#/$defs/Text'
+              default: null
+            heading8:
+              $ref: '#/$defs/Text'
+              default: null
+            heading9:
+              $ref: '#/$defs/Text'
+              default: null
+            iframe:
+              $ref: '#/$defs/Iframe'
+              default: null
+            image:
+              $ref: '#/$defs/Image'
+              default: null
+            isv:
+              $ref: '#/$defs/Isv'
+              default: null
+            jira_issue:
+              $ref: '#/$defs/JiraIssue'
+              default: null
+            link_preview:
+              $ref: '#/$defs/LinkPreview'
+              default: null
+            mindnote:
+              $ref: '#/$defs/Mindnote'
+              default: null
+            okr:
+              $ref: '#/$defs/Okr'
+              default: null
+            okr_key_result:
+              $ref: '#/$defs/OkrKeyResult'
+              default: null
+            okr_objective:
+              $ref: '#/$defs/OkrObjective'
+              default: null
+            okr_progress:
+              $ref: '#/$defs/OkrProgress'
+              default: null
+            ordered:
+              $ref: '#/$defs/Text'
+              default: null
+            page:
+              $ref: '#/$defs/Text'
+              default: null
+            parent_id:
+              default: null
+              title: Parent Id
+              type: string
+            quote:
+              $ref: '#/$defs/Text'
+              default: null
+            quote_container:
+              $ref: '#/$defs/QuoteContainer'
+              default: null
+            sheet:
+              $ref: '#/$defs/Sheet'
+              default: null
+            table:
+              $ref: '#/$defs/Table'
+              default: null
+            table_cell:
+              $ref: '#/$defs/TableCell'
+              default: null
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+            text:
+              $ref: '#/$defs/Text'
+              default: null
+            todo:
+              $ref: '#/$defs/Text'
+              default: null
+            undefined:
+              $ref: '#/$defs/Undefined'
+              default: null
+            view:
+              $ref: '#/$defs/View'
+              default: null
+            wiki_catalog:
+              $ref: '#/$defs/WikiCatalog'
+              default: null
+          title: Block
+          type: object
+        Board:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Board
+          type: object
+        Callout:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            border_color:
+              default: null
+              title: Border Color
+              type: integer
+            emoji_id:
+              default: null
+              title: Emoji Id
+              type: string
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+          title: Callout
+          type: object
+        ChatCard:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            chat_id:
+              default: null
+              title: Chat Id
+              type: integer
+          title: ChatCard
+          type: object
+        CreateDocumentBlockChildrenResponseBody:
+          properties:
+            children:
+              default: null
+              items:
+                $ref: '#/$defs/Block'
+              title: Children
+              type: array
+            client_token:
+              default: null
+              title: Client Token
+              type: string
+            document_revision_id:
+              default: null
+              title: Document Revision Id
+              type: integer
+          title: CreateDocumentBlockChildrenResponseBody
+          type: object
+        Diagram:
+          properties:
+            diagram_type:
+              default: null
+              title: Diagram Type
+              type: integer
+          title: Diagram
+          type: object
+        Divider:
+          properties: {}
+          title: Divider
+          type: object
+        Equation:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Equation
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        File:
+          properties:
+            name:
+              default: null
+              title: Name
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: File
+          type: object
+        Grid:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+          title: Grid
+          type: object
+        GridColumn:
+          properties:
+            width_ratio:
+              default: null
+              title: Width Ratio
+              type: integer
+          title: GridColumn
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        Iframe:
+          properties:
+            component:
+              $ref: '#/$defs/IframeComponent'
+              default: null
+          title: Iframe
+          type: object
+        IframeComponent:
+          properties:
+            iframe_type:
+              default: null
+              title: Iframe Type
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: IframeComponent
+          type: object
+        Image:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Image
+          type: object
+        InlineBlock:
+          properties:
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineBlock
+          type: object
+        InlineFile:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            source_block_id:
+              default: null
+              title: Source Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineFile
+          type: object
+        Isv:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+          title: Isv
+          type: object
+        JiraIssue:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            key:
+              default: null
+              title: Key
+              type: string
+          title: JiraIssue
+          type: object
+        Link:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Link
+          type: object
+        LinkPreview:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+            url_type:
+              default: null
+              title: Url Type
+              type: string
+          title: LinkPreview
+          type: object
+        MentionDoc:
+          properties:
+            obj_type:
+              default: null
+              title: Obj Type
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            title:
+              default: null
+              title: Title
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: MentionDoc
+          type: object
+        MentionUser:
+          properties:
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: MentionUser
+          type: object
+        Mindnote:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Mindnote
+          type: object
+        ObjectiveIdWithKrId:
+          properties:
+            kr_ids:
+              default: null
+              items:
+                type: integer
+              title: Kr Ids
+              type: array
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+          title: ObjectiveIdWithKrId
+          type: object
+        Okr:
+          properties:
+            objectives:
+              default: null
+              items:
+                $ref: '#/$defs/ObjectiveIdWithKrId'
+              title: Objectives
+              type: array
+            okr_id:
+              default: null
+              title: Okr Id
+              type: integer
+            period_display_status:
+              default: null
+              title: Period Display Status
+              type: string
+            period_name_en:
+              default: null
+              title: Period Name En
+              type: string
+            period_name_zh:
+              default: null
+              title: Period Name Zh
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+            visible_setting:
+              $ref: '#/$defs/OkrVisibleSetting'
+              default: null
+          title: Okr
+          type: object
+        OkrKeyResult:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            kr_id:
+              default: null
+              title: Kr Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrKeyResult
+          type: object
+        OkrObjective:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrObjective
+          type: object
+        OkrProgress:
+          properties: {}
+          title: OkrProgress
+          type: object
+        OkrProgressRate:
+          properties:
+            current:
+              default: null
+              title: Current
+              type: number
+            mode:
+              default: null
+              title: Mode
+              type: string
+            percent:
+              default: null
+              title: Percent
+              type: number
+            progress_status:
+              default: null
+              title: Progress Status
+              type: string
+            start:
+              default: null
+              title: Start
+              type: number
+            status_type:
+              default: null
+              title: Status Type
+              type: string
+            target:
+              default: null
+              title: Target
+              type: number
+          title: OkrProgressRate
+          type: object
+        OkrVisibleSetting:
+          properties:
+            progress_fill_area_visible:
+              default: null
+              title: Progress Fill Area Visible
+              type: boolean
+            progress_status_visible:
+              default: null
+              title: Progress Status Visible
+              type: boolean
+            score_visible:
+              default: null
+              title: Score Visible
+              type: boolean
+          title: OkrVisibleSetting
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateDocumentBlockChildrenResponseBody_'
+          title: OutModel
+        QuoteContainer:
+          properties: {}
+          title: QuoteContainer
+          type: object
+        Reminder:
+          properties:
+            create_user_id:
+              default: null
+              title: Create User Id
+              type: string
+            expire_time:
+              default: null
+              title: Expire Time
+              type: integer
+            is_notify:
+              default: null
+              title: Is Notify
+              type: boolean
+            is_whole_day:
+              default: null
+              title: Is Whole Day
+              type: boolean
+            notify_time:
+              default: null
+              title: Notify Time
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Reminder
+          type: object
+        Sheet:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Sheet
+          type: object
+        Table:
+          properties:
+            cells:
+              default: null
+              items:
+                type: string
+              title: Cells
+              type: array
+            property:
+              $ref: '#/$defs/TableProperty'
+              default: null
+          title: Table
+          type: object
+        TableCell:
+          properties: {}
+          title: TableCell
+          type: object
+        TableMergeInfo:
+          properties:
+            col_span:
+              default: null
+              title: Col Span
+              type: integer
+            row_span:
+              default: null
+              title: Row Span
+              type: integer
+          title: TableMergeInfo
+          type: object
+        TableProperty:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            column_width:
+              default: null
+              items:
+                type: integer
+              title: Column Width
+              type: array
+            header_column:
+              default: null
+              title: Header Column
+              type: boolean
+            header_row:
+              default: null
+              title: Header Row
+              type: boolean
+            merge_info:
+              default: null
+              items:
+                $ref: '#/$defs/TableMergeInfo'
+              title: Merge Info
+              type: array
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+          title: TableProperty
+          type: object
+        Task:
+          properties:
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+          title: Task
+          type: object
+        Text:
+          properties:
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/TextElement'
+              title: Elements
+              type: array
+            style:
+              $ref: '#/$defs/TextStyle'
+              default: null
+          title: Text
+          type: object
+        TextElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: TextElement
+          type: object
+        TextElementStyle:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            bold:
+              default: null
+              title: Bold
+              type: boolean
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            inline_code:
+              default: null
+              title: Inline Code
+              type: boolean
+            italic:
+              default: null
+              title: Italic
+              type: boolean
+            link:
+              $ref: '#/$defs/Link'
+              default: null
+            strikethrough:
+              default: null
+              title: Strikethrough
+              type: boolean
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+            underline:
+              default: null
+              title: Underline
+              type: boolean
+          title: TextElementStyle
+          type: object
+        TextRun:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: TextRun
+          type: object
+        TextStyle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            background_color:
+              default: null
+              title: Background Color
+              type: string
+            done:
+              default: null
+              title: Done
+              type: boolean
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            indentation_level:
+              default: null
+              title: Indentation Level
+              type: string
+            language:
+              default: null
+              title: Language
+              type: integer
+            sequence:
+              default: null
+              title: Sequence
+              type: string
+            wrap:
+              default: null
+              title: Wrap
+              type: boolean
+          title: TextStyle
+          type: object
+        Undefined:
+          properties: {}
+          title: Undefined
+          type: object
+        UndefinedElement:
+          properties: {}
+          title: UndefinedElement
+          type: object
+        View:
+          properties:
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: View
+          type: object
+        WikiCatalog:
+          properties:
+            wiki_token:
+              default: null
+              title: Wiki Token
+              type: string
+          title: WikiCatalog
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_document:
+    description: 获取文档基本信息
+    func_name: get_document
+    input_schema:
+      properties:
+        document_id:
+          description: 文档的唯一标识。
+          title: Document Id
+          type: string
+          x-description-en: The unique identifier of the document.
+          x-description-zh-hans: 文档的唯一标识。
+          x-description-zh-hant: 文檔的唯一標識。
+      required:
+      - document_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the basic information of the document
+      description_zh_hans: 获取文档基本信息
+      description_zh_hant: 獲取文檔基本資訊
+      name_en: get_document
+      name_zh_hans: 获取文档
+      name_zh_hant: 获取文檔
+    name: get_document
+    output_schema:
+      $defs:
+        BaseRespModel_GetDocumentResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/GetDocumentResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[GetDocumentResponseBody]
+          type: object
+        Document:
+          properties:
+            cover:
+              $ref: '#/$defs/DocumentCover'
+              default: null
+            display_setting:
+              $ref: '#/$defs/DocumentDisplaySetting'
+              default: null
+            document_id:
+              default: null
+              title: Document Id
+              type: string
+            revision_id:
+              default: null
+              title: Revision Id
+              type: integer
+            title:
+              default: null
+              title: Title
+              type: string
+          title: Document
+          type: object
+        DocumentCover:
+          properties:
+            offset_ratio_x:
+              default: null
+              title: Offset Ratio X
+              type: number
+            offset_ratio_y:
+              default: null
+              title: Offset Ratio Y
+              type: number
+            token:
+              default: null
+              title: Token
+              type: string
+          title: DocumentCover
+          type: object
+        DocumentDisplaySetting:
+          properties:
+            show_authors:
+              default: null
+              title: Show Authors
+              type: boolean
+            show_comment_count:
+              default: null
+              title: Show Comment Count
+              type: boolean
+            show_create_time:
+              default: null
+              title: Show Create Time
+              type: boolean
+            show_like_count:
+              default: null
+              title: Show Like Count
+              type: boolean
+            show_pv:
+              default: null
+              title: Show Pv
+              type: boolean
+            show_related_matters:
+              default: null
+              title: Show Related Matters
+              type: boolean
+            show_uv:
+              default: null
+              title: Show Uv
+              type: boolean
+          title: DocumentDisplaySetting
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        GetDocumentResponseBody:
+          properties:
+            document:
+              $ref: '#/$defs/Document'
+              default: null
+          title: GetDocumentResponseBody
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_GetDocumentResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  get_document_content:
+    description: 获取文档纯文本内容
+    func_name: get_document_content
+    input_schema:
+      properties:
+        document_id:
+          description: 文档的唯一标识。
+          title: Document Id
+          type: string
+          x-description-en: The unique identifier of the document.
+          x-description-zh-hans: 文档的唯一标识。
+          x-description-zh-hant: 文檔的唯一標識。
+        lang:
+          default: 0
+          description: '指定返回的 MentionUser 即 @用户 的语言
+
+            0：该用户的默认名称。如：@张敏
+
+            1：该用户的英文名称。如：@Min Zhang
+
+            2：暂不支持该枚举，使用时返回该用户的默认名称'
+          title: Lang
+          type: integer
+          x-description-en: 'Specify the language of the returned MentionUser (i.e.,
+            @user).
+
+            0: The user''s default name. For example: @Zhang Min.
+
+            1: The user''s English name. For example: @Min Zhang.
+
+            2: This enumeration is not supported for now. Return the user''s default
+            name when using it.'
+          x-description-zh-hans: '指定返回的提及用户（即@用户）的语言
+
+            0：该用户的默认名称。例如：@张敏
+
+            1：该用户的英文名称。例如：@Min Zhang
+
+            2：暂不支持该枚举，使用时返回该用户的默认名称'
+          x-description-zh-hant: '指定返回的 MentionUser 即 @用户 的語言
+
+            0：該用戶的預設名稱。如：@張敏
+
+            1：該用戶的英文名称。如：@Min Zhang
+
+            2：暫不支援該枚舉，使用時返回該用戶的預設名稱'
+      required:
+      - document_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the plain text content of the document
+      description_zh_hans: 获取文档纯文本内容
+      description_zh_hant: 獲取文檔純文本內容
+      name_en: get_document_content
+      name_zh_hans: 获取文档内容
+      name_zh_hant: 取得文檔內容
+    name: get_document_content
+    output_schema:
+      $defs:
+        BaseRespModel_RawContentDocumentResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/RawContentDocumentResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[RawContentDocumentResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_RawContentDocumentResponseBody_'
+          title: OutModel
+        RawContentDocumentResponseBody:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+          title: RawContentDocumentResponseBody
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  list_document_block:
+    description: 获取文档所有块
+    func_name: list_document_block
+    input_schema:
+      properties:
+        document_id:
+          description: 文档的唯一标识。
+          title: Document Id
+          type: string
+          x-description-en: The unique identifier of the document.
+          x-description-zh-hans: 文档的唯一标识。
+          x-description-zh-hant: 文檔的唯一標識。
+        document_revision_id:
+          default: -1
+          description: 查询的文档版本，-1 表示文档最新版本。文档创建后，版本为 1。
+          title: Document Revision Id
+          type: integer
+          x-description-en: The version of the queried document. -1 represents the
+            latest version of the document. After the document is created, the version
+            is 1.
+          x-description-zh-hans: 查询的文档版本，-1 表示文档最新版本。文档创建后，版本为 1。
+          x-description-zh-hant: 查詢的文檔版本，-1 表示文檔最新版本。文檔創建後，版本為 1。
+        page_size:
+          default: 500
+          description: 分页大小, <= 500
+          title: Page Size
+          type: integer
+          x-description-en: Page size, <= 500
+          x-description-zh-hans: 分页大小, <= 500
+          x-description-zh-hant: 分頁大小, <= 500
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating to start traversing from the beginning.
+          x-description-zh-hans: 分页标记，第一次请求不填，表示从头开始遍历
+          x-description-zh-hant: 分頁標記，第一次請求不填，表示從頭開始遍歷
+      required:
+      - document_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Get all blocks of the document
+      description_zh_hans: 获取文档所有块
+      description_zh_hant: 獲取文檔所有塊
+      name_en: list_document_block
+      name_zh_hans: 列出文档块
+      name_zh_hant: 列出文檔塊
+    name: list_document_block
+    output_schema:
+      $defs:
+        AddOns:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+            record:
+              default: null
+              title: Record
+              type: string
+          title: AddOns
+          type: object
+        Agenda:
+          properties: {}
+          title: Agenda
+          type: object
+        AgendaItem:
+          properties: {}
+          title: AgendaItem
+          type: object
+        AgendaItemContent:
+          properties: {}
+          title: AgendaItemContent
+          type: object
+        AgendaItemTitle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/AgendaTitleElement'
+              title: Elements
+              type: array
+          title: AgendaItemTitle
+          type: object
+        AgendaTitleElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: AgendaTitleElement
+          type: object
+        BaseRespModel_CreateDocumentBlockChildrenResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateDocumentBlockChildrenResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateDocumentBlockChildrenResponseBody]
+          type: object
+        Bitable:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: Bitable
+          type: object
+        Block:
+          properties:
+            add_ons:
+              $ref: '#/$defs/AddOns'
+              default: null
+            agenda:
+              $ref: '#/$defs/Agenda'
+              default: null
+            agenda_item:
+              $ref: '#/$defs/AgendaItem'
+              default: null
+            agenda_item_content:
+              $ref: '#/$defs/AgendaItemContent'
+              default: null
+            agenda_item_title:
+              $ref: '#/$defs/AgendaItemTitle'
+              default: null
+            bitable:
+              $ref: '#/$defs/Bitable'
+              default: null
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            block_type:
+              default: null
+              title: Block Type
+              type: integer
+            board:
+              $ref: '#/$defs/Board'
+              default: null
+            bullet:
+              $ref: '#/$defs/Text'
+              default: null
+            callout:
+              $ref: '#/$defs/Callout'
+              default: null
+            chat_card:
+              $ref: '#/$defs/ChatCard'
+              default: null
+            children:
+              default: null
+              items:
+                type: string
+              title: Children
+              type: array
+            code:
+              $ref: '#/$defs/Text'
+              default: null
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            diagram:
+              $ref: '#/$defs/Diagram'
+              default: null
+            divider:
+              $ref: '#/$defs/Divider'
+              default: null
+            equation:
+              $ref: '#/$defs/Text'
+              default: null
+            file:
+              $ref: '#/$defs/File'
+              default: null
+            grid:
+              $ref: '#/$defs/Grid'
+              default: null
+            grid_column:
+              $ref: '#/$defs/GridColumn'
+              default: null
+            heading1:
+              $ref: '#/$defs/Text'
+              default: null
+            heading2:
+              $ref: '#/$defs/Text'
+              default: null
+            heading3:
+              $ref: '#/$defs/Text'
+              default: null
+            heading4:
+              $ref: '#/$defs/Text'
+              default: null
+            heading5:
+              $ref: '#/$defs/Text'
+              default: null
+            heading6:
+              $ref: '#/$defs/Text'
+              default: null
+            heading7:
+              $ref: '#/$defs/Text'
+              default: null
+            heading8:
+              $ref: '#/$defs/Text'
+              default: null
+            heading9:
+              $ref: '#/$defs/Text'
+              default: null
+            iframe:
+              $ref: '#/$defs/Iframe'
+              default: null
+            image:
+              $ref: '#/$defs/Image'
+              default: null
+            isv:
+              $ref: '#/$defs/Isv'
+              default: null
+            jira_issue:
+              $ref: '#/$defs/JiraIssue'
+              default: null
+            link_preview:
+              $ref: '#/$defs/LinkPreview'
+              default: null
+            mindnote:
+              $ref: '#/$defs/Mindnote'
+              default: null
+            okr:
+              $ref: '#/$defs/Okr'
+              default: null
+            okr_key_result:
+              $ref: '#/$defs/OkrKeyResult'
+              default: null
+            okr_objective:
+              $ref: '#/$defs/OkrObjective'
+              default: null
+            okr_progress:
+              $ref: '#/$defs/OkrProgress'
+              default: null
+            ordered:
+              $ref: '#/$defs/Text'
+              default: null
+            page:
+              $ref: '#/$defs/Text'
+              default: null
+            parent_id:
+              default: null
+              title: Parent Id
+              type: string
+            quote:
+              $ref: '#/$defs/Text'
+              default: null
+            quote_container:
+              $ref: '#/$defs/QuoteContainer'
+              default: null
+            sheet:
+              $ref: '#/$defs/Sheet'
+              default: null
+            table:
+              $ref: '#/$defs/Table'
+              default: null
+            table_cell:
+              $ref: '#/$defs/TableCell'
+              default: null
+            task:
+              $ref: '#/$defs/Task'
+              default: null
+            text:
+              $ref: '#/$defs/Text'
+              default: null
+            todo:
+              $ref: '#/$defs/Text'
+              default: null
+            undefined:
+              $ref: '#/$defs/Undefined'
+              default: null
+            view:
+              $ref: '#/$defs/View'
+              default: null
+            wiki_catalog:
+              $ref: '#/$defs/WikiCatalog'
+              default: null
+          title: Block
+          type: object
+        Board:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Board
+          type: object
+        Callout:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            border_color:
+              default: null
+              title: Border Color
+              type: integer
+            emoji_id:
+              default: null
+              title: Emoji Id
+              type: string
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+          title: Callout
+          type: object
+        ChatCard:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            chat_id:
+              default: null
+              title: Chat Id
+              type: integer
+          title: ChatCard
+          type: object
+        CreateDocumentBlockChildrenResponseBody:
+          properties:
+            children:
+              default: null
+              items:
+                $ref: '#/$defs/Block'
+              title: Children
+              type: array
+            client_token:
+              default: null
+              title: Client Token
+              type: string
+            document_revision_id:
+              default: null
+              title: Document Revision Id
+              type: integer
+          title: CreateDocumentBlockChildrenResponseBody
+          type: object
+        Diagram:
+          properties:
+            diagram_type:
+              default: null
+              title: Diagram Type
+              type: integer
+          title: Diagram
+          type: object
+        Divider:
+          properties: {}
+          title: Divider
+          type: object
+        Equation:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Equation
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        File:
+          properties:
+            name:
+              default: null
+              title: Name
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: File
+          type: object
+        Grid:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+          title: Grid
+          type: object
+        GridColumn:
+          properties:
+            width_ratio:
+              default: null
+              title: Width Ratio
+              type: integer
+          title: GridColumn
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        Iframe:
+          properties:
+            component:
+              $ref: '#/$defs/IframeComponent'
+              default: null
+          title: Iframe
+          type: object
+        IframeComponent:
+          properties:
+            iframe_type:
+              default: null
+              title: Iframe Type
+              type: integer
+            url:
+              default: null
+              title: Url
+              type: string
+          title: IframeComponent
+          type: object
+        Image:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            height:
+              default: null
+              title: Height
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+            width:
+              default: null
+              title: Width
+              type: integer
+          title: Image
+          type: object
+        InlineBlock:
+          properties:
+            block_id:
+              default: null
+              title: Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineBlock
+          type: object
+        InlineFile:
+          properties:
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            source_block_id:
+              default: null
+              title: Source Block Id
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: InlineFile
+          type: object
+        Isv:
+          properties:
+            component_id:
+              default: null
+              title: Component Id
+              type: string
+            component_type_id:
+              default: null
+              title: Component Type Id
+              type: string
+          title: Isv
+          type: object
+        JiraIssue:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            key:
+              default: null
+              title: Key
+              type: string
+          title: JiraIssue
+          type: object
+        Link:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+          title: Link
+          type: object
+        LinkPreview:
+          properties:
+            url:
+              default: null
+              title: Url
+              type: string
+            url_type:
+              default: null
+              title: Url Type
+              type: string
+          title: LinkPreview
+          type: object
+        MentionDoc:
+          properties:
+            obj_type:
+              default: null
+              title: Obj Type
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            title:
+              default: null
+              title: Title
+              type: string
+            token:
+              default: null
+              title: Token
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: MentionDoc
+          type: object
+        MentionUser:
+          properties:
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: MentionUser
+          type: object
+        Mindnote:
+          properties:
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Mindnote
+          type: object
+        ObjectiveIdWithKrId:
+          properties:
+            kr_ids:
+              default: null
+              items:
+                type: integer
+              title: Kr Ids
+              type: array
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+          title: ObjectiveIdWithKrId
+          type: object
+        Okr:
+          properties:
+            objectives:
+              default: null
+              items:
+                $ref: '#/$defs/ObjectiveIdWithKrId'
+              title: Objectives
+              type: array
+            okr_id:
+              default: null
+              title: Okr Id
+              type: integer
+            period_display_status:
+              default: null
+              title: Period Display Status
+              type: string
+            period_name_en:
+              default: null
+              title: Period Name En
+              type: string
+            period_name_zh:
+              default: null
+              title: Period Name Zh
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+            visible_setting:
+              $ref: '#/$defs/OkrVisibleSetting'
+              default: null
+          title: Okr
+          type: object
+        OkrKeyResult:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            kr_id:
+              default: null
+              title: Kr Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrKeyResult
+          type: object
+        OkrObjective:
+          properties:
+            confidential:
+              default: null
+              title: Confidential
+              type: boolean
+            content:
+              $ref: '#/$defs/Text'
+              default: null
+            objective_id:
+              default: null
+              title: Objective Id
+              type: integer
+            position:
+              default: null
+              title: Position
+              type: integer
+            progress_rate:
+              $ref: '#/$defs/OkrProgressRate'
+              default: null
+            score:
+              default: null
+              title: Score
+              type: integer
+            visible:
+              default: null
+              title: Visible
+              type: boolean
+            weight:
+              default: null
+              title: Weight
+              type: number
+          title: OkrObjective
+          type: object
+        OkrProgress:
+          properties: {}
+          title: OkrProgress
+          type: object
+        OkrProgressRate:
+          properties:
+            current:
+              default: null
+              title: Current
+              type: number
+            mode:
+              default: null
+              title: Mode
+              type: string
+            percent:
+              default: null
+              title: Percent
+              type: number
+            progress_status:
+              default: null
+              title: Progress Status
+              type: string
+            start:
+              default: null
+              title: Start
+              type: number
+            status_type:
+              default: null
+              title: Status Type
+              type: string
+            target:
+              default: null
+              title: Target
+              type: number
+          title: OkrProgressRate
+          type: object
+        OkrVisibleSetting:
+          properties:
+            progress_fill_area_visible:
+              default: null
+              title: Progress Fill Area Visible
+              type: boolean
+            progress_status_visible:
+              default: null
+              title: Progress Status Visible
+              type: boolean
+            score_visible:
+              default: null
+              title: Score Visible
+              type: boolean
+          title: OkrVisibleSetting
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateDocumentBlockChildrenResponseBody_'
+          title: OutModel
+        QuoteContainer:
+          properties: {}
+          title: QuoteContainer
+          type: object
+        Reminder:
+          properties:
+            create_user_id:
+              default: null
+              title: Create User Id
+              type: string
+            expire_time:
+              default: null
+              title: Expire Time
+              type: integer
+            is_notify:
+              default: null
+              title: Is Notify
+              type: boolean
+            is_whole_day:
+              default: null
+              title: Is Whole Day
+              type: boolean
+            notify_time:
+              default: null
+              title: Notify Time
+              type: integer
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: Reminder
+          type: object
+        Sheet:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+            token:
+              default: null
+              title: Token
+              type: string
+          title: Sheet
+          type: object
+        Table:
+          properties:
+            cells:
+              default: null
+              items:
+                type: string
+              title: Cells
+              type: array
+            property:
+              $ref: '#/$defs/TableProperty'
+              default: null
+          title: Table
+          type: object
+        TableCell:
+          properties: {}
+          title: TableCell
+          type: object
+        TableMergeInfo:
+          properties:
+            col_span:
+              default: null
+              title: Col Span
+              type: integer
+            row_span:
+              default: null
+              title: Row Span
+              type: integer
+          title: TableMergeInfo
+          type: object
+        TableProperty:
+          properties:
+            column_size:
+              default: null
+              title: Column Size
+              type: integer
+            column_width:
+              default: null
+              items:
+                type: integer
+              title: Column Width
+              type: array
+            header_column:
+              default: null
+              title: Header Column
+              type: boolean
+            header_row:
+              default: null
+              title: Header Row
+              type: boolean
+            merge_info:
+              default: null
+              items:
+                $ref: '#/$defs/TableMergeInfo'
+              title: Merge Info
+              type: array
+            row_size:
+              default: null
+              title: Row Size
+              type: integer
+          title: TableProperty
+          type: object
+        Task:
+          properties:
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            task_id:
+              default: null
+              title: Task Id
+              type: string
+          title: Task
+          type: object
+        Text:
+          properties:
+            elements:
+              default: null
+              items:
+                $ref: '#/$defs/TextElement'
+              title: Elements
+              type: array
+            style:
+              $ref: '#/$defs/TextStyle'
+              default: null
+          title: Text
+          type: object
+        TextElement:
+          properties:
+            equation:
+              $ref: '#/$defs/Equation'
+              default: null
+            file:
+              $ref: '#/$defs/InlineFile'
+              default: null
+            inline_block:
+              $ref: '#/$defs/InlineBlock'
+              default: null
+            mention_doc:
+              $ref: '#/$defs/MentionDoc'
+              default: null
+            mention_user:
+              $ref: '#/$defs/MentionUser'
+              default: null
+            reminder:
+              $ref: '#/$defs/Reminder'
+              default: null
+            text_run:
+              $ref: '#/$defs/TextRun'
+              default: null
+            undefined:
+              $ref: '#/$defs/UndefinedElement'
+              default: null
+          title: TextElement
+          type: object
+        TextElementStyle:
+          properties:
+            background_color:
+              default: null
+              title: Background Color
+              type: integer
+            bold:
+              default: null
+              title: Bold
+              type: boolean
+            comment_ids:
+              default: null
+              items:
+                type: string
+              title: Comment Ids
+              type: array
+            inline_code:
+              default: null
+              title: Inline Code
+              type: boolean
+            italic:
+              default: null
+              title: Italic
+              type: boolean
+            link:
+              $ref: '#/$defs/Link'
+              default: null
+            strikethrough:
+              default: null
+              title: Strikethrough
+              type: boolean
+            text_color:
+              default: null
+              title: Text Color
+              type: integer
+            underline:
+              default: null
+              title: Underline
+              type: boolean
+          title: TextElementStyle
+          type: object
+        TextRun:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+            text_element_style:
+              $ref: '#/$defs/TextElementStyle'
+              default: null
+          title: TextRun
+          type: object
+        TextStyle:
+          properties:
+            align:
+              default: null
+              title: Align
+              type: integer
+            background_color:
+              default: null
+              title: Background Color
+              type: string
+            done:
+              default: null
+              title: Done
+              type: boolean
+            folded:
+              default: null
+              title: Folded
+              type: boolean
+            indentation_level:
+              default: null
+              title: Indentation Level
+              type: string
+            language:
+              default: null
+              title: Language
+              type: integer
+            sequence:
+              default: null
+              title: Sequence
+              type: string
+            wrap:
+              default: null
+              title: Wrap
+              type: boolean
+          title: TextStyle
+          type: object
+        Undefined:
+          properties: {}
+          title: Undefined
+          type: object
+        UndefinedElement:
+          properties: {}
+          title: UndefinedElement
+          type: object
+        View:
+          properties:
+            view_type:
+              default: null
+              title: View Type
+              type: integer
+          title: View
+          type: object
+        WikiCatalog:
+          properties:
+            wiki_token:
+              default: null
+              title: Wiki Token
+              type: string
+          title: WikiCatalog
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

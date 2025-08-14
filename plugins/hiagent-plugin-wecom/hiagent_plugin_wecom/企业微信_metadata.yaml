@@ -1,0 +1,96 @@
+category: Productivity
+config_schema: {}
+description: 企业微信群机器人
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-wecom/hiagent_plugin_wecom/icon.png
+labels:
+  description_en: Enterprise WeChat group robot
+  description_zh_hans: 企业微信群机器人
+  description_zh_hant: 企業微信群機器人
+  name_en: WeCom
+  name_zh_hans: 企业微信
+  name_zh_hant: 企業微信
+meta_version: v1
+metadata_path: 企业微信_metadata.yaml
+name: 企业微信
+package_info:
+  name: hiagent_plugin_wecom
+  version: ''
+tools:
+  wecom_robot_send:
+    description: "send robot message"
+    func_name: wecom_robot_send
+    input_schema:
+      properties:
+        content:
+          description: 消息内容
+          title: Content
+          type: string
+          x-description-en: Message content
+          x-description-zh-hans: 消息内容
+          x-description-zh-hant: 消息內容
+        hook_key:
+          description: '申请说明: <https://developer.work.weixin.qq.com/document/path/91770>'
+          title: Hook Key
+          type: string
+          x-description-en: 'Application instructions: <https://developer.work.weixin.qq.com/document/path/91770>'
+          x-description-zh-hans: '申请说明: <https://developer.work.weixin.qq.com/document/path/91770>'
+          x-description-zh-hant: '申請說明: <https://developer.work.weixin.qq.com/document/path/91770>'
+        message_type:
+          description: 消息类型，一般为 text
+          title: Message Type
+          type: string
+          x-description-en: Message type, usually "text".
+          x-description-zh-hans: 消息类型，一般为 text
+          x-description-zh-hant: 消息類型，一般為 text
+      required:
+      - content
+      - hook_key
+      - message_type
+      title: InModel
+      type: object
+    labels:
+      description_en: send robot message
+      description_zh_hans: 发送机器人消息
+      description_zh_hant: 發送机器人消息
+      name_en: wecom_robot_send
+      name_zh_hans: 发送机器人消息
+      name_zh_hant: 發送機器人消息
+    name: wecom_robot_send
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

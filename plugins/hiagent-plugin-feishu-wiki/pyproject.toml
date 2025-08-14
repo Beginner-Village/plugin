@@ -1,0 +1,28 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-feishu-wiki"
+version = "0.2.1"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_feishu_wiki/icon.png",
+  "hiagent_plugin_feishu_wiki/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_feishu_wiki:FeishuWikiPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.9.2"
+lark-oapi = "^1.4.3"
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"飞书知识库" = "hiagent_plugin_feishu_wiki:FeishuWikiPlugin"

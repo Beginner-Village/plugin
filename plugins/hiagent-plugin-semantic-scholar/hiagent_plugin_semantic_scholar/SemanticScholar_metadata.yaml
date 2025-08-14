@@ -1,0 +1,92 @@
+category: Education
+config_schema: {}
+description: Tool that searches the SemanticScholar API.
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-semantic-scholar/hiagent_plugin_semantic_scholar/icon.png
+labels:
+  description_en: Tool that searches the SemanticScholar API.
+  description_zh_hans: 用于搜索语义学者（SemanticScholar）应用程序编程接口（API）的工具。
+  description_zh_hant: 用於搜尋SemanticScholar API的工具。
+  name_en: SemanticScholar
+  name_zh_hans: 语义学者
+  name_zh_hant: 語義學者
+meta_version: v1
+metadata_path: SemanticScholar_metadata.yaml
+name: SemanticScholar
+package_info:
+  name: hiagent_plugin_semantic_scholar
+  version: ''
+tools:
+  search:
+    description: ''
+    func_name: search
+    input_schema:
+      properties:
+        load_max_docs:
+          default: 10
+          description: 最大加载文档数量
+          title: Load Max Docs
+          type: integer
+          x-description-en: Maximum number of loaded documents
+          x-description-zh-hans: 最大加载文档数量
+          x-description-zh-hant: 最大載入文件數量
+        query:
+          title: Query
+          type: string
+        top_k_results:
+          default: 5
+          description: 返回结果数量
+          title: Top K Results
+          type: integer
+          x-description-en: Number of returned results
+          x-description-zh-hans: 返回结果数量
+          x-description-zh-hant: 返回結果數量
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: ''
+      description_zh_hans: ''
+      description_zh_hant: ''
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

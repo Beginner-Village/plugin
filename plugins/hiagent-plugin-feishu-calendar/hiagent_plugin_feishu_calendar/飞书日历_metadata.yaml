@@ -1,0 +1,3788 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书日历
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-calendar/hiagent_plugin_feishu_calendar/icon.png
+labels:
+  description_en: Feishu Calendar
+  description_zh_hans: 飞书日历
+  description_zh_hant: 飛書日曆
+  name_en: Feishu Calendar
+  name_zh_hans: 飞书日历
+  name_zh_hant: 飛書日曆
+meta_version: v1
+metadata_path: 飞书日历_metadata.yaml
+name: 飞书日历
+package_info:
+  name: hiagent_plugin_feishu_calendar
+  version: ''
+tools:
+  create_event:
+    description: 创建日程
+    func_name: create_event
+    input_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        calendar_id:
+          description: 日历 ID。
+          title: Calendar Id
+          type: string
+          x-description-en: Calendar ID.
+          x-description-zh-hans: 日历 ID。
+          x-description-zh-hant: 日曆 ID。
+        event:
+          $ref: '#/$defs/CalendarEvent'
+          description: 事件信息
+          x-description-en: Event information
+          x-description-zh-hans: 事件信息
+          x-description-zh-hant: 事件資訊
+        idempotency_key:
+          default: ''
+          description: 创建日程的幂等 key，该 key 在应用和日历维度下唯一，用于避免重复创建资源。
+          title: Idempotency Key
+          type: string
+          x-description-en: Create an idempotent key for the schedule. This key is
+            unique within the dimensions of the application and the calendar and is
+            used to avoid duplicate resource creation.
+          x-description-zh-hans: 创建日程的幂等键，此键在应用和日历维度上具有唯一性，用于防止重复创建资源。
+          x-description-zh-hant: 創建日程的冪等 key，該 key 在應用和日曆維度下唯一，用於避免重複創建資源。
+      required:
+      - calendar_id
+      - event
+      title: InModel
+      type: object
+    labels:
+      description_en: Create a schedule
+      description_zh_hans: 创建日程
+      description_zh_hant: 創建日程
+      name_en: create_event
+      name_zh_hans: 创建事件
+      name_zh_hant: 創建事件
+    name: create_event
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        BaseRespModel_CreateCalendarEventResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/CreateCalendarEventResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[CreateCalendarEventResponseBody]
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CreateCalendarEventResponseBody:
+          properties:
+            event:
+              $ref: '#/$defs/CalendarEvent'
+              default: null
+          title: CreateCalendarEventResponseBody
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_CreateCalendarEventResponseBody_'
+          title: OutModel
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  delete_event:
+    description: 删除日程
+    func_name: delete_event
+    input_schema:
+      properties:
+        calendar_id:
+          description: 日程所在的日历 ID。
+          title: Calendar Id
+          type: string
+          x-description-en: The calendar ID where the schedule is located.
+          x-description-zh-hans: 日程所在的日历 ID。
+          x-description-zh-hant: 日程所在的日曆 ID。
+        event_id:
+          description: 日程 ID。
+          title: Event Id
+          type: string
+          x-description-en: Schedule ID.
+          x-description-zh-hans: 日程 ID。
+          x-description-zh-hant: 日程ID。
+        need_notification:
+          default: 'true'
+          description: 删除日程是否给日程参与人发送 Bot 通知。
+          title: Need Notification
+          type: string
+          x-description-en: Whether to send a Bot notification to the participants
+            when deleting a schedule.
+          x-description-zh-hans: 删除日程是否给日程参与人发送 Bot 通知。
+          x-description-zh-hant: 刪除日程時，是否要向日程參與人發送 Bot 通知
+      required:
+      - calendar_id
+      - event_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Delete the schedule
+      description_zh_hans: 删除日程
+      description_zh_hant: 刪除日程
+      name_en: delete_event
+      name_zh_hans: 删除事件
+      name_zh_hant: 刪除事件
+    name: delete_event
+    output_schema:
+      $defs:
+        BaseRespModel_dict_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[dict]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_dict_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  list_calendars:
+    description: 查询日历列表
+    func_name: list_calendars
+    input_schema:
+      properties:
+        page_size:
+          default: 500
+          description: 一次请求返回的最大日历数量。50 ～ 1000
+          title: Page Size
+          type: integer
+          x-description-en: 'The maximum number of calendars returned in one request.
+            Range: 50 - 1000.'
+          x-description-zh-hans: 一次请求返回的最大日历数量。范围为50至1000。
+          x-description-zh-hant: 一次請求返回的最大日曆數量。50 ～ 1000
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating traversal from the beginning.
+          x-description-zh-hans: 分页标记，首次请求无需填写，意味着从起始处开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，表示從頭開始遍歷；
+        sync_token:
+          default: ''
+          description: 增量同步标记，第一次请求不填。当分页查询结束（page_token 返回值为空）时，接口会返回 sync_token
+            字段，下次调用可使用该 sync_token 增量获取日历变更数据
+          title: Sync Token
+          type: string
+          x-description-en: Incremental sync token. Leave it blank for the first request.
+            When the paginated query ends (the return value of page_token is empty),
+            the interface will return the sync_token field. You can use this sync_token
+            to incrementally get calendar change data in the next call.
+          x-description-zh-hans: 增量同步标记，首次请求无需填写。当分页查询结束（page_token 返回值为空）时，接口会返回
+            sync_token 字段，下次调用时可使用该 sync_token 增量获取日历变更数据。
+          x-description-zh-hant: 增量同步標記，第一次請求無需填寫。當分頁查詢結束（page_token 返回值為空）時，介面會返回
+            sync_token 字段，下次調用時可使用該 sync_token 增量獲取日曆變更數據。
+      title: InModel
+      type: object
+    labels:
+      description_en: Query the calendar list
+      description_zh_hans: 查询日历列表
+      description_zh_hant: 查詢日曆列表
+      name_en: list_calendars
+      name_zh_hans: 列出日历
+      name_zh_hant: 列出日曆
+    name: list_calendars
+    output_schema:
+      $defs:
+        BaseRespModel_ListCalendarResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ListCalendarResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ListCalendarResponseBody]
+          type: object
+        Calendar:
+          properties:
+            calendar_id:
+              default: null
+              title: Calendar Id
+              type: string
+            color:
+              default: null
+              title: Color
+              type: integer
+            description:
+              default: null
+              title: Description
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            is_third_party:
+              default: null
+              title: Is Third Party
+              type: boolean
+            permissions:
+              default: null
+              title: Permissions
+              type: string
+            role:
+              default: null
+              title: Role
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            summary_alias:
+              default: null
+              title: Summary Alias
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: Calendar
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ListCalendarResponseBody:
+          properties:
+            calendar_list:
+              default: null
+              items:
+                $ref: '#/$defs/Calendar'
+              title: Calendar List
+              type: array
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+            sync_token:
+              default: null
+              title: Sync Token
+              type: string
+          title: ListCalendarResponseBody
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ListCalendarResponseBody_'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  list_event:
+    description: 查询日程列表
+    func_name: list_event
+    input_schema:
+      properties:
+        anchor_time:
+          description: '时间锚点，Unix 时间戳（秒）。anchor_time用于设置一个时间点，以便直接拉取该时间点之后的日程数据，从而避免拉取全量日程数据。你可以使用page_token或sync_token进行分页或增量拉取anchor_time之后的所有日程数据。比如:
+            "1609430400"'
+          title: Anchor Time
+          type: string
+          x-description-en: 'Time anchor, Unix timestamp (seconds). anchor_time is
+            used to set a time point so that you can directly pull the schedule data
+            after this time point, thus avoiding pulling all the schedule data. You
+            can use page_token or sync_token to perform paging or incremental pulling
+            of all the schedule data after anchor_time. For example: "1609430400"'
+          x-description-zh-hans: 时间锚点，Unix时间戳（秒）。anchor_time用于设定一个时间点，以便直接获取该时间点之后的日程数据，进而避免获取全量日程数据。你可以使用page_token或sync_token对anchor_time之后的所有日程数据进行分页或增量获取。例如："1609430400"
+          x-description-zh-hant: '時間錨點，Unix時間戳（秒）。anchor_time用於設定一個時間點，以便直接拉取該時間點之後的日程資料，從而避免拉取全量日程資料。你可以使用page_token或sync_token進行分頁或增量拉取anchor_time之後的所有日程資料。例如:
+            "1609430400"'
+        calendar_id:
+          description: 日程所在的日历 ID。
+          title: Calendar Id
+          type: string
+          x-description-en: The calendar ID where the schedule is located.
+          x-description-zh-hans: 日程所在的日历 ID。
+          x-description-zh-hant: 日程所在的日曆 ID。
+        page_size:
+          default: 500
+          description: 一次请求要求返回的最大日程数量。50 ～ 1000
+          title: Page Size
+          type: integer
+          x-description-en: The maximum number of schedules to be returned in one
+            request. It ranges from 50 to 1000.
+          x-description-zh-hans: 一次请求要求返回的最大日程数量。范围为50至1000。
+          x-description-zh-hant: 一次請求要求返回的最大日程數量。50 ～ 1000
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating traversal starts from the beginning.
+          x-description-zh-hans: 分页标记，首次请求无需填写，意味着从开头开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，代表從頭開始遍歷；
+        sync_token:
+          default: ''
+          description: 增量同步标记，第一次请求不填。当分页查询结束（page_token 返回值为空）时，接口会返回 sync_token
+            字段，下次调用可使用该 sync_token 增量获取日历变更数据。
+          title: Sync Token
+          type: string
+          x-description-en: Incremental sync token. Leave it blank for the first request.
+            When the paginated query ends (the return value of page_token is empty),
+            the interface will return the sync_token field. You can use this sync_token
+            to incrementally obtain calendar change data in the next call.
+          x-description-zh-hans: '增量同步标记，首次请求无需填写。当分页查询结束（page_token 返回值为空）时，接口会返回
+            sync_token 字段，后续调用可使用该 sync_token 增量获取日历变更数据。 '
+          x-description-zh-hant: '增量同步標記，第一次請求不用填寫。當分頁查詢結束（page_token 返回值為空）時，介面會返回
+            sync_token 欄位，下次調用時可使用該 sync_token 增量獲取日曆變更數據。 '
+      required:
+      - calendar_id
+      - anchor_time
+      title: InModel
+      type: object
+    labels:
+      description_en: Query the schedule list
+      description_zh_hans: 查询日程列表
+      description_zh_hant: 查詢日程列表
+      name_en: list_events
+      name_zh_hans: 列出事件
+      name_zh_hant: 列出事件
+    name: list_event
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        BaseRespModel_ListCalendarEventResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ListCalendarEventResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ListCalendarEventResponseBody]
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ListCalendarEventResponseBody:
+          properties:
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEvent'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+            sync_token:
+              default: null
+              title: Sync Token
+              type: string
+          title: ListCalendarEventResponseBody
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ListCalendarEventResponseBody_'
+          title: OutModel
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  search_event:
+    description: 搜索日程
+    func_name: search_event
+    input_schema:
+      $defs:
+        EventSearchFilter:
+          properties:
+            chat_ids:
+              default: null
+              items:
+                type: string
+              title: Chat Ids
+              type: array
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            room_ids:
+              default: null
+              items:
+                type: string
+              title: Room Ids
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            user_ids:
+              default: null
+              items:
+                type: string
+              title: User Ids
+              type: array
+          title: EventSearchFilter
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+      properties:
+        calendar_id:
+          description: 日程所在的日历 ID。
+          title: Calendar Id
+          type: string
+          x-description-en: The calendar ID where the schedule is located.
+          x-description-zh-hans: 日程所在的日历 ID。
+          x-description-zh-hant: 日程所在的日曆 ID。
+        filter:
+          $ref: '#/$defs/EventSearchFilter'
+          default: {}
+          description: 搜索条件
+          x-description-en: Search criteria
+          x-description-zh-hans: 搜索条件
+          x-description-zh-hant: 搜尋條件
+        page_size:
+          default: 500
+          description: 一次请求要求返回的最大日程数量。50 ～ 1000
+          title: Page Size
+          type: integer
+          x-description-en: The maximum number of schedules to be returned in one
+            request. It ranges from 50 to 1000.
+          x-description-zh-hans: 一次请求要求返回的最大日程数量。范围为50至1000。
+          x-description-zh-hant: 一次請求要求返回的最大日程數量。50 ～ 1000
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating to start traversing from the beginning.
+          x-description-zh-hans: 分页标记，首次请求时无需填写，意味着从开头开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，代表從頭開始遍歷；
+        query:
+          description: 搜索关键字。
+          title: Query
+          type: string
+          x-description-en: Search for keywords.
+          x-description-zh-hans: 搜索关键字。
+          x-description-zh-hant: 搜尋關鍵字。
+      required:
+      - calendar_id
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for schedules
+      description_zh_hans: 搜索日程
+      description_zh_hant: 搜尋日程
+      name_en: search_event
+      name_zh_hans: 搜索事件
+      name_zh_hant: 搜尋事件
+    name: search_event
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        BaseRespModel_SearchCalendarEventResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/SearchCalendarEventResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[SearchCalendarEventResponseBody]
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_SearchCalendarEventResponseBody_'
+          title: OutModel
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        SearchCalendarEventResponseBody:
+          properties:
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEvent'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+          title: SearchCalendarEventResponseBody
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  update_event:
+    description: 更新日程
+    func_name: update_event
+    input_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        calendar_id:
+          description: 日程所在的日历 ID。
+          title: Calendar Id
+          type: string
+          x-description-en: The calendar ID where the schedule is located.
+          x-description-zh-hans: 日程所在的日历 ID。
+          x-description-zh-hant: 日程所在的日曆 ID。
+        event:
+          $ref: '#/$defs/CalendarEvent'
+          description: 事件信息
+          x-description-en: Event information
+          x-description-zh-hans: 事件信息
+          x-description-zh-hant: 事件資訊
+        event_id:
+          description: 日程 ID。
+          title: Event Id
+          type: string
+          x-description-en: Schedule ID.
+          x-description-zh-hans: 日程 ID。
+          x-description-zh-hant: 日程ID。
+      required:
+      - calendar_id
+      - event_id
+      - event
+      title: InModel
+      type: object
+    labels:
+      description_en: Update the schedule
+      description_zh_hans: 更新日程
+      description_zh_hant: 更新日程
+      name_en: update_event
+      name_zh_hans: 更新事件
+      name_zh_hant: 更新事件
+    name: update_event
+    output_schema:
+      $defs:
+        Attachment:
+          properties:
+            file_size:
+              default: null
+              title: File Size
+              type: string
+            file_token:
+              default: null
+              title: File Token
+              type: string
+            is_deleted:
+              default: null
+              title: Is Deleted
+              type: boolean
+            name:
+              default: null
+              title: Name
+              type: string
+          title: Attachment
+          type: object
+        AttendeeChatMember:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+          title: AttendeeChatMember
+          type: object
+        BaseRespModel_PatchCalendarEventResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/PatchCalendarEventResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[PatchCalendarEventResponseBody]
+          type: object
+        CalendarAttendeeResourceCustomization:
+          properties:
+            index_key:
+              default: null
+              title: Index Key
+              type: string
+            input_content:
+              default: null
+              title: Input Content
+              type: string
+            options:
+              default: null
+              items:
+                $ref: '#/$defs/CustomizationOption'
+              title: Options
+              type: array
+          title: CalendarAttendeeResourceCustomization
+          type: object
+        CalendarEvent:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            attachments:
+              default: null
+              items:
+                $ref: '#/$defs/Attachment'
+              title: Attachments
+              type: array
+            attendee_ability:
+              default: null
+              title: Attendee Ability
+              type: string
+            attendees:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarEventAttendee'
+              title: Attendees
+              type: array
+            color:
+              default: null
+              title: Color
+              type: integer
+            create_time:
+              default: null
+              title: Create Time
+              type: string
+            description:
+              default: null
+              title: Description
+              type: string
+            end_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            event_id:
+              default: null
+              title: Event Id
+              type: string
+            event_organizer:
+              $ref: '#/$defs/EventOrganizer'
+              default: null
+            free_busy_status:
+              default: null
+              title: Free Busy Status
+              type: string
+            has_more_attendee:
+              default: null
+              title: Has More Attendee
+              type: boolean
+            is_exception:
+              default: null
+              title: Is Exception
+              type: boolean
+            location:
+              $ref: '#/$defs/EventLocation'
+              default: null
+            need_notification:
+              default: null
+              title: Need Notification
+              type: boolean
+            organizer_calendar_id:
+              default: null
+              title: Organizer Calendar Id
+              type: string
+            recurrence:
+              default: null
+              title: Recurrence
+              type: string
+            recurring_event_id:
+              default: null
+              title: Recurring Event Id
+              type: string
+            reminders:
+              default: null
+              items:
+                $ref: '#/$defs/Reminder'
+              title: Reminders
+              type: array
+            schemas:
+              default: null
+              items:
+                $ref: '#/$defs/Schema'
+              title: Schemas
+              type: array
+            start_time:
+              $ref: '#/$defs/TimeInfo'
+              default: null
+            status:
+              default: null
+              title: Status
+              type: string
+            summary:
+              default: null
+              title: Summary
+              type: string
+            vchat:
+              $ref: '#/$defs/Vchat'
+              default: null
+            visibility:
+              default: null
+              title: Visibility
+              type: string
+          title: CalendarEvent
+          type: object
+        CalendarEventAttendee:
+          properties:
+            approval_reason:
+              default: null
+              title: Approval Reason
+              type: string
+            attendee_id:
+              default: null
+              title: Attendee Id
+              type: string
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            chat_members:
+              default: null
+              items:
+                $ref: '#/$defs/AttendeeChatMember'
+              title: Chat Members
+              type: array
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            is_external:
+              default: null
+              title: Is External
+              type: boolean
+            is_optional:
+              default: null
+              title: Is Optional
+              type: boolean
+            is_organizer:
+              default: null
+              title: Is Organizer
+              type: boolean
+            operate_id:
+              default: null
+              title: Operate Id
+              type: string
+            resource_customization:
+              default: null
+              items:
+                $ref: '#/$defs/CalendarAttendeeResourceCustomization'
+              title: Resource Customization
+              type: array
+            room_id:
+              default: null
+              title: Room Id
+              type: string
+            rsvp_status:
+              default: null
+              title: Rsvp Status
+              type: string
+            third_party_email:
+              default: null
+              title: Third Party Email
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: CalendarEventAttendee
+          type: object
+        CustomizationOption:
+          properties:
+            option_key:
+              default: null
+              title: Option Key
+              type: string
+            others_content:
+              default: null
+              title: Others Content
+              type: string
+          title: CustomizationOption
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        EventLocation:
+          properties:
+            address:
+              default: null
+              title: Address
+              type: string
+            latitude:
+              default: null
+              title: Latitude
+              type: number
+            longitude:
+              default: null
+              title: Longitude
+              type: number
+            name:
+              default: null
+              title: Name
+              type: string
+          title: EventLocation
+          type: object
+        EventOrganizer:
+          properties:
+            display_name:
+              default: null
+              title: Display Name
+              type: string
+            user_id:
+              default: null
+              title: User Id
+              type: string
+          title: EventOrganizer
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        MeetingSettings:
+          properties:
+            allow_attendees_start:
+              default: null
+              title: Allow Attendees Start
+              type: boolean
+            assign_hosts:
+              default: null
+              items:
+                type: integer
+              title: Assign Hosts
+              type: array
+            auto_record:
+              default: null
+              title: Auto Record
+              type: boolean
+            join_meeting_permission:
+              default: null
+              title: Join Meeting Permission
+              type: string
+            open_lobby:
+              default: null
+              title: Open Lobby
+              type: boolean
+            owner_id:
+              default: null
+              title: Owner Id
+              type: integer
+            password:
+              default: null
+              title: Password
+              type: string
+          title: MeetingSettings
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_PatchCalendarEventResponseBody_'
+          title: OutModel
+        PatchCalendarEventResponseBody:
+          properties:
+            event:
+              $ref: '#/$defs/CalendarEvent'
+              default: null
+          title: PatchCalendarEventResponseBody
+          type: object
+        Reminder:
+          properties:
+            minutes:
+              default: null
+              title: Minutes
+              type: integer
+          title: Reminder
+          type: object
+        Schema:
+          properties:
+            app_link:
+              default: null
+              title: App Link
+              type: string
+            ui_name:
+              default: null
+              title: Ui Name
+              type: string
+            ui_status:
+              default: null
+              title: Ui Status
+              type: string
+          title: Schema
+          type: object
+        TimeInfo:
+          properties:
+            date:
+              default: null
+              title: Date
+              type: string
+            timestamp:
+              default: null
+              title: Timestamp
+              type: string
+            timezone:
+              default: null
+              title: Timezone
+              type: string
+          title: TimeInfo
+          type: object
+        VcInfo:
+          properties:
+            meeting_no:
+              default: null
+              title: Meeting No
+              type: integer
+            unique_id:
+              default: null
+              title: Unique Id
+              type: integer
+          title: VcInfo
+          type: object
+        Vchat:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            icon_type:
+              default: null
+              title: Icon Type
+              type: string
+            live_link:
+              default: null
+              title: Live Link
+              type: string
+            meeting_settings:
+              $ref: '#/$defs/MeetingSettings'
+              default: null
+            meeting_url:
+              default: null
+              title: Meeting Url
+              type: string
+            vc_info:
+              $ref: '#/$defs/VcInfo'
+              default: null
+            vc_type:
+              default: null
+              title: Vc Type
+              type: string
+          title: Vchat
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

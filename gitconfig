@@ -1,0 +1,21 @@
+
+[gc]
+        auto = 0
+[url "gitlab@git.byted.org:"]
+        insteadOf = https://code.byted.org/
+[url "gitlab@git.byted.org"]
+        insteadOf = git@code.byted.org
+[url "gitlab@git.byted.org:"]
+        insteadOf = ssh://git@code.byted.org:29418/
+[url "gerrit@git.byted.org:"]
+        insteadOf = ssh://deploy@git.byted.org:29418/
+[url "gerrit@git.byted.org:"]
+        insteadOf = gitr:
+[url "gerrit@git.byted.org:"]
+        insteadOf = https://git.byted.org/
+[url "git@code.byted.org:"]
+	insteadOf = https://code.byted.org/
+[url "gitlab@git.byted.org:"]
+        insteadOf = ssh://git@code.byted.org/
+[safe]
+	directory = /opt/tiger/jenkins_slave/workspace/build_pipeline_LubanSeven_buildkit.base_82730907

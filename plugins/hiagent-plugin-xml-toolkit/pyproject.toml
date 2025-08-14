@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "hiagent-plugin-xml-toolkit"
+version = "0.2.1"
+description = ""
+authors = ["wangbin.35 <wangbin.35@bytedance.com>"]
+include = [
+  "hiagent_plugin_xml_toolkit/icon.png",
+  "hiagent_plugin_xml_toolkit/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_xml_toolkit:XmlToolkitPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.11.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"xml工具" = "hiagent_plugin_xml_toolkit:XmlToolkitPlugin"

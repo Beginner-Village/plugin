@@ -1,0 +1,29 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-duckduckgosearch"
+version = "0.2.1"
+description = ""
+package-mode = true
+include = [
+    "hiagent_plugin_duckduckgosearch/icon.png",
+    "hiagent_plugin_duckduckgosearch/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_duckduckgosearch:DuckDuckGoSearchPlugin._gen_metadata'
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain-community = "^0.3.4"
+duckduckgo-search = "^6.3.5"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+DuckDuckGoSearch = "hiagent_plugin_duckduckgosearch:DuckDuckGoSearchPlugin"

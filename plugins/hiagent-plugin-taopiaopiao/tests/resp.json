@@ -1,0 +1,487 @@
+{
+  "film_open_show_nowandsoon_get_response": {
+    "count": 442,
+    "return_code": "0",
+    "return_value": {
+      "show": [
+        {
+          "company": "中国电影股份有限公司北京电影发行分公司|北京影行天下文化传播有限公司|北京完美影视传媒有限责任公司|上海路文影视文化工作室|北京华美时空文化传播有限公司|东阳新经典影业有限公司",
+          "country": "中国大陆",
+          "duration": 110,
+          "language": "汉语普通话",
+          "leader": "文章|白百何|张嘉益|张子萱",
+          "name": "失恋33天",
+          "open_day": "2011-11-08 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/T13hSDXdtmXXagOFbX",
+          "remark": "7.7",
+          "show_code": "001105452011",
+          "show_id": "735",
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1qqHLxy_1gK0jSZFqXXcpaXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB16vbHxpT7gK0jSZFpXXaTkpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1jvfHxpT7gK0jSZFpXXaTkpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1bGLLxy_1gK0jSZFqXXcpaXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1PTrHxxD1gK0jSZFsXXbldVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1gUfHxAL0gK0jSZFtXXXQCXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB12rvHxvb2gK0jSZK9XXaEgFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1iaLLxy_1gK0jSZFqXXcpaXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB13hrQxBr0gK0jSZFnXXbRRXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB173LMxEY1gK0jSZFCXXcwqXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1DdDMxxD1gK0jSZFKXXcJrVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1m1jJxrr1gK0jSZR0XXbP8XXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1_MLMxEY1gK0jSZFCXXcwqXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB17unNxAT2gK0jSZFkXXcIQFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1b22Ixxz1gK0jSZSgXXavwpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1MPE.wKbviK0jSZFNXXaApXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1.RbMxrY1gK0jSZTEXXXDQVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB16HvHxvb2gK0jSZK9XXaEgFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1.xnJxCf2gK0jSZFPXXXsopXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB15931XcKfxu4jSZPfXXb3dXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1rmHMxrj1gK0jSZFOXXc7GpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1X9bNxuH2gK0jSZJnXXaT1FXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1sCHMxrj1gK0jSZFOXXc7GpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1qfDNxq61gK0jSZFlXXXDKFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1mpzIxEH1gK0jSZSyXXXtlpXa_.jpg"
+            ]
+          },
+          "type": "爱情|剧情"
+        },
+        {
+          "company": "广西电影制片厂|International Film Circuit",
+          "country": "中国大陆",
+          "duration": 91,
+          "language": "汉语普通话",
+          "leader": "王学圻|刘强|薛白|谭托",
+          "name": "黄土地",
+          "open_day": "1984-12-31 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i1\/TB1dO.hRFXXXXbrXpXXXXXXXXXX_.jpg",
+          "remark": "8.4",
+          "show_code": "001100391984",
+          "show_id": "816",
+          "show_versions": {
+            "string": [
+              "2D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1XQvGRFXXXXccapXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1TOL2RFXXXXcNXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1fArURFXXXXX7XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1YiT_RFXXXXaSXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB12WkbRFXXXXX0XFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1GAbDRFXXXXbiapXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1GS6TRFXXXXcgXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1hmEdRFXXXXbBXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1J1.fRFXXXXb0XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1NezVRFXXXXcSXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1jT67RFXXXXcbXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1SE.jRFXXXXcMXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1Ky7dRFXXXXbLXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1gizURFXXXXaAXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB16A23RFXXXXcQXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1sW2.RFXXXXc0XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1.D69RFXXXXa5XFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1L7oaRFXXXXcWXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1lWgxRFXXXXXgXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1nLcaRFXXXXczXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1rtD5RFXXXXcpXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1Hyv4RFXXXXXwXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1RxEzRFXXXXXcXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1YcL3RFXXXXXuXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1SnPVRFXXXXcqXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1LMgqRFXXXXcvXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1h.EqRFXXXXckXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1zf6_RFXXXXanXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB16osxRFXXXXXWXXXXXXXXXXXX_.jpg"
+            ]
+          },
+          "type": "剧情"
+        },
+        {
+          "company": "西安电影制片厂|西部电影集团有限公司|华夏电影发行有限责任公司|Transmundo Films|Transmundo Home Video (THV)|New Yorker Films|陕西西影电影频道经营有限责任公司|华夏电影发行有限责任公司",
+          "country": "中国大陆",
+          "duration": 92,
+          "language": "汉语普通话",
+          "leader": "姜文|巩俐|滕汝骏|钱明|刘继",
+          "name": "红高粱",
+          "open_day": "2018-10-12 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i2\/O1CN01aNEBpq1sZIFYyvCvc_!!6000000005780-0-alipicbeacon.jpg",
+          "remark": "8.8",
+          "show_code": "001100891987",
+          "show_id": "1818",
+          "show_versions": {
+            "string": [
+              "2D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/TB1kTyPFXXXXXcDaVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1QjYCFFXXXXadaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB17Uwzj3HqK1RjSZFEXXcGMXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/TB1iYATFpXXXXXtbFXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB18dl_NhTpK1RjSZFMXXbG_VXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/TB1IIDiFFXXXXbJaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1cX6VFpXXXXaDbXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1PgubFpXXXXajcFXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1fQTsFFXXXXchXVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1xiq7FFXXXXasapXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB17pnoFFXXXXb6apXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1L5juFFXXXXcQXVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1agSXFFXXXXctaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1m4PYFFXXXXaPaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1IYTFFFXXXXbtaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1hBaDFFXXXXcIbpXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1RwY_FXXXXXaDcVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1aDTTFFXXXXbaXVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1TvmFFXXXXXczaVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1LT_mFFXXXXXeaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1xjA6FpXXXXcWbFXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1FjWmFFXXXXasaFXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1kPx1XpXXXXb_bpXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1KmdsFFXXXXbybXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1yJcQFFXXXXXsaXXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB16noUFFXXXXasXpXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB16qrhFFXXXXc9XVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/TB1CDdeXpXXXXcWaVXXSutbFXXX",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1hFZtj4TpK1RjSZR0XXbEwXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1uDExj7voK1RjSZFNXXcxMVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB18Z49NirpK1RjSZFhXXXSdXXa_.jpg"
+            ]
+          },
+          "type": "剧情|爱情"
+        },
+        {
+          "company": "Applause Pictures Limited|甲上娱乐有限公司|摩根·陈影业有限公司|Ruddy Morgan Productions|Mega Star Video Distribution|Shaw Organisation|甲上娱乐有限公司|天映娱乐|Wild Side Films|Applause Entertainment|Pan Européenne Distribution",
+          "country": "中国大陆|中国香港",
+          "duration": 106,
+          "highlight": "如果爱，如果不爱",
+          "language": "汉语普通话,粤语,英语",
+          "leader": "金城武|周迅|张学友|池珍熙",
+          "name": "如果·爱",
+          "open_day": "2005-12-01 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i1\/TB1qKqGLVXXXXctXXXXXXXXXXXX_.jpg",
+          "remark": "8.2",
+          "show_code": "001101922005",
+          "show_id": "1973",
+          "show_versions": {
+            "string": [
+              "2D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1wCisLVXXXXcaXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1x4WILVXXXXbyXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1G6SELVXXXXXPXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1FdiILVXXXXbjXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1b9GnLVXXXXXvaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1VDeuLVXXXXa9XFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1rmKuLVXXXXcvXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB18C1vLVXXXXbRXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1_eSsLVXXXXXvXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1ojWcLVXXXXcFapXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB11qeCLVXXXXbpXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1CjqALVXXXXa.XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1fKupLVXXXXa3XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1YmqfLVXXXXXJapXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1m25KLVXXXXaNXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1MNalLVXXXXaCaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB10UCoLVXXXXcbXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1b.KLLVXXXXXSXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1LRqtLVXXXXX3XVXXXXXXXXXX_.jpg"
+            ]
+          },
+          "type": "爱情|剧情|歌舞"
+        },
+        {
+          "company": "Fuji TV Drama Production Center|美国想象娱乐公司|联华影业公司|西安电影制片厂|Argentina Video Home (AVH)|MCA\/Universal Pictures",
+          "country": "中国大陆",
+          "duration": 137,
+          "language": "汉语普通话",
+          "leader": "周里京|吴玉芳|高保成|李小力",
+          "name": "人生",
+          "open_day": "1984-12-31 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i2\/O1CN01FzdfxS1oquo3eGtG4_!!6000000005277-0-alipicbeacon.jpg",
+          "show_code": "001100811984",
+          "show_id": "2041",
+          "show_versions": {
+            "string": [
+              "其他"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1n2WJQFXXXXXSXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1Rt9NQFXXXXcIXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1qSV9QFXXXXXMaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1HpmVQFXXXXXgXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1zumfQFXXXXcZXVXXXXXXXXXX_.jpg"
+            ]
+          },
+          "type": "剧情|爱情"
+        },
+        {
+          "company": "美国传奇影片公司|辛克匹电影公司|美国华纳兄弟影片公司|美国华纳兄弟影片公司|华夏电影发行有限责任公司|中国电影股份有限公司|上海电影（集团）公司上海电影译制厂|中国电影集团公司",
+          "country": "美国|英国",
+          "duration": 165,
+          "highlight": "漫长黑暗过后，终迎黎明曙光。",
+          "language": "英语",
+          "leader": "克里斯蒂安·贝尔|汤姆·哈迪|安妮·海瑟薇|迈克尔·凯恩",
+          "name": "蝙蝠侠：黑暗骑士崛起",
+          "name_en": "The Dark Knight Rises",
+          "open_day": "2012-08-27 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i4\/O1CN01d2dMxw1WJnIRm4A1m_!!6000000002768-2-alipicbeacon.png",
+          "remark": "9.3",
+          "show_code": "051301242012,051601242012,051101242012,051501242012",
+          "show_id": "2740",
+          "show_mark": "3D",
+          "show_versions": {
+            "string": [
+              "3D",
+              "IMAX3D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1efBdMXXXXXXGXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1NzpoMXXXXXbiXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1ul33LVXXXXa1aXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1QF8mMXXXXXcFXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB12wleMXXXXXcIXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1FglmMXXXXXczXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1yLdXMXXXXXc7XFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1_oJnMXXXXXbEXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB14EFqMXXXXXXxXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1UGNaMXXXXXclXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1W_o4LVXXXXaxaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB11nFaMXXXXXbvXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1cuxaMXXXXXbNXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1FpJjMXXXXXaqXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB10jxkMXXXXXXkXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB142RoMXXXXXaCXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1jzJjMXXXXXXdXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1_wc9LVXXXXXeXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB18zXbMXXXXXaKXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1uBloMXXXXXbfXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB10Ns_LVXXXXaQXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB196VhMXXXXXaOXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1e_0kMXXXXXciXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1L04kMXXXXXXpXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1vZ4gMXXXXXbgXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1hy0lMXXXXXcLXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1AIU0LVXXXXXlapXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB13i0hMXXXXXaoXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1sNo.LVXXXXX2XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1l6kYLVXXXXc2aXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/O1CN01iNuzbF1I8QUhg3xcI_!!6000000000848-0-alipicbeacon.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/O1CN01A1IXgK1QTyE7wZ8bB_!!6000000001978-0-alipicbeacon.jpg"
+            ]
+          },
+          "type": "动作|科幻|剧情|惊悚|犯罪"
+        },
+        {
+          "company": "东方电影制作有限公司|Beijing ShengShi HuaRei Film Investment & Management Co.|Foshan Pearl River Media Group|Desen International Media|Teng Yuan Film & TV Media|Beijing Baron Stars Culture Media|Shenzhen Haiguchi Investment|Beijing Xinyinglian Cinema Circuit|星汇天姬（北京）影视传媒有限公司|东方电影制作有限公司|佛山珠江传媒股份有限公司|大盛国际传媒（北京）有限公司|河南电影电视制作集团有限公司|北京盛世华锐电影投资管理有限公司|东方电影制作有限公司|Gravitas Ventures|Cathay-Keris Films|山水国际娱乐公司|Scorpio East|Libero|Variance Films|Well Go|Solar Entertainment Corporation|Face to Face|寰宇镭射录影有限公司|大盛国际传媒（北京）有限公司|中国电影集团公司电影发行放映分公司|北京盛世华锐电影投资管理有限公司|北京影行天下文化传播有限公司|东阳腾远影视传媒有限公司",
+          "country": "中国香港|中国大陆",
+          "duration": 108,
+          "highlight": "甄子丹负责叶问，黄晓明负责2",
+          "language": "汉语普通话",
+          "leader": "甄子丹|洪金宝|黄晓明|熊黛林",
+          "name": "叶问2：宗师传奇",
+          "open_day": "2010-04-27 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i2\/TB1ReqSMpXXXXXvXXXXXXXXXXXX_.jpg",
+          "remark": "7.9",
+          "show_code": "001106032010",
+          "show_id": "2894",
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1_lqLMpXXXXczXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1uBOSMpXXXXXkXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1EOKFMpXXXXbbXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1CG1tMpXXXXXbXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1lJqmMpXXXXXiaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1pXyBMpXXXXc8XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1JOauMpXXXXcLXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB19vCOMpXXXXbIXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1dVitMpXXXXXFXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1nw1SMpXXXXXvXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1qUKvMpXXXXaTXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1eqOoMpXXXXciXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1f8SDMpXXXXb0XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1U9atMpXXXXXiXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1DGSDMpXXXXchXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1mMGRMpXXXXX6XXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1hwWpMpXXXXbVXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB10VGwMpXXXXccXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1w05AMpXXXXXqXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1txuBMpXXXXcyXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1fKKBMpXXXXcLXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1UlCFMpXXXXa8XpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB17pyCMpXXXXcqXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1OPiQMpXXXXXsXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1oB9BMpXXXXctXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1DXyLMpXXXXcSXXXXXXXXXXXX_.jpg"
+            ]
+          },
+          "type": "动作|剧情"
+        },
+        {
+          "company": "北京电影学院青年电影制片厂|北京今典影业有限公司",
+          "country": "中国大陆",
+          "duration": 119,
+          "highlight": "武汉全程拍摄讲述“女扁担”李宝莉苦痛一生",
+          "language": "汉语普通话,武汉话",
+          "leader": "颜丙燕|陈刚|焦刚|李现|赵倩",
+          "name": "万箭穿心",
+          "open_day": "2012-11-16 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i4\/TB1.bDiLXXXXXceXVXXXXXXXXXX_.jpg",
+          "remark": "8.9",
+          "show_code": "001105622012",
+          "show_id": "3170",
+          "show_versions": {
+            "string": [
+              "2D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/T1LxEFFlFfXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1FxVOFexgXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T14qhGFmXhXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1E67IFXFXXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1wXAbFXdXXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1EjtYFc0iXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1RklSFgVhXXb1upjX",
+              "https:\/\/img.alicdn.com\/tfs\/T1BJF9FkVgXXb1upjX"
+            ]
+          },
+          "type": "剧情|家庭"
+        },
+        {
+          "company": "共青团中央宣传部|潇湘电影集团有限公司|湖南潇影第二影业有限公司|湖南锦绣神州影视文化有限公司|珠海怡华通投资有限公司|潇湘电影集团有限公司|湖南潇影第二影业有限公司|中国电影股份有限公司北京电影发行分公司",
+          "country": "中国大陆",
+          "duration": 101,
+          "language": "汉语普通话",
+          "leader": "胡家华|成泰燊|颜世魁|张江诗琴",
+          "name": "青春雷锋",
+          "open_day": "2013-03-04 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i3\/TB1JP43JpXXXXb9XpXXXXXXXXXX_.jpg",
+          "show_code": "001106422012",
+          "show_id": "3570",
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1u6z.AWL7gK0jSZFBXXXZZpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1ZUsiAYj1gK0jSZFuXXcrHpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1SPz.AWL7gK0jSZFBXXXZZpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1FescAVP7gK0jSZFjXXc5aXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1ncZeA.T1gK0jSZFhXXaAtVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB10mwgAYY1gK0jSZTEXXXDQVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1I3ZgA7T2gK0jSZPcXXcKkpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1Q8ghAW61gK0jSZFlXXXDKFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1sBQhA1H2gK0jSZJnXXaT1FXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1uEsbA1L2gK0jSZPhXXahvXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1A1EbA2b2gK0jSZK9XXaEgFXa_.jpg"
+            ]
+          },
+          "type": "剧情|传记"
+        },
+        {
+          "company": "辛克匹电影公司|美国华纳兄弟影片公司|中国电影集团公司|华夏电影发行有限责任公司|上海电影（集团）公司上海电影译制厂|中国电影集团公司|美国传奇影片公司",
+          "country": "美国|英国",
+          "duration": 148,
+          "highlight": "梦境错综复杂，危险伺机而发",
+          "language": "英语,日语,法语",
+          "leader": "莱昂纳多·迪卡普里奥|约瑟夫·高登-莱维特|艾利奥特·佩吉|汤姆·哈迪",
+          "name": "盗梦空间",
+          "name_en": "Inception",
+          "open_day": "2020-08-28 00:00:00",
+          "poster": "https:\/\/img.alicdn.com\/tfs\/i3\/TB1wTW4dypE_u4jSZKbXXbCUVXa_.jpg",
+          "remark": "9.3",
+          "show_code": "051100152010,051300242020,051100242020",
+          "show_id": "4480",
+          "show_mark": "IMAX 2D",
+          "show_versions": {
+            "string": [
+              "IMAX2D",
+              "2D"
+            ]
+          },
+          "status": "1",
+          "trailer_list": {
+            "string": [
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1Q7FUMXXXXXbfXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1VIFSMXXXXXb1XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1YaVTMXXXXXbHXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1MBdYMXXXXXc1XFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1C9h7MXXXXXaTXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1.cWcMXXXXXXPXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1aYFRMXXXXXc7XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1DoRYMXXXXXbiXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1o_d0MXXXXXbkXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB19Rd.MXXXXXa7XXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1_wpUMXXXXXa1XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1Jh00MXXXXXaYXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1zxJRMXXXXXcjXVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1IqB_MXXXXXcNXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1hgd8MXXXXXafXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB17KuaMXXXXXaFXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1R2NNMXXXXXaEaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1I5pQMXXXXXc7XVXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1uL03MXXXXXXYXFXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB15tqcMXXXXXXaXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1XV44MXXXXXcHXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1HbXQMXXXXXXXaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1JzN9MXXXXXbQXXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1JTRQMXXXXXXcaXXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1IIR6MXXXXXbGXpXXXXXXXXXX_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB11GAJQYr1gK0jSZFDXXb9yVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1G5AMQ7Y2gK0jSZFgXXc5OFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB101IHQWL7gK0jSZFBXXXZZpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1TevufcVl614jSZKPXXaGjpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB19SX2e3gP7K4jSZFqXXamhVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1G6MHQ.Y1gK0jSZFCXXcwqXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1JeMHQWL7gK0jSZFBXXXZZpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1S.G6hQ9l0K4jSZFKXXXFjpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1t63Hg8FR4u4jSZFPXXanzFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1POE0RQY2gK0jSZFgXXc5OFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB13EbKeiDsXe8jSZR0XXXK6FXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1gAIZRQT2gK0jSZFkXXcIQFXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1ojkURUY1gK0jSZFCXXcwqXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB19LZSR.Y1gK0jSZFCXXcwqXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1C5Oaf3gP7K4jSZFqXXamhVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1Y.Z.d0Tfau8jSZFwXXX1mVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1rBwLR.z1gK0jSZLeXXb9kVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1pAZMR4D1gK0jSZFsXXbldVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB14XFASQL0gK0jSZFAXXcA9pXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1_HmZe9slXu8jSZFuXXXg7FXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1IORASHr1gK0jSZFDXXb9yVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1lhVFSNv1gK0jSZFFXXb0sXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1pbitgMgP7K4jSZFqXXamhVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i1\/TB1sW4mSVP7gK0jSZFjXXc5aXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1urmtgMgP7K4jSZFqXXamhVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1Ebx2ToY1gK0jSZFMXXaWcVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1MVtSTXY7gK0jSZKzXXaikpXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i4\/TB1rVKcTXP7gK0jSZFjXXc5aXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i3\/TB1uu1hfdTfau8jSZFwXXX1mVXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1zQbGdNvbeK8jSZPfXXariXXa_.jpg",
+              "https:\/\/img.alicdn.com\/tfs\/i2\/TB1hXDjg3gP7K4jSZFqXXamhVXa_.jpg"
+            ]
+          },
+          "type": "动作|悬疑|科幻|剧情"
+        }
+      ]
+    },
+    "request_id": "15stx8kfo8uuq"
+  }
+}

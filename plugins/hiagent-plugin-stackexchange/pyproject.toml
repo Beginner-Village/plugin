@@ -1,0 +1,27 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-stackexchange"
+version = "1.1.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_stackexchange/icon.png",
+  "hiagent_plugin_stackexchange/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_stackexchange:StackExchangePlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain-community = "^0.3.4"
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+stackexchange = "^0.5.0"
+stackapi = "^0.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+StackExchange = "hiagent_plugin_stackexchange:StackExchangePlugin"

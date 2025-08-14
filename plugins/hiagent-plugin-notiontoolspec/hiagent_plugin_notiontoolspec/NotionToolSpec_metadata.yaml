@@ -1,0 +1,267 @@
+category: Productivity
+config_schema:
+  properties:
+    integration_token:
+      description: https://www.notion.so/profile/integrations
+      title: Integration Token
+      type: string
+      x-description-en: https://www.notion.so/profile/integrations
+      x-description-zh-hans: https://www.notion.so/profile/integrations
+      x-description-zh-hant: https://www.notion.so/profile/integrations
+      x-hiagent-secret: true
+  required:
+  - integration_token
+  title: InModel
+  type: object
+description: 'NotionToolSpec loads and updates documents from Notion. '
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-notiontoolspec/hiagent_plugin_notiontoolspec/icon.png
+labels:
+  description_en: NotionToolSpec loads and updates documents from Notion.
+  description_zh_hans: NotionToolSpec 从 Notion 加载并更新文档。
+  description_zh_hant: NotionToolSpec 可從 Notion 載入和更新文件。
+  name_en: Notion
+  name_zh_hans: Notion
+  name_zh_hant: Notion
+meta_version: v1
+metadata_path: NotionToolSpec_metadata.yaml
+name: NotionToolSpec
+package_info:
+  name: hiagent_plugin_notiontoolspec
+  version: ''
+tools:
+  load_data:
+    description: Loads content from a set of page id.Don't use this tool if you don't
+      know the page id.
+    func_name: load_data
+    input_schema:
+      properties:
+        page_id:
+          description: Notion page id
+          title: Page Id
+          type: string
+          x-description-en: Notion page id
+          x-description-zh-hans: Notion页面ID
+          x-description-zh-hant: Notion 頁面 ID
+      required:
+      - page_id
+      title: InModel
+      type: object
+    labels:
+      description_en: Loads content from a set of page id.Don't use this tool if you
+        don't know the page id.
+      description_zh_hans: 从一组页面 ID 加载内容。如果你不知道页面 ID，请勿使用此工具。
+      description_zh_hant: 從一組頁面ID載入內容。如果您不知道頁面ID，請勿使用此工具。
+      name_en: load_data
+      name_zh_hans: 加载数据
+      name_zh_hant: 載入資料
+    name: load_data
+    output_schema:
+      $defs:
+        ActionResult:
+          properties:
+            result:
+              description: ''
+              title: Result
+              type: string
+          required:
+          - result
+          title: ActionResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ActionResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  search_data:
+    description: "\n        Search a list of relevant pages.Contains metadata for\
+      \ each page (but not the page content).\n        "
+    func_name: search_data
+    input_schema:
+      properties:
+        direction:
+          default: descending
+          description: The direction to sort. Possible values include ascending and
+            descending.
+          title: Direction
+          type: string
+          x-description-en: The direction to sort. Possible values include ascending
+            and descending.
+          x-description-zh-hans: 排序方向。可能的值包括升序和降序。
+          x-description-zh-hant: 排序方向。可能的值包括升序和降序。
+        page_size:
+          default: 100
+          description: 'The number of items from the full list to include in the response.
+            Maximum: 100.'
+          title: Page Size
+          type: integer
+          x-description-en: 'The number of items from the full list to include in
+            the response. Maximum: 100.'
+          x-description-zh-hans: 响应中要包含的完整列表中的项目数量。最大值：100。
+          x-description-zh-hant: 回覆中要包含完整列表中的項目數量。最大值：100。
+        property:
+          default: null
+          description: The name of the property to filter the results by.
+          title: Property
+          type: string
+          x-description-en: The name of the property to filter the results by.
+          x-description-zh-hans: 用于过滤结果的属性名称。
+          x-description-zh-hant: 用於篩選結果的屬性名稱。
+        query:
+          description: The text that the API compares page and database titles against.
+          title: Query
+          type: string
+          x-description-en: The text that the API compares page and database titles
+            against.
+          x-description-zh-hans: API用于对比页面标题和数据库标题的文本。
+          x-description-zh-hant: API 用来比对页面标题和资料库标题的文本。
+        timestamp:
+          default: last_edited_time
+          description: The name of the timestamp to sort against. Possible values
+            include last_edited_time.
+          title: Timestamp
+          type: string
+          x-description-en: The name of the timestamp to sort against. Possible values
+            include last_edited_time.
+          x-description-zh-hans: 用于排序的时间戳名称。可能的值包括最后编辑时间。
+          x-description-zh-hant: 用於排序的時間戳名稱。可能的值包括 last_edited_time。
+        value:
+          default: null
+          description: 'The value of the property to filter the results by. '
+          title: Value
+          type: string
+          x-description-en: The value of the property to filter the results by.
+          x-description-zh-hans: 用于筛选结果的属性值。
+          x-description-zh-hant: 用於篩選結果的屬性值。
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Search a list of relevant pages. Contains metadata for each
+        page (but not the page content).
+      description_zh_hans: 搜索相关页面列表。包含每个页面的元数据（但不包含页面内容）。
+      description_zh_hant: 搜索相關頁面列表。包含每個頁面的元數據（但不包含頁面內容）。
+      name_en: search_data
+      name_zh_hans: 搜索数据
+      name_zh_hant: 搜尋資料
+    name: search_data
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          items:
+            $ref: '#/$defs/SearchResult'
+          title: OutModel
+          type: array
+        SearchResult:
+          properties:
+            archived:
+              anyOf:
+              - type: boolean
+              - type: 'null'
+              default: null
+              title: Archived
+            created_time:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Created Time
+            id:
+              title: Id
+              type: string
+            in_trash:
+              anyOf:
+              - type: boolean
+              - type: 'null'
+              default: null
+              title: In Trash
+            last_edited_time:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Last Edited Time
+            object:
+              title: Object
+              type: string
+            public_url:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Public Url
+            url:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Url
+          required:
+          - object
+          - id
+          title: SearchResult
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

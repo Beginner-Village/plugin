@@ -1,0 +1,304 @@
+category: Productivity
+config_schema:
+  properties:
+    api_token:
+      description: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+      title: Api Token
+      type: string
+      x-description-en: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+      x-description-zh-hans: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+      x-description-zh-hant: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+      x-hiagent-secret: true
+    cloud:
+      description: Specify if using Atlassian Cloud. Defaults to False.
+      title: Cloud
+      type: boolean
+      x-description-en: Specify if using Atlassian Cloud. Defaults to False.
+      x-description-zh-hans: 指定是否使用Atlassian Cloud。默认值为False。
+      x-description-zh-hant: 指定是否使用 Atlassian 雲端。預設為 False。
+    instance_url:
+      description: The url to be used in the request.
+      title: Instance Url
+      type: string
+      x-description-en: The url to be used in the request.
+      x-description-zh-hans: 请求中要使用的URL。
+      x-description-zh-hant: 請求中要使用的URL。
+    username:
+      description: ''
+      title: Username
+      type: string
+  required:
+  - username
+  - instance_url
+  - cloud
+  - api_token
+  title: InModel
+  type: object
+description: Jira 是 Atlassian 提供的一款流行的项目管理和问题跟踪软件，广泛用于敏捷团队的软件开发流程中，以帮助团队规划、跟踪和管理项目。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-jira-toolkit/hiagent_plugin_jira_toolkit/icon.png
+labels:
+  description_en: Jira is a popular project management and issue tracking software
+    provided by Atlassian. It is widely used in the software development process of
+    agile teams to help them plan, track, and manage projects.
+  description_zh_hans: Jira 是 Atlassian 提供的一款流行的项目管理和问题跟踪软件，广泛用于敏捷团队的软件开发流程中，以帮助团队规划、跟踪和管理项目。
+  description_zh_hant: Jira是Atlassian提供的一款流行的專案管理和問題追蹤軟件，廣泛用於敏捷團隊的軟件開發流程中，以幫助團隊規劃、追蹤和管理專案。
+  name_en: JiraToolkit
+  name_zh_hans: Jira工具包
+  name_zh_hant: Jira工具包
+meta_version: v1
+metadata_path: JiraToolkit_metadata.yaml
+name: JiraToolkit
+package_info:
+  name: hiagent_plugin_jira_toolkit
+  version: ''
+tools:
+  create_issue:
+    description: "\n        Creates an issue or a sub-task from a JSON representation\n\
+      \        "
+    func_name: create_issue
+    input_schema:
+      properties:
+        fields:
+          description: JSON data, mandatory keys are issuetype, summary and project.
+          title: Fields
+          type: string
+          x-description-en: JSON data, mandatory keys are issuetype, summary and project.
+          x-description-zh-hans: JSON数据，必填键为问题类型（issuetype）、摘要（summary）和项目（project）。
+          x-description-zh-hant: JSON資料，必填的鍵為issuetype、summary和project。
+      required:
+      - fields
+      title: InModel
+      type: object
+    labels:
+      description_en: Creates an issue or a sub-task from a JSON representation
+      description_zh_hans: 根据 JSON 表示形式创建一个问题或子任务
+      description_zh_hant: 從 JSON 表示形式創建一個問題或子任務
+      name_en: create_issue
+      name_zh_hans: 创建问题
+      name_zh_hant: 建立問題
+    name: create_issue
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        IssueResult:
+          properties:
+            id:
+              title: Id
+              type: string
+            key:
+              title: Key
+              type: string
+          required:
+          - id
+          - key
+          title: IssueResult
+          type: object
+        OutModel:
+          $ref: '#/$defs/IssueResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  jql:
+    description: "Get issues from jql search result with all related fields"
+    func_name: jql
+    input_schema:
+      properties:
+        jql:
+          description: JQL query string
+          title: Jql
+          type: string
+          x-description-en: JQL query string
+          x-description-zh-hans: JQL查询字符串
+          x-description-zh-hant: JQL查詢字串
+      required:
+      - jql
+      title: InModel
+      type: object
+    labels:
+      description_en: Get issues from jql search result with all related fields
+      description_zh_hans: 从JQL搜索结果中获取包含所有相关字段的问题
+      description_zh_hant: 從 JQL 搜尋結果中取得包含所有相關欄位的問題
+      name_en: jql
+      name_zh_hans: jql
+      name_zh_hant: jql
+    name: jql
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        JqlResult:
+          properties:
+            result:
+              description: ''
+              title: Result
+              type: string
+          required:
+          - result
+          title: JqlResult
+          type: object
+        OutModel:
+          $ref: '#/$defs/JqlResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  projects:
+    description: "Returns all projects which are visible for the currently logged-in user. If no user is logged in, it returns the list of projects that are visible when using anonymous access."
+    func_name: projects
+    input_schema:
+      properties: {}
+      title: InModel
+      type: object
+    labels:
+      description_en: Returns all projects which are visible for the currently logged-in
+        user. If no user is logged in, it returns the list of projects that are visible
+        when using anonymous access.
+      description_zh_hans: 返回当前已登录用户可见的所有项目。如果没有用户登录，则返回使用匿名访问时可见的项目列表。
+      description_zh_hant: 返回目前已登入使用者可見的所有專案。若無使用者登入，則返回匿名存取時可見的專案清單。
+      name_en: projects
+      name_zh_hans: 项目
+      name_zh_hant: 項目
+    name: projects
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          items:
+            $ref: '#/$defs/ProjectResult'
+          title: OutModel
+          type: array
+        ProjectResult:
+          properties:
+            id:
+              description: Project id.
+              title: Id
+              type: string
+              x-description-en: Project id.
+              x-description-zh-hans: 项目编号；项目 ID
+              x-description-zh-hant: 項目編號。
+            key:
+              description: Project key.
+              title: Key
+              type: string
+              x-description-en: Project key.
+              x-description-zh-hans: 项目密钥
+              x-description-zh-hant: 項目密鑰
+            name:
+              description: Project name.
+              title: Name
+              type: string
+              x-description-en: Project name.
+              x-description-zh-hans: 项目名称。
+              x-description-zh-hant: 專案名稱。
+            projectTypeKey:
+              description: Project type key.
+              title: Projecttypekey
+              type: string
+              x-description-en: Project type key.
+              x-description-zh-hans: 项目类型密钥。
+              x-description-zh-hant: 專案類型索引鍵。
+            style:
+              description: Project style.
+              title: Style
+              type: string
+              x-description-en: Project style.
+              x-description-zh-hans: 项目风格。
+              x-description-zh-hant: 專案風格。
+          required:
+          - id
+          - key
+          - name
+          - projectTypeKey
+          - style
+          title: ProjectResult
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

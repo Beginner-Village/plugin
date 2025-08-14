@@ -1,0 +1,31 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-webscraper"
+version = "0.2.1"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_webscraper/icon.png",
+  "hiagent_plugin_webscraper/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_webscraper:WebscraperPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+newspaper3k = "^0.2.8"
+beautifulsoup4 = "^4.12.3"
+lxml-html-clean = "^0.3.1"
+openpyxl = "^3.1.5"
+readabilipy = "^0.2.0"
+chardet = "^5.2.0"
+pypdfium2 = "^4.30.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"网页抓取" = "hiagent_plugin_webscraper:WebscraperPlugin"

@@ -1,0 +1,89 @@
+category: Education
+config_schema:
+  properties:
+    app_id:
+      description: 申请地址:<https://developer.wolframalpha.com/access>
+      title: App Id
+      type: string
+      x-description-en: 'Application address: <https://developer.wolframalpha.com/access>'
+      x-description-zh-hans: 申请地址:<https://developer.wolframalpha.com/access>
+      x-description-zh-hant: 申請地址:<https://developer.wolframalpha.com/access>
+      x-hiagent-secret: true
+  required:
+  - app_id
+  title: InModel
+  type: object
+description: Tool that searches the WolframAlpha API.
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-wolfram-alpha/hiagent_plugin_wolfram_alpha/icon.png
+labels:
+  description_en: Tool that searches the WolframAlpha API.
+  description_zh_hans: 用于搜索WolframAlpha API的工具。
+  description_zh_hant: 用於搜尋WolframAlpha API的工具。
+  name_en: WolframAlpha
+  name_zh_hans: WolframAlpha
+  name_zh_hant: WolframAlpha
+meta_version: v1
+metadata_path: WolframAlpha_metadata.yaml
+name: WolframAlpha
+package_info:
+  name: hiagent_plugin_wolfram_alpha
+  version: ''
+tools:
+  search:
+    description: ''
+    func_name: search
+    input_schema:
+      properties:
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: ''
+      description_zh_hans: ''
+      description_zh_hant: ''
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

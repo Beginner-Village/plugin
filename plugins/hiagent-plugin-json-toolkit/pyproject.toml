@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "hiagent-plugin-json-toolkit"
+version = "0.2.0"
+description = ""
+authors = ["lujinghao <lujinghao@bytedance.com>"]
+
+include = [
+    "hiagent_plugin_json_toolkit/icon.png",
+    "hiagent_plugin_json_toolkit/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_json_toolkit:JsonToolkitPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.11.9"
+langchain-community = "^0.3.8"
+
+[tool.poetry.group.dev.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"json工具" = "hiagent_plugin_json_toolkit:JsonToolkitPlugin"

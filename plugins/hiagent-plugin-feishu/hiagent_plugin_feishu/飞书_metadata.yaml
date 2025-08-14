@@ -1,0 +1,97 @@
+category: Productivity
+config_schema:
+  properties:
+    hook_key:
+      description: '详情见: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot'
+      title: 群机器人webhook的key
+      type: string
+      x-description-en: 'For details, see: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot'
+      x-description-zh-hans: 详情见：https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
+      x-description-zh-hant: '詳情見: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot'
+      x-hiagent-secret: true
+    host:
+      default: open.feishu.cn
+      description: '飞书接口域名, 默认: open.feishu.cn'
+      title: Host
+      type: string
+      x-description-en: 'Feishu API domain name, default: open.feishu.cn'
+      x-description-zh-hans: 飞书接口域名，默认：open.feishu.cn
+      x-description-zh-hant: 飛書接口域名，預設：open.feishu.cn
+  required:
+  - hook_key
+  title: InModel
+  type: object
+description: 飞书群机器人
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu/hiagent_plugin_feishu/icon.png
+labels:
+  description_en: Feishu group robot
+  description_zh_hans: 飞书群机器人
+  description_zh_hant: 飛書群機器人
+  name_en: Feishu
+  name_zh_hans: 飞书
+  name_zh_hant: 飛書
+meta_version: v1
+metadata_path: 飞书_metadata.yaml
+name: 飞书
+package_info:
+  name: hiagent_plugin_feishu
+  version: ''
+tools:
+  feishu_group_bot:
+    description: 发送群消息
+    func_name: feishu_group_bot
+    input_schema:
+      properties:
+        content:
+          title: Content
+          type: string
+      required:
+      - content
+      title: InModel
+      type: object
+    labels:
+      description_en: Send group messages
+      description_zh_hans: 发送群消息
+      description_zh_hant: 發送群消息
+      name_en: Feishu group bot
+      name_zh_hans: 飞书群组机器人
+      name_zh_hant: 飛書群機器人
+    name: feishu_group_bot
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

@@ -1,0 +1,90 @@
+category: Productivity
+config_schema: {}
+description: 与 XML 规范交互的工具
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-xml-toolkit/hiagent_plugin_xml_toolkit/icon.png
+labels:
+  description_en: Tools for interacting with XML specifications
+  description_zh_hans: 与 XML 规范交互的工具
+  description_zh_hant: 與 XML 規範交互的工具
+  name_en: XML tools
+  name_zh_hans: xml工具
+  name_zh_hant: xml工具
+meta_version: v1
+metadata_path: xml工具_metadata.yaml
+name: xml工具
+package_info:
+  name: hiagent_plugin_xml_toolkit
+  version: ''
+tools:
+  xml_spec_find_element:
+    description: 一个查找 XML 内容的工具，返回查找匹配的第一个子元素文本
+    func_name: xml_spec_find_element
+    input_schema:
+      properties:
+        match:
+          description: '用于查找的 XML 标签名称或 XPath 表达式文本，（例如：.//year/..[@name="Singapore"]） '
+          title: Match
+          type: string
+          x-description-en: The text of the XML tag name or XPath expression used
+            for searching (e.g.,.//year/..[@name="Singapore"])
+          x-description-zh-hans: 用于查找的 XML 标签名称或 XPath 表达式文本，（例如：.//year/..[@name="新加坡"]）
+          x-description-zh-hant: 用於查找的 XML 標籤名稱或 XPath 表達式文本，（例如：.//year/..[@name="Singapore"]）
+        xml_file_url:
+          description: XML文件的URL地址
+          title: Xml File Url
+          type: string
+          x-description-en: URL address of the XML file
+          x-description-zh-hans: XML文件的URL地址
+          x-description-zh-hant: XML檔案的URL位址
+      required:
+      - match
+      - xml_file_url
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for searching XML content that returns the text of the
+        first child element that matches the search.
+      description_zh_hans: 一个查找 XML 内容的工具，返回查找匹配的第一个子元素文本
+      description_zh_hant: 一個查找 XML 內容的工具，返回查找匹配的第一個子元素文本
+      name_en: xml_spec_find_element
+      name_zh_hans: XML元素查找
+      name_zh_hant: XML元素查找
+    name: xml_spec_find_element
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

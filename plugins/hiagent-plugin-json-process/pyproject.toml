@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hiagent-plugin-json-process"
+version = "0.2.1"
+description = ""
+authors = ["lujinghao <lujinghao@bytedance.com>"]
+
+include = [
+  "hiagent_plugin_json_process/icon.png",
+  "hiagent_plugin_json_process/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_json_process:JsonProcessPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+jsonpath-ng = "^1.7.0"
+
+[tool.poetry.group.dev.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"json处理" = "hiagent_plugin_json_process:JsonProcessPlugin"

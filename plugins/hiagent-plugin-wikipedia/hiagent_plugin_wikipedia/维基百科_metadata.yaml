@@ -1,0 +1,83 @@
+category: WebSearch
+config_schema: {}
+description: 维基百科是一个由全世界的志愿者创建和编辑的免费在线百科全书。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-wikipedia/hiagent_plugin_wikipedia/icon.png
+labels:
+  description_en: Wikipedia is a free online encyclopedia created and edited by volunteers
+    from around the world.
+  description_zh_hans: 维基百科是一个由全世界的志愿者创建和编辑的免费在线百科全书。
+  description_zh_hant: 維基百科是一個由全世界的志願者創建和編輯的免費在線百科全書。
+  name_en: Wikipedia
+  name_zh_hans: 维基百科
+  name_zh_hant: 維基百科
+meta_version: v1
+metadata_path: 维基百科_metadata.yaml
+name: 维基百科
+package_info:
+  name: hiagent_plugin_wikipedia
+  version: ''
+tools:
+  search:
+    description: A tool for performing a Wikipedia search and extracting snippets
+      and webpages. Input should be a search query.
+    func_name: search
+    input_schema:
+      properties:
+        lang:
+          default: en
+          title: Lang
+          type: string
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for performing a Wikipedia search and extracting snippets
+        and webpages. Input should be a search query.
+      description_zh_hans: 一个用于执行维基百科搜索并提取摘要和网页内容的工具。输入应为搜索查询词。
+      description_zh_hant: 一個用於進行維基百科搜索，並提取摘要和網頁的工具。輸入應為搜索查詢內容。
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

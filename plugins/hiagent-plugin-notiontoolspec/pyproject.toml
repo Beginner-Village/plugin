@@ -1,0 +1,28 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-notiontoolspec"
+version = "1.2.0"
+description = ""
+package-mode = true
+include = [
+    "hiagent_plugin_notiontoolspec/icon.png",
+    "hiagent_plugin_notiontoolspec/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_notiontoolspec:NotionToolSpecPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+llama-index = "^0.12.5"
+llama-index-readers-notion = "^0.3.0"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"NotionToolSpec" = "hiagent_plugin_notiontoolspec:NotionToolSpecPlugin"

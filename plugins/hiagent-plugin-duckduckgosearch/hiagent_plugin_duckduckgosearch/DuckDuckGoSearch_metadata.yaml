@@ -1,0 +1,180 @@
+category: WebSearch
+config_schema: {}
+description: DuckDuckGo Search
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-duckduckgosearch/hiagent_plugin_duckduckgosearch/icon.png
+labels:
+  description_en: DuckDuckGo Search
+  description_zh_hans: DuckDuckGo搜索
+  description_zh_hant: DuckDuckGo搜尋
+  name_en: DuckDuckGo Search
+  name_zh_hans: DuckDuckGo搜索
+  name_zh_hant: DuckDuckGo搜尋
+meta_version: v1
+metadata_path: DuckDuckGoSearch_metadata.yaml
+name: DuckDuckGoSearch
+package_info:
+  name: hiagent_plugin_duckduckgosearch
+  version: ''
+tools:
+  search:
+    description: Run query through DuckDuckGo and return concatenated results.
+    func_name: search
+    input_schema:
+      properties:
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Run query through DuckDuckGo and return concatenated results.
+      description_zh_hans: 通过 DuckDuckGo 运行查询并返回拼接后的结果。
+      description_zh_hant: 透過 DuckDuckGo 執行查詢並返回串接後的結果。
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  search_results:
+    description: Run query through DuckDuckGo and return metadata
+    func_name: search_results
+    input_schema:
+      properties:
+        max_results:
+          default: 5
+          title: Max Results
+          type: integer
+        query:
+          title: Query
+          type: string
+        source:
+          default: text
+          description: text or news
+          enum:
+          - text
+          - news
+          title: search source
+          type: string
+          x-description-en: text or news
+          x-description-zh-hans: text 或 news
+          x-description-zh-hant: text 或 news
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Run query through DuckDuckGo and return metadata
+      description_zh_hans: 通过 DuckDuckGo 运行查询并返回元数据
+      description_zh_hant: 透過 DuckDuckGo 執行查詢並返回元數據
+      name_en: search_results
+      name_zh_hans: 搜索结果
+      name_zh_hant: 搜尋結果
+    name: search_results
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          items:
+            $ref: '#/$defs/SearchResults'
+          title: OutModel
+          type: array
+        SearchResults:
+          properties:
+            date:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Date
+            link:
+              title: Link
+              type: string
+            snippet:
+              title: Snippet
+              type: string
+            source:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              title: Source
+            title:
+              title: Title
+              type: string
+          required:
+          - snippet
+          - title
+          - link
+          title: SearchResults
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

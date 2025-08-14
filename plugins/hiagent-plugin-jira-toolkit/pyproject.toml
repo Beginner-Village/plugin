@@ -1,0 +1,25 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-jira-toolkit"
+version = "1.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_jira_toolkit/icon.png",
+  "hiagent_plugin_jira_toolkit/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_jira_toolkit:JiraToolkitPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+atlassian-python-api = "^3.41.16"
+langchain-community = "^0.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"JiraToolkit" = "hiagent_plugin_jira_toolkit:JiraToolkitPlugin"

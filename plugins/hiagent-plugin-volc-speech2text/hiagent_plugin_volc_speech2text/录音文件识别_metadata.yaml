@@ -1,0 +1,123 @@
+category: AudioVideo
+config_schema:
+  properties:
+    app_id:
+      description: '申请说明: <https://www.volcengine.com/docs/6561/80818>'
+      title: app_id
+      type: string
+      x-description-en: 'Application instructions: <https://www.volcengine.com/docs/6561/80818>'
+      x-description-zh-hans: '申请说明: <https://www.volcengine.com/docs/6561/80818>'
+      x-description-zh-hant: '申請說明: <https://www.volcengine.com/docs/6561/80818>'
+    cluster:
+      description: 根据场景，选择需要访问的集群。
+      title: 业务集群
+      type: string
+      x-description-en: Select the cluster to access based on the scenario.
+      x-description-zh-hans: 根据场景，选择需要访问的集群。
+      x-description-zh-hant: 根據場景，選擇需要訪問的集群。
+    token:
+      title: token
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - token
+  - cluster
+  title: InModel
+  type: object
+description: 录音文件识别是一个提取语音文本的插件，仅支持识别 raw / wav / ogg / mp3 格式的音频文件
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-volc-speech2text/hiagent_plugin_volc_speech2text/icon.png
+labels:
+  description_en: The recording file recognition is a plugin for extracting speech
+    text, which only supports recognizing audio files in raw / wav / ogg / mp3 formats.
+  description_zh_hans: 录音文件识别是一个提取语音文本的插件，仅支持识别 raw / wav / ogg / mp3 格式的音频文件
+  description_zh_hant: 錄音文件識別是一個提取語音文本的插件，僅支援識別 raw / wav / ogg / mp3 格式的音頻文件
+  name_en: Recording file recognition
+  name_zh_hans: 录音文件识别
+  name_zh_hant: 錄音文件識別
+meta_version: v1
+metadata_path: 录音文件识别_metadata.yaml
+name: 录音文件识别
+package_info:
+  name: hiagent_plugin_volc_speech2text
+  version: ''
+tools:
+  SpeechToText:
+    description: 读取音频url链接，并将音频转为文字
+    func_name: SpeechToText
+    input_schema:
+      properties:
+        format:
+          description: '录音文件格式, 支持的格式有: raw / wav / ogg / mp3 '
+          enum:
+          - wav, mp3
+          - ogg
+          - raw
+          title: Format
+          type: string
+          x-description-en: 'Audio recording file formats. Supported formats are:
+            raw / wav / ogg / mp3'
+          x-description-zh-hans: 录音文件格式，支持的格式有：raw / wav / ogg / mp3
+          x-description-zh-hant: 錄音文件格式，支援的格式有：raw / wav / ogg / mp3
+        url:
+          description: 录音文件的url
+          title: Url
+          type: string
+          x-description-en: The URL of the recording file
+          x-description-zh-hans: 录音文件的url
+          x-description-zh-hant: 錄音文件的URL
+      required:
+      - url
+      - format
+      title: InModel
+      type: object
+    labels:
+      description_en: Read the audio URL link and convert the audio to text.
+      description_zh_hans: 读取音频url链接，并将音频转为文字
+      description_zh_hant: 讀取音頻url連結，並將音頻轉為文字
+      name_en: SpeechToText
+      name_zh_hans: 语音转文本
+      name_zh_hant: 語音轉文字
+    name: SpeechToText
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          description: 识别到的音频文件文字信息
+          title: OutModel
+          type: string
+          x-description-en: Text information of the recognized audio file
+          x-description-zh-hans: 识别到的音频文件文字信息
+          x-description-zh-hant: 識別到的音頻文件文字資訊
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

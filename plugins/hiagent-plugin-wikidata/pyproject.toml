@@ -1,0 +1,27 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-wikidata"
+version = "0.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_wikidata/icon.png",
+  "hiagent_plugin_wikidata/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_wikidata:WikidataPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+python = "^3.11"
+langchain-community = "^0.3.4"
+wikibase-rest-api-client = "<0.2"
+mediawikiapi = "^1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+wikidata = "hiagent_plugin_wikidata:WikidataPlugin"

@@ -1,0 +1,76 @@
+category: WebSearch
+config_schema: {}
+description: Tool that searches the Wikidata API.
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-wikidata/hiagent_plugin_wikidata/icon.png
+labels:
+  description_en: Tool that searches the Wikidata API.
+  description_zh_hans: 用于搜索维基数据（Wikidata）应用程序编程接口（API）的工具。
+  description_zh_hant: 用於搜尋維基資料（Wikidata）應用程式介面（API）的工具。
+  name_en: wikidata
+  name_zh_hans: 维基数据
+  name_zh_hant: 维基数据
+meta_version: v1
+metadata_path: wikidata_metadata.yaml
+name: wikidata
+package_info:
+  name: hiagent_plugin_wikidata
+  version: ''
+tools:
+  search:
+    description: Tool that searches the Wikidata API.
+    func_name: search
+    input_schema:
+      properties:
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Tool that searches the Wikidata API.
+      description_zh_hans: 搜索维基数据API的工具。
+      description_zh_hant: 用於搜尋維基數據 API 的工具。
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

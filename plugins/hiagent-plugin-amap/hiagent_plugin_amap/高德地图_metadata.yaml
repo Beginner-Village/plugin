@@ -1,0 +1,1480 @@
+category: LifeAssistant
+config_schema:
+  properties:
+    api_key:
+      description: '申请链接: <https://lbs.amap.com/api/webservice/create-project-and-key>'
+      title: Api Key
+      type: string
+      x-description-en: 'Application link: <https://lbs.amap.com/api/webservice/create-project-and-key>'
+      x-description-zh-hans: '申请链接: <https://lbs.amap.com/api/webservice/create-project-and-key>'
+      x-description-zh-hant: '申請連結: <https://lbs.amap.com/api/webservice/create-project-and-key>'
+      x-hiagent-secret: true
+  required:
+  - api_key
+  title: InModel
+  type: object
+description: 高德地图插件，该插件能够帮助用户规划出最优的骑行、步行、开车及公共交通路线。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-amap/hiagent_plugin_amap/icon.png
+labels:
+  description_en: Gaode Map plugin. This plugin can help users plan the optimal routes for cycling, walking, driving, and taking public transportation.
+  description_zh_hans: 高德地图插件，该插件能够帮助用户规划出最优的骑行、步行、开车及公共交通路线。
+  description_zh_hant: 高德地圖插件，該插件能夠幫助用戶規劃出最優的騎行、步行、開車及公共交通路線。
+  name_en: AutoNavi Maps
+  name_zh_hans: 高德地图
+  name_zh_hant: 高德地圖
+meta_version: v1
+metadata_path: 高德地图_metadata.yaml
+name: 高德地图
+package_info:
+  name: hiagent_plugin_amap
+  version: ''
+tools:
+  plan_bicycle:
+    description: 骑行路线规划
+    func_name: plan_bicycle
+    input_schema:
+      properties:
+        destination:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 目的地
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801 ，经纬度小数点后不超过6位
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+        start:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 出发点
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，如117.500244, 40.417801  经纬度小数点后不超过6位。
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以 “,” 分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+      required:
+      - start
+      - destination
+      title: InModel
+      type: object
+    labels:
+      description_en: Cycling route planning
+      description_zh_hans: 骑行路线规划
+      description_zh_hant: 騎行路線規劃
+      name_en: Plan to ride a bicycle.
+      name_zh_hans: 自行车计划
+      name_zh_hant: 自行車計劃
+    name: plan_bicycle
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/PlanBicycleResult'
+          title: OutModel
+        Path:
+          properties:
+            distance:
+              default: null
+              description: 单位：米
+              title: 起点和终点的步行距离
+              type: integer
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行时间预计
+              type: integer
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            steps:
+              default: []
+              description: 路线
+              items:
+                $ref: '#/$defs/Step'
+              title: Steps
+              type: array
+              x-description-en: Route
+              x-description-zh-hans: 路线
+              x-description-zh-hant: 路線
+          title: Path
+          type: object
+        PlanBicycleResult:
+          properties:
+            data:
+              $ref: '#/$defs/Route'
+              default: null
+              title: 数据
+            errcode:
+              title: Errcode
+              type: integer
+            errdetail:
+              default: null
+              title: Errdetail
+              type: string
+            errmsg:
+              title: Errmsg
+              type: string
+          required:
+          - errmsg
+          - errcode
+          title: PlanBicycleResult
+          type: object
+        Route:
+          properties:
+            destination:
+              default: null
+              title: 终点
+              type: string
+            origin:
+              default: null
+              title: 起点
+              type: string
+            paths:
+              default: []
+              description: 方案
+              items:
+                $ref: '#/$defs/Path'
+              title: Paths
+              type: array
+              x-description-en: Plan
+              x-description-zh-hans: 方案
+              x-description-zh-hant: 方案
+          title: Route
+          type: object
+        Step:
+          properties:
+            action:
+              default: null
+              title: 步行主要动作
+              type: string
+            assistant_action:
+              default: null
+              title: 步行辅助动作
+              type: string
+            distance:
+              default: null
+              description: 单位：米
+              title: 此路段距离
+              type: integer
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              title: 此路段预计步行时间
+              type: integer
+            instruction:
+              default: null
+              title: 路段步行指示
+              type: string
+            orientation:
+              default: null
+              title: 方向
+              type: string
+            polyline:
+              default: null
+              title: 此路段坐标点
+              type: string
+            road:
+              default: null
+              title: 道路名称
+              type: string
+            walk_type:
+              default: null
+              description: 0，普通道路;1，人行横道;3，地下通道;4，过街天桥;5，地铁通道;6，公园;7，广场;8，扶梯;9，直梯;10，索道;11，空中通道;12，建筑物穿越通道;13，行人通道;14，游船路线;15，观光车路线;16，滑道;18，扩路;19，道路附属连接线;20，阶梯;21，斜坡;22，桥;23，隧道;30，轮渡
+              title: 这段路是否存在特殊的方式
+              type: integer
+              x-description-en: 0, Ordinary road; 1, Pedestrian crossing; 3, Underpass;
+                4, Footbridge; 5, Subway passage; 6, Park; 7, Square; 8, Escalator;
+                9, Elevator; 10, Cableway; 11, Aerial passage; 12, Building crossing
+                passage; 13, Pedestrian passage; 14, Cruise route; 15, Sightseeing
+                bus route; 16, Slide; 18, Road expansion; 19, Road auxiliary connection
+                line; 20, Stairs; 21, Ramp; 22, Bridge; 23, Tunnel; 30, Ferry
+              x-description-zh-hans: 0，普通道路；1，人行横道；3，地下通道；4，过街天桥；5，地铁通道；6，公园；7，广场；8，扶梯；9，直梯；10，索道；11，空中通道；12，建筑物穿越通道；13，行人通道；14，游船路线；15，观光车路线；16，滑道；18，扩路；19，道路附属连接线；20，阶梯；21，斜坡；22，桥；23，隧道；30，轮渡
+              x-description-zh-hant: 0，普通道路；1，人行橫道；3，地下通道；4，天橋；5，地鐵通道；6，公園；7，廣場；8，扶手電梯；9，升降機；10，纜車；11，空中通道；12，建築物穿越通道；13，行人通道；14，遊船路線；15，觀光車路線；16，滑道；18，擴建道路；19，道路附屬連接線；20，階梯；21，斜坡；22，橋梁；23，隧道；30，渡輪
+          title: Step
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  plan_driving:
+    description: 驾驶路线规划
+    func_name: plan_driving
+    input_schema:
+      properties:
+        destination:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 目的地
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801  经纬度小数点后不超过6位
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+        start:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 出发点
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，如117.500244, 40.417801，经纬度小数点后不超过6位。
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以 “,” 分隔，例如117.500244, 40.417801 經緯度小數點不超過6位
+      required:
+      - start
+      - destination
+      title: InModel
+      type: object
+    labels:
+      description_en: Driving route planning
+      description_zh_hans: 驾驶路线规划
+      description_zh_hant: 駕駛路線規劃
+      name_en: Driving plan
+      name_zh_hans: 驾车规划
+      name_zh_hant: 規劃駕車路線
+    name: plan_driving
+    output_schema:
+      $defs:
+        City:
+          properties:
+            adcode:
+              default: null
+              title: 途径区域编码
+              type: string
+            citycode:
+              default: null
+              title: 途径城市编码
+              type: string
+            districts:
+              default: null
+              items:
+                $ref: '#/$defs/District'
+              title: 途径区县
+              type: array
+            name:
+              default: null
+              title: 名称
+              type: string
+          title: City
+          type: object
+        District:
+          properties:
+            adcode:
+              default: null
+              title: 途径区县 adcode
+              type: string
+            name:
+              default: null
+              title: 途径区县名称
+              type: string
+          title: District
+          type: object
+        DrivingRoute:
+          properties:
+            destination:
+              default: null
+              title: 终点
+              type: string
+            origin:
+              default: null
+              title: 起点
+              type: string
+            paths:
+              default: []
+              description: 方案
+              items:
+                $ref: '#/$defs/Path'
+              title: Paths
+              type: array
+              x-description-en: Plan
+              x-description-zh-hans: 方案
+              x-description-zh-hant: 方案
+            taxi_cost:
+              default: null
+              title: 打车费用
+              type: string
+          title: DrivingRoute
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/PlanDrivingResult'
+          title: OutModel
+        Path:
+          properties:
+            distance:
+              default: null
+              description: 单位：米
+              title: 起点和终点的步行距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行时间预计
+              type: string
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            restriction:
+              default: null
+              description: 0 代表限行已规避或未限行，即该路线没有限行路段; 1 代表限行无法规避，即该线路有限行路段
+              title: 限行结果
+              type: string
+              x-description-en: 0 represents that traffic restrictions have been avoided
+                or there are no restrictions, meaning there are no restricted sections
+                on this route; 1 represents that traffic restrictions cannot be avoided,
+                meaning there are restricted sections on this route.
+              x-description-zh-hans: 0代表限行已规避或未限行，即该路线没有限行路段；1代表限行无法规避，即该线路有限行路段
+              x-description-zh-hant: 0代表限行已避開或未限行，即該路線沒有限行路段；1代表限行無法避開，即該線路有限行路段
+            steps:
+              default: []
+              description: 路线
+              items:
+                $ref: '#/$defs/Step'
+              title: Steps
+              type: array
+              x-description-en: Route
+              x-description-zh-hans: 路线
+              x-description-zh-hant: 路線
+            strategy:
+              default: null
+              title: 导航策略
+              type: string
+            toll_distance:
+              default: null
+              description: 单位：米
+              title: 收费路段距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            tolls:
+              default: null
+              description: 单位：元
+              title: 此导航方案道路收费
+              type: string
+              x-description-en: 'Unit: Yuan'
+              x-description-zh-hans: 单位：元
+              x-description-zh-hant: 單位：元
+            traffic_lights:
+              default: null
+              title: 红绿灯个数
+              type: string
+          title: Path
+          type: object
+        PlanDrivingResult:
+          properties:
+            count:
+              default: null
+              title: 总数
+              type: integer
+            info:
+              title: Info
+              type: string
+            route:
+              $ref: '#/$defs/DrivingRoute'
+              default: null
+              title: 驾车换乘方案
+            status:
+              title: Status
+              type: integer
+          required:
+          - info
+          - status
+          title: PlanDrivingResult
+          type: object
+        Step:
+          properties:
+            action:
+              default: null
+              title: 导航主要动作
+              type: string
+            assistant_action:
+              default: null
+              title: 步行辅助动作
+              type: string
+            cities:
+              default: null
+              items:
+                $ref: '#/$defs/City'
+              title: 路线途经行政区划
+              type: array
+            distance:
+              default: null
+              description: 单位：米
+              title: 此路段距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            instruction:
+              default: null
+              title: 行驶指示
+              type: string
+            orientation:
+              default: null
+              title: 方向
+              type: string
+            polyline:
+              default: null
+              title: 此路段坐标点串
+              type: string
+            road:
+              default: null
+              title: 道路名称
+              type: string
+            tmcs:
+              default: null
+              items:
+                $ref: '#/$defs/Tmc'
+              title: 驾车导航详细信息
+              type: array
+            toll_distance:
+              default: null
+              description: 单位：米
+              title: 收费路段距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            toll_road:
+              default: null
+              title: 主要收费道路
+              type: string
+            tolls:
+              default: null
+              description: 单位：元
+              title: 此路段收费
+              type: string
+              x-description-en: 'Unit: Yuan'
+              x-description-zh-hans: 单位：元
+              x-description-zh-hant: 單位：元
+          title: Step
+          type: object
+        Tmc:
+          properties:
+            distance:
+              default: null
+              description: 单位：米
+              title: 此段路的长度
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            polyline:
+              default: null
+              description: 规格：x1,y1;x2,y2
+              title: 此段路的轨迹
+              type: string
+              x-description-en: 'Specifications: x1,y1;x2,y2'
+              x-description-zh-hans: 规格：x1,y1;x2,y2
+              x-description-zh-hant: 規格：x1,y1;x2,y2
+            status:
+              default: null
+              description: 未知、畅通、缓行、拥堵、严重拥堵
+              title: 此段路的交通情况
+              type: string
+              x-description-en: Unknown, Smooth flow, Slow moving, Congested, Severely
+                congested
+              x-description-zh-hans: 未知、畅通、缓行、拥堵、严重拥堵
+              x-description-zh-hant: 未知、暢通、緩行、擁堵、嚴重擁堵
+          title: Tmc
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  plan_integrated:
+    description: 公共交通路线规划
+    func_name: plan_integrated
+    input_schema:
+      properties:
+        city:
+          description: 目前支持市内公交换乘/跨城公交的起点城市。可选值：城市名称/citycode
+          title: 城市/跨城规划时的起点城市
+          type: string
+          x-description-en: 'Currently supported starting cities for in-city bus transfers/inter-city
+            buses. Optional values: city names/city codes'
+          x-description-zh-hans: 目前支持市内公交换乘/跨城公交的起点城市。可选值：城市名称/城市代码
+          x-description-zh-hant: 目前支援市內公交換乘/跨城公交的起點城市。可選值：城市名稱/城市代碼
+        destination:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 目的地
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801,
+            经纬度小数点后不超过6位。
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801,
+            經緯度小數點不超過6位
+        start:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 出发点
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801  经纬度小数点后不超过6位。
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+      required:
+      - start
+      - destination
+      - city
+      title: InModel
+      type: object
+    labels:
+      description_en: Public transportation route planning
+      description_zh_hans: 公共交通路线规划
+      description_zh_hant: 公共交通路線規劃
+      name_en: Integrated plan
+      name_zh_hans: 综合计划
+      name_zh_hant: 整合計劃
+    name: plan_integrated
+    output_schema:
+      $defs:
+        Alter:
+          properties:
+            id:
+              default: null
+              title: 备选方案 ID
+              type: string
+            name:
+              default: null
+              title: 备选线路名称
+              type: string
+          title: Alter
+          type: object
+        Bus:
+          properties:
+            buslines:
+              default: null
+              items:
+                $ref: '#/$defs/Busline'
+              title: 线路列表
+              type: array
+          title: Bus
+          type: object
+        BusStop:
+          properties:
+            id:
+              default: null
+              title: 公交站点编号
+              type: string
+            location:
+              default: null
+              title: 公交站点经纬度
+              type: string
+            name:
+              default: null
+              title: 途径公交站点信息
+              type: string
+          title: BusStop
+          type: object
+        Busline:
+          properties:
+            arrival_stop:
+              $ref: '#/$defs/BusStop'
+              default: null
+              title: 到达站点
+            departure_stop:
+              $ref: '#/$defs/BusStop'
+              default: null
+              title: 起始站点
+            distance:
+              default: null
+              description: 单位：米
+              title: 公交行驶距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 公交预计行驶时间
+              type: string
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            end_time:
+              default: null
+              description: 格式如：0600，代表06：00
+              title: 末班车时间
+              type: string
+              x-description-en: The format is like 0600, representing 06:00.
+              x-description-zh-hans: 格式如：0600，代表06：00
+              x-description-zh-hant: 格式如：0600，代表06：00
+            id:
+              default: null
+              title: 线路id
+              type: string
+            name:
+              default: null
+              title: 公交路线名称
+              type: string
+            polyline:
+              default: null
+              title: 此路段坐标集
+              type: string
+            start_time:
+              default: null
+              description: 格式如：0600，代表06：00
+              title: 首班车时间
+              type: string
+              x-description-en: The format is like 0600, representing 06:00.
+              x-description-zh-hans: 格式如：0600，代表06：00
+              x-description-zh-hant: 格式如：0600，代表06：00
+            type:
+              default: null
+              title: 公交类型
+              type: string
+            via_num:
+              default: null
+              title: 途径站数
+              type: integer
+            via_stops:
+              default: null
+              items:
+                $ref: '#/$defs/BusStop'
+              title: 途径站
+              type: array
+          title: Busline
+          type: object
+        DepartureStop:
+          properties:
+            adcode:
+              default: null
+              title: 站点所在区域编码
+              type: string
+            end:
+              default: null
+              description: 1表示为终点站，0表示非终点站
+              title: 是否为终点站
+              type: string
+              x-description-en: 1 represents the terminal station, and 0 represents
+                a non-terminal station.
+              x-description-zh-hans: 1表示为终点站，0表示非终点站
+              x-description-zh-hant: 1表示為終點站，0表示非終點站
+            id:
+              default: null
+              title: 站点id
+              type: string
+            location:
+              default: null
+              title: 站点经纬度
+              type: string
+            name:
+              default: null
+              title: 站点名称
+              type: string
+            start:
+              default: null
+              description: 1表示为始发站，0表示非始发站
+              title: 是否始发站
+              type: string
+              x-description-en: 1 represents the starting station, and 0 represents
+                a non-starting station.
+              x-description-zh-hans: 1表示为始发站，0表示非始发站
+              x-description-zh-hant: 1表示為始發站，0表示非始發站
+            time:
+              default: null
+              title: 站点预计到站时间
+              type: string
+          title: DepartureStop
+          type: object
+        Emergency:
+          properties:
+            busid:
+              default: null
+              title: 线路id
+              type: string
+            busname:
+              default: null
+              title: 线路名
+              type: string
+            eventTagDesc:
+              default: null
+              description: 值为："提示“、”甩站“、”突发“、”停运“
+              title: 事件标签
+              type: string
+              x-description-en: 'Values are: "Prompt", "Bypass Stops", "Emergency",
+                "Suspension of Service"'
+              x-description-zh-hans: 值为：“提示”、“甩站”、“突发”、“停运”
+              x-description-zh-hant: 值為：「提示」、「甩站」、「突發」、「停運」
+            ldescription:
+              default: null
+              title: 事件的线路上的文案
+              type: string
+            linetype:
+              default: null
+              description: 1：影响乘坐；2：不影响乘坐
+              title: 事件类型
+              type: string
+              x-description-en: '1: Affect the ride; 2: Do not affect the ride'
+              x-description-zh-hans: 1：影响乘坐；2：不影响乘坐
+              x-description-zh-hant: 1：影響乘坐；2：不影響乘坐
+          title: Emergency
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        IntegratedRoute:
+          properties:
+            destination:
+              default: null
+              title: 终点
+              type: string
+            distance:
+              default: null
+              description: 单位：米
+              title: 起点和终点的步行距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            origin:
+              default: null
+              title: 起点
+              type: string
+            taxi_cost:
+              default: null
+              title: 出租车费用
+              type: string
+            transits:
+              default: []
+              items:
+                $ref: '#/$defs/Transit'
+              title: 公交换乘方案列表
+              type: array
+          title: IntegratedRoute
+          type: object
+        OutModel:
+          $ref: '#/$defs/PlanIntegratedResult'
+          title: OutModel
+        PlanIntegratedResult:
+          properties:
+            count:
+              default: null
+              title: 总数
+              type: integer
+            info:
+              title: Info
+              type: string
+            route:
+              $ref: '#/$defs/IntegratedRoute'
+              default: null
+              title: 驾车换乘方案
+            status:
+              title: Status
+              type: integer
+          required:
+          - info
+          - status
+          title: PlanIntegratedResult
+          type: object
+        Railway:
+          properties:
+            alters:
+              default: null
+              items:
+                $ref: '#/$defs/Alter'
+              title: 聚合的备选方案
+              type: array
+            arrival_stop:
+              $ref: '#/$defs/DepartureStop'
+              default: null
+              title: 火车到站信息
+            departure_stop:
+              $ref: '#/$defs/DepartureStop'
+              default: null
+              title: 火车始发站信息
+            distance:
+              default: null
+              title: 该 item 换乘段的行车总距离
+              type: string
+            id:
+              default: null
+              title: 线路id
+              type: string
+            name:
+              default: null
+              title: 线路名称
+              type: string
+            spaces:
+              default: null
+              items:
+                $ref: '#/$defs/Space'
+              title: 仓位及价格信息
+              type: array
+            time:
+              default: null
+              title: 该线路车段耗时
+              type: string
+            trip:
+              default: null
+              title: 线路车次号
+              type: string
+            type:
+              default: null
+              title: 线路车次类型
+              type: string
+            via_stop:
+              default: null
+              items:
+                $ref: '#/$defs/DepartureStop'
+              title: 途径站点信息
+              type: array
+          title: Railway
+          type: object
+        Segment:
+          properties:
+            bus:
+              $ref: '#/$defs/Bus'
+              default: null
+              title: 此路段公交导航信息
+            entrance:
+              $ref: '#/$defs/SubwayEntry'
+              default: null
+              title: 地铁入口
+            exit:
+              $ref: '#/$defs/SubwayEntry'
+              default: null
+              title: 地铁出口
+            railway:
+              $ref: '#/$defs/Railway'
+              default: null
+              title: 乘坐火车的信息
+            walking:
+              $ref: '#/$defs/Walking'
+              default: null
+              title: 此路段步行导航信息
+          title: Segment
+          type: object
+        Space:
+          properties:
+            code:
+              default: null
+              title: 仓位编码
+              type: string
+            cost:
+              default: null
+              title: 仓位费用
+              type: string
+          title: Space
+          type: object
+        SubwayEntry:
+          properties:
+            location:
+              default: null
+              title: 入口经纬度
+              type: string
+          title: SubwayEntry
+          type: object
+        Transit:
+          properties:
+            cost:
+              default: null
+              description: 单位：元
+              title: 此换乘方案价格
+              type: string
+              x-description-en: 'Unit: Yuan'
+              x-description-zh-hans: 单位：元
+              x-description-zh-hant: 單位：元
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行时间预计
+              type: string
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            emergency:
+              $ref: '#/$defs/Emergency'
+              default: null
+              title: 紧急事件
+            nightflag:
+              default: null
+              description: 0：非夜班车；1：夜班车
+              title: 是否是夜班车
+              type: string
+              x-description-en: '0: Not a night bus; 1: Night bus'
+              x-description-zh-hans: 0：非夜班车；1：夜班车
+              x-description-zh-hant: 0：非夜間巴士；1：夜間巴士
+            segments:
+              default: null
+              items:
+                $ref: '#/$defs/Segment'
+              title: 换乘路段列表
+              type: array
+            walking_distance:
+              default: null
+              description: 单位：米
+              title: 此方案总步行距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+          title: Transit
+          type: object
+        Walking:
+          properties:
+            destination:
+              default: null
+              title: 终点坐标
+              type: string
+            distance:
+              default: null
+              description: 单位：米
+              title: 每段线路步行距离
+              type: integer
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行预计时间
+              type: integer
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            origin:
+              default: null
+              title: 起点坐标
+              type: string
+            steps:
+              default: []
+              items:
+                $ref: '#/$defs/WalkingStep'
+              title: 步行路段列表
+              type: array
+          title: Walking
+          type: object
+        WalkingStep:
+          properties:
+            action:
+              default: null
+              title: 步行主要动作
+              type: string
+            assistant_action:
+              default: null
+              title: 步行辅助动作
+              type: string
+            distance:
+              default: null
+              description: 单位：米
+              title: 此路段距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行预计时间
+              type: string
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            instruction:
+              default: null
+              title: 此段路的行走介绍
+              type: string
+            polyline:
+              default: null
+              title: 此段路的坐标
+              type: string
+            road:
+              default: null
+              title: 道路名称
+              type: string
+          title: WalkingStep
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  plan_walking:
+    description: 步行路线规划
+    func_name: plan_walking
+    input_schema:
+      properties:
+        destination:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 目的地
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801。经纬度小数点后不超过6位
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+        start:
+          description: 规则：lon，lat（经度，纬度）， “,”分割，如117.500244, 40.417801 经纬度小数点不超过6位
+          title: 出发点
+          type: string
+          x-description-en: 'Rules: lon, lat (longitude, latitude), separated by ",",
+            e.g., 117.500244, 40.417801. The number of decimal places for longitude
+            and latitude should not exceed 6.'
+          x-description-zh-hans: 规则：lon，lat（经度，纬度），用“,”分隔，例如117.500244, 40.417801  经纬度小数点后不超过6位
+          x-description-zh-hant: 規則：lon，lat（經度，緯度），以「,」分隔，例如117.500244, 40.417801  經緯度小數點不超過6位
+      required:
+      - start
+      - destination
+      title: InModel
+      type: object
+    labels:
+      description_en: Walking route planning
+      description_zh_hans: 步行路线规划
+      description_zh_hant: 步行路線規劃
+      name_en: plan_walking
+      name_zh_hans: 步行计划
+      name_zh_hant: 規劃步行
+    name: plan_walking
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/PlanWalkingResult'
+          title: OutModel
+        Path:
+          properties:
+            distance:
+              default: null
+              description: 单位：米
+              title: 起点和终点的步行距离
+              type: string
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              description: 单位：秒
+              title: 步行时间预计
+              type: string
+              x-description-en: 'Unit: second'
+              x-description-zh-hans: 单位：秒
+              x-description-zh-hant: 單位：秒
+            steps:
+              default: []
+              description: 路线
+              items:
+                $ref: '#/$defs/Step'
+              title: Steps
+              type: array
+              x-description-en: Route
+              x-description-zh-hans: 路线
+              x-description-zh-hant: 路線
+          title: Path
+          type: object
+        PlanWalkingResult:
+          properties:
+            count:
+              default: 0
+              title: 总数
+              type: integer
+            info:
+              title: Info
+              type: string
+            route:
+              $ref: '#/$defs/Route'
+              default: null
+              title: 路线方案
+            status:
+              title: Status
+              type: integer
+          required:
+          - info
+          - status
+          title: PlanWalkingResult
+          type: object
+        Route:
+          properties:
+            destination:
+              default: null
+              title: 终点
+              type: string
+            origin:
+              default: null
+              title: 起点
+              type: string
+            paths:
+              default: []
+              description: 方案
+              items:
+                $ref: '#/$defs/Path'
+              title: Paths
+              type: array
+              x-description-en: Plan
+              x-description-zh-hans: 方案
+              x-description-zh-hant: 方案
+          title: Route
+          type: object
+        Step:
+          properties:
+            action:
+              default: null
+              title: 步行主要动作
+              type: string
+            assistant_action:
+              default: null
+              title: 步行辅助动作
+              type: string
+            distance:
+              default: null
+              description: 单位：米
+              title: 此路段距离
+              type: integer
+              x-description-en: 'Unit: meter'
+              x-description-zh-hans: 单位：米
+              x-description-zh-hant: 單位：米
+            duration:
+              default: null
+              title: 此路段预计步行时间
+              type: integer
+            instruction:
+              default: null
+              title: 路段步行指示
+              type: string
+            orientation:
+              default: null
+              title: 方向
+              type: string
+            polyline:
+              default: null
+              title: 此路段坐标点
+              type: string
+            road:
+              default: null
+              title: 道路名称
+              type: string
+            walk_type:
+              default: null
+              description: 0，普通道路;1，人行横道;3，地下通道;4，过街天桥;5，地铁通道;6，公园;7，广场;8，扶梯;9，直梯;10，索道;11，空中通道;12，建筑物穿越通道;13，行人通道;14，游船路线;15，观光车路线;16，滑道;18，扩路;19，道路附属连接线;20，阶梯;21，斜坡;22，桥;23，隧道;30，轮渡
+              title: 这段路是否存在特殊的方式
+              type: integer
+              x-description-en: 0, Ordinary road; 1, Pedestrian crossing; 3, Underpass;
+                4, Footbridge; 5, Subway passage; 6, Park; 7, Square; 8, Escalator;
+                9, Elevator; 10, Cableway; 11, Aerial passage; 12, Building crossing
+                passage; 13, Pedestrian passage; 14, Cruise route; 15, Sightseeing
+                bus route; 16, Slide; 18, Road expansion; 19, Road auxiliary connection
+                line; 20, Stairs; 21, Ramp; 22, Bridge; 23, Tunnel; 30, Ferry
+              x-description-zh-hans: 0，普通道路；1，人行横道；3，地下通道；4，过街天桥；5，地铁通道；6，公园；7，广场；8，扶梯；9，直梯；10，索道；11，空中通道；12，建筑物穿越通道；13，行人通道；14，游船路线；15，观光车路线；16，滑道；18，扩路；19，道路附属连接线；20，阶梯；21，斜坡；22，桥；23，隧道；30，轮渡
+              x-description-zh-hant: 0，普通道路；1，人行橫道；3，地下通道；4，天橋；5，地鐵通道；6，公園；7，廣場；8，扶手電梯；9，升降機；10，索道；11，空中通道；12，建築物穿越通道；13，行人通道；14，遊船路線；15，觀光車路線；16，滑道；18，擴建道路；19，道路附屬連接線；20，樓梯；21，斜坡；22，橋梁；23，隧道；30，渡輪
+          title: Step
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  poi_to_geocode:
+    description: 地理编码，支持将详细的结构化地址转换为高德经纬度坐标。
+    func_name: poi_to_geocode
+    input_schema:
+      properties:
+        address:
+          description: 结构化地址信息. 规则遵循：国家、省份、城市、区县、城镇、乡村、街道、门牌号码、屋邨、大厦，如：北京市朝阳区阜通东大街6号。
+          title: Address
+          type: string
+          x-description-en: 'Structured address information. The rules follow: country,
+            province, city, district/county, town, village, street, house number,
+            housing estate, building. For example: No. 6, Futong East Street, Chaoyang
+            District, Beijing.'
+          x-description-zh-hans: 结构化地址信息。规则遵循：国家、省份、城市、区县、城镇、乡村、街道、门牌号码、屋邨、大厦，如：北京市朝阳区阜通东大街6号。
+          x-description-zh-hant: 結構化地址資訊。規則遵循：國家、省份、城市、區縣、城鎮、鄉村、街道、門牌號碼、屋邨、大廈，如：北京市朝陽區阜通東大街6號。
+        city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: 指定查询的城市. 可选输入内容包括：指定城市的中文（如北京）、指定城市的中文全拼（beijing）、citycode（010）、adcode（110000），不支持县级市。当指定城市查询内容为空时，会进行全国范围内的地址转换检索。
+          title: City
+          x-description-en: 'Specify the city for the query. Optional input includes:
+            Chinese name of the specified city (e.g., 北京), full Chinese pinyin of
+            the specified city (beijing), citycode (010), and adcode (110000). County
+            - level cities are not supported. When the query content for the specified
+            city is empty, an address conversion search will be conducted nationwide. '
+          x-description-zh-hans: 指定查询的城市。可选输入内容包括：指定城市的中文（如北京）、指定城市的中文全拼（beijing）、citycode（010）、adcode（110000），不支持县级市。当指定城市查询内容为空时，会进行全国范围内的地址转换检索。
+          x-description-zh-hant: '指定查詢的城市。可選輸入內容包括：指定城市的中文（如北京）、指定城市的中文全拼（beijing）、citycode（010）、adcode（110000），不支援縣級市。當指定城市查詢內容為空時，會進行全國範圍內的地址轉換檢索。 '
+      required:
+      - address
+      title: InModel
+      type: object
+    labels:
+      description_en: Geocoding supports converting detailed structured addresses
+        into Gaode longitude and latitude coordinates.
+      description_zh_hans: 地理编码，支持将详细的结构化地址转换为高德经纬度坐标。
+      description_zh_hant: 地理編碼，支援將詳細的結構化地址轉換為高德經緯度座標。
+      name_en: poi_to_geocode
+      name_zh_hans: 兴趣点转地理编码
+      name_zh_hant: 興趣點轉地理編碼
+    name: poi_to_geocode
+    output_schema:
+      $defs:
+        GeocodeItem:
+          properties:
+            adcode:
+              default: null
+              description: 区域编码
+              title: Adcode
+              type: string
+              x-description-en: Regional encoding
+              x-description-zh-hans: 区域编码
+              x-description-zh-hant: 區域編碼
+            city:
+              default: null
+              description: 城市
+              title: City
+              type: string
+              x-description-en: City
+              x-description-zh-hans: 城市
+              x-description-zh-hant: 城市
+            citycode:
+              default: null
+              description: 城市编码
+              title: Citycode
+              type: string
+              x-description-en: City code
+              x-description-zh-hans: 城市编码
+              x-description-zh-hant: 城市編碼
+            country:
+              default: null
+              description: 国家
+              title: Country
+              type: string
+              x-description-en: Country
+              x-description-zh-hans: 国家
+              x-description-zh-hant: 國家
+            district:
+              default: null
+              description: 区
+              title: District
+              type: string
+              x-description-en: District; Area; Region
+              x-description-zh-hans: 区
+              x-description-zh-hant: 區
+            level:
+              default: null
+              description: 匹配级别
+              title: Level
+              type: string
+              x-description-en: Matching level
+              x-description-zh-hans: 匹配级别
+              x-description-zh-hant: 匹配級別
+            location:
+              default: null
+              description: 坐标点
+              title: Location
+              type: string
+              x-description-en: Coordinate points
+              x-description-zh-hans: 坐标点
+              x-description-zh-hant: 坐標點
+            number:
+              default: null
+              description: 门牌
+              title: Number
+              type: string
+              x-description-en: House number plate
+              x-description-zh-hans: 门牌
+              x-description-zh-hant: 門牌
+            province:
+              default: null
+              description: 省份
+              title: Province
+              type: string
+              x-description-en: Province
+              x-description-zh-hans: 省份
+              x-description-zh-hant: 省份
+            street:
+              default: null
+              description: 街道
+              title: Street
+              type: string
+              x-description-en: Street
+              x-description-zh-hans: 街道
+              x-description-zh-hant: 街道
+          title: GeocodeItem
+          type: object
+        GeocodeResult:
+          properties:
+            count:
+              default: null
+              description: 总数
+              title: Count
+              type: integer
+              x-description-en: Sum
+              x-description-zh-hans: 总数
+              x-description-zh-hant: 總數
+            geocodes:
+              default: []
+              description: 列表
+              items:
+                $ref: '#/$defs/GeocodeItem'
+              title: Geocodes
+              type: array
+              x-description-en: List
+              x-description-zh-hans: 列表
+              x-description-zh-hant: 列表
+            info:
+              title: Info
+              type: string
+            status:
+              title: Status
+              type: integer
+          required:
+          - info
+          - status
+          title: GeocodeResult
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/GeocodeResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

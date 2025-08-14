@@ -1,0 +1,104 @@
+category: LifeAssistant
+config_schema: {}
+description: 一个二维码工具, 用于生成二维码
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-qrcode/hiagent_plugin_qrcode/icon.png
+labels:
+  description_en: A QR code tool for generating QR codes.
+  description_zh_hans: 一个二维码工具, 用于生成二维码
+  description_zh_hant: 一個二維碼工具，用於生成二維碼
+  name_en: QR code tool
+  name_zh_hans: 二维码工具
+  name_zh_hant: 二維碼工具
+meta_version: v1
+metadata_path: 二维码工具_metadata.yaml
+name: 二维码工具
+package_info:
+  name: hiagent_plugin_qrcode
+  version: ''
+tools:
+  qrcode_generator:
+    description: 生成二维码
+    func_name: qrcode_generator
+    input_schema:
+      properties:
+        border:
+          default: 2
+          description: 边框粗细的格数（默认为2）0 ~ 100
+          title: Border
+          type: integer
+          x-description-en: Number of grid cells for border thickness (default is
+            2), ranging from 0 to 100.
+          x-description-zh-hans: 边框粗细的格数（默认为2）0 ~ 100
+          x-description-zh-hant: 邊框粗細的格數（預設為2）0 ~ 100
+        content:
+          description: 二维码文本内容
+          title: Content
+          type: string
+          x-description-en: QR code text content
+          x-description-zh-hans: 二维码文本内容
+          x-description-zh-hant: 二維碼文本內容
+        error_correction:
+          default: L
+          description: 容错等级，可设置为L, M, Q, H，从低到高，生成的二维码越大且容错效果越好
+          enum:
+          - L
+          - M
+          - Q
+          - H
+          title: Error Correction
+          type: string
+          x-description-en: The error correction level can be set to L, M, Q, H. From
+            low to high, the generated QR code will be larger and the error correction
+            effect will be better.
+          x-description-zh-hans: 容错等级，可设置为L、M、Q、H，从低到高，生成的二维码越大且容错效果越好
+          x-description-zh-hant: 容錯等級，可設定為L、M、Q、H，由低到高，生成的二維碼越大且容錯效果越好。
+      required:
+      - content
+      title: InModel
+      type: object
+    labels:
+      description_en: Generate a QR code
+      description_zh_hans: 生成二维码
+      description_zh_hant: 生成二維碼
+      name_en: qrcode_generator
+      name_zh_hans: 二维码生成器
+      name_zh_hant: 二維碼生成器
+    name: qrcode_generator
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

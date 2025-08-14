@@ -1,0 +1,404 @@
+category: Productivity
+config_schema:
+  properties:
+    app_id:
+      description: '申请链接: <https://open.larkoffice.com/app>'
+      title: App Id
+      type: string
+      x-description-en: 'Application link: <https://open.larkoffice.com/app>'
+      x-description-zh-hans: '申请链接: <https://open.larkoffice.com/app>'
+      x-description-zh-hant: '申請連結: <https://open.larkoffice.com/app>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_secret
+  title: InModel
+  type: object
+description: 飞书消息
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-feishu-message/hiagent_plugin_feishu_message/icon.png
+labels:
+  description_en: Feishu messages
+  description_zh_hans: 飞书消息
+  description_zh_hant: 飛書消息
+  name_en: Feishu messages
+  name_zh_hans: 飞书消息
+  name_zh_hant: 飛書消息
+meta_version: v1
+metadata_path: 飞书消息_metadata.yaml
+name: 飞书消息
+package_info:
+  name: hiagent_plugin_feishu_message
+  version: ''
+tools:
+  list_message:
+    description: '获取会话历史消息: 获取指定会话（包括单聊、群组）内的历史消息（即聊天记录）'
+    func_name: list_message
+    input_schema:
+      properties:
+        container_id:
+          description: 容器 ID。ID 类型与 container_id_type 取值一致
+          title: Container Id
+          type: string
+          x-description-en: Container ID. The ID type is consistent with the value
+            of container_id_type.
+          x-description-zh-hans: 容器 ID。ID 类型与 container_id_type 取值一致
+          x-description-zh-hant: 容器ID。ID類型與container_id_type取值一致
+        container_id_type:
+          description: 容器类型。chat：包含单聊（p2p）和群聊（group）, thread：话题
+          enum:
+          - chat
+          - thread
+          title: Container Id Type
+          type: string
+          x-description-en: 'Container types. chat: includes one-on-one chat (p2p)
+            and group chat (group), thread: topic'
+          x-description-zh-hans: 容器类型。chat：包含单聊（p2p）和群聊（group），thread：话题
+          x-description-zh-hant: 容器類型。chat：包含單聊（p2p）和群聊（group），thread：話題
+        end_time:
+          default: ''
+          description: 待查询历史信息的结束时间，秒级时间戳。thread 容器类型暂不支持获取指定时间范围内的消息。
+          title: End Time
+          type: string
+          x-description-en: The end time of the historical information to be queried,
+            in seconds as a timestamp. The thread container type currently does not
+            support retrieving messages within a specified time range.
+          x-description-zh-hans: 待查询历史信息的结束时间，秒级时间戳。thread 容器类型暂不支持获取指定时间范围内的消息。
+          x-description-zh-hant: 待查詢歷史資訊的結束時間，秒級時間戳。thread 容器類型暫不支援獲取指定時間範圍內的消息。
+        page_size:
+          default: 20
+          description: 分页大小，即单次请求所返回的数据条目数。1 ~ 50
+          title: Page Size
+          type: integer
+          x-description-en: Page size, which is the number of data entries returned
+            in a single request. It ranges from 1 to 50.
+          x-description-zh-hans: 分页大小，即单次请求所返回的数据条目数。1 ~ 50
+          x-description-zh-hant: 分頁大小，即單次請求所返回的資料條目數。1 ~ 50
+        page_token:
+          default: ''
+          description: 分页标记，第一次请求不填，表示从头开始遍历；
+          title: Page Token
+          type: string
+          x-description-en: Pagination marker. Leave it blank for the first request,
+            indicating to start traversing from the beginning.
+          x-description-zh-hans: 分页标记，第一次请求不填，表示从头开始遍历；
+          x-description-zh-hant: 分頁標記，第一次請求不填，表示從頭開始遍歷；
+        sort_type:
+          default: ByCreateTimeAsc
+          description: 消息排序方式。ByCreateTimeAsc：按消息创建时间升序排列, ByCreateTimeDesc：按消息创建时间降序排列
+          title: Sort Type
+          type: string
+          x-description-en: 'Message sorting methods. ByCreateTimeAsc: Sort messages
+            in ascending order of creation time. ByCreateTimeDesc: Sort messages in
+            descending order of creation time.'
+          x-description-zh-hans: 消息排序方式。ByCreateTimeAsc：按消息创建时间升序排列，ByCreateTimeDesc：按消息创建时间降序排列
+          x-description-zh-hant: 消息排序方式。ByCreateTimeAsc：按消息創建時間升序排列，ByCreateTimeDesc：按消息創建時間降序排列
+        start_time:
+          default: ''
+          description: 待查询历史信息的起始时间，秒级时间戳。thread 容器类型暂不支持获取指定时间范围内的消息。
+          title: Start Time
+          type: string
+          x-description-en: The start time of the historical information to be queried,
+            a timestamp in seconds. The thread container type does not currently support
+            retrieving messages within a specified time range.
+          x-description-zh-hans: 待查询历史信息的起始时间，秒级时间戳。thread 容器类型暂不支持获取指定时间范围内的消息。
+          x-description-zh-hant: 待查詢歷史資訊的起始時間，秒級時間戳。thread 容器類型暫不支援獲取指定時間範圍內的消息。
+      required:
+      - container_id_type
+      - container_id
+      title: InModel
+      type: object
+    labels:
+      description_en: 'Get session historical messages: Retrieve historical messages
+        (i.e., chat records) within a specified session (including one-on-one chats
+        and group chats).'
+      description_zh_hans: '获取会话历史消息: 获取指定会话（包括单聊、群组）内的历史消息（即聊天记录）'
+      description_zh_hant: '獲取會話歷史消息: 獲取指定會話（包括單聊、群組）內的歷史消息（即聊天記錄）'
+      name_en: list_message
+      name_zh_hans: 消息列表
+      name_zh_hant: 列出訊息
+    name: list_message
+    output_schema:
+      $defs:
+        BaseRespModel_ListMessageResponseBody_:
+          properties:
+            code:
+              default: 0
+              title: Code
+              type: integer
+            data:
+              anyOf:
+              - $ref: '#/$defs/ListMessageResponseBody'
+              - type: 'null'
+              default: null
+            error:
+              anyOf:
+              - $ref: '#/$defs/Error'
+              - type: 'null'
+              default: null
+            msg:
+              default: ''
+              title: Msg
+              type: string
+          title: BaseRespModel[ListMessageResponseBody]
+          type: object
+        Error:
+          properties:
+            details:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorDetail'
+              title: Details
+              type: array
+            field_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorFieldViolation'
+              title: Field Violations
+              type: array
+            helps:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorHelp'
+              title: Helps
+              type: array
+            log_id:
+              default: null
+              title: Log Id
+              type: string
+            permission_violations:
+              default: null
+              items:
+                $ref: '#/$defs/ErrorPermissionViolation'
+              title: Permission Violations
+              type: array
+            troubleshooter:
+              default: null
+              title: Troubleshooter
+              type: string
+          title: Error
+          type: object
+        ErrorDetail:
+          properties:
+            key:
+              default: null
+              title: Key
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorDetail
+          type: object
+        ErrorFieldViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            field:
+              default: null
+              title: Field
+              type: string
+            value:
+              default: null
+              title: Value
+              type: string
+          title: ErrorFieldViolation
+          type: object
+        ErrorHelp:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            url:
+              default: null
+              title: Url
+              type: string
+          title: ErrorHelp
+          type: object
+        ErrorPermissionViolation:
+          properties:
+            description:
+              default: null
+              title: Description
+              type: string
+            subject:
+              default: null
+              title: Subject
+              type: string
+            type:
+              default: null
+              title: Type
+              type: string
+          title: ErrorPermissionViolation
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ListMessageResponseBody:
+          properties:
+            has_more:
+              default: null
+              title: Has More
+              type: boolean
+            items:
+              default: null
+              items:
+                $ref: '#/$defs/Message'
+              title: Items
+              type: array
+            page_token:
+              default: null
+              title: Page Token
+              type: string
+          title: ListMessageResponseBody
+          type: object
+        Mention:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            id_type:
+              default: null
+              title: Id Type
+              type: string
+            key:
+              default: null
+              title: Key
+              type: string
+            name:
+              default: null
+              title: Name
+              type: string
+            tenant_key:
+              default: null
+              title: Tenant Key
+              type: string
+          title: Mention
+          type: object
+        Message:
+          properties:
+            body:
+              $ref: '#/$defs/MessageBody'
+              default: null
+            chat_id:
+              default: null
+              title: Chat Id
+              type: string
+            create_time:
+              default: null
+              title: Create Time
+              type: integer
+            deleted:
+              default: null
+              title: Deleted
+              type: boolean
+            mentions:
+              default: null
+              items:
+                $ref: '#/$defs/Mention'
+              title: Mentions
+              type: array
+            message_id:
+              default: null
+              title: Message Id
+              type: string
+            msg_type:
+              default: null
+              title: Msg Type
+              type: string
+            parent_id:
+              default: null
+              title: Parent Id
+              type: string
+            root_id:
+              default: null
+              title: Root Id
+              type: string
+            sender:
+              $ref: '#/$defs/Sender'
+              default: null
+            thread_id:
+              default: null
+              title: Thread Id
+              type: string
+            update_time:
+              default: null
+              title: Update Time
+              type: integer
+            updated:
+              default: null
+              title: Updated
+              type: boolean
+            upper_message_id:
+              default: null
+              title: Upper Message Id
+              type: string
+          title: Message
+          type: object
+        MessageBody:
+          properties:
+            content:
+              default: null
+              title: Content
+              type: string
+          title: MessageBody
+          type: object
+        OutModel:
+          $ref: '#/$defs/BaseRespModel_ListMessageResponseBody_'
+          title: OutModel
+        Sender:
+          properties:
+            id:
+              default: null
+              title: Id
+              type: string
+            id_type:
+              default: null
+              title: Id Type
+              type: string
+            sender_type:
+              default: null
+              title: Sender Type
+              type: string
+            tenant_key:
+              default: null
+              title: Tenant Key
+              type: string
+          title: Sender
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

@@ -1,0 +1,26 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-wikipedia"
+version = "0.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_wikipedia/icon.png",
+  "hiagent_plugin_wikipedia/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_wikipedia:WikipediaPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+wikipedia = "^1.4.0"
+langchain-community = "^0.3.4"
+# hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"维基百科" = "hiagent_plugin_wikipedia:WikipediaPlugin"

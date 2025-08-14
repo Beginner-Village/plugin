@@ -1,0 +1,1215 @@
+category: WebSearch
+config_schema:
+  properties:
+    token:
+      description: '申请说明: https://open.tianyancha.com/console/mydata'
+      title: Token
+      type: string
+      x-description-en: 'Application instructions: https://open.tianyancha.com/console/mydata'
+      x-description-zh-hans: '申请说明: https://open.tianyancha.com/console/mydata'
+      x-description-zh-hant: '申請說明: https://open.tianyancha.com/console/mydata'
+      x-hiagent-secret: true
+  required:
+  - token
+  title: InModel
+  type: object
+description: 利用天眼查官方API接口,以关键词检索企业列表实现企业搜索功能，并支持查询企业基本信息、新闻舆情、经营异常及变更记录等信息。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-tianyancha/hiagent_plugin_tianyancha/icon.png
+labels:
+  description_en: Use the official Tianyancha API interface to implement the enterprise
+    search function by retrieving the enterprise list with keywords, and support querying
+    information such as basic enterprise information, news and public opinion, business
+    abnormalities, and change records.
+  description_zh_hans: 利用天眼查官方API接口,以关键词检索企业列表实现企业搜索功能，并支持查询企业基本信息、新闻舆情、经营异常及变更记录等信息。
+  description_zh_hant: 利用天眼查官方API介面，以關鍵詞檢索企業列表實現企業搜索功能，並支援查詢企業基本資訊、新聞輿情、經營異常及變更記錄等資訊。
+  name_en: Tianyancha
+  name_zh_hans: 天眼查
+  name_zh_hant: 天眼查
+meta_version: v1
+metadata_path: 天眼查_metadata.yaml
+name: 天眼查
+package_info:
+  name: hiagent_plugin_tianyancha
+  version: ''
+tools:
+  abnormal_operation:
+    description: 可以通过公司名称（需公司全称）或ID获取企业经营异常信息，经营异常信息包括列入/移除原因、时间、做出决定机关等字段的详细信息。
+    func_name: abnormal_operation
+    input_schema:
+      properties:
+        keyword:
+          description: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          title: Keyword
+          type: string
+          x-description-en: Search keywords (company name, company ID, registration
+            number, or unified social credit code)
+          x-description-zh-hans: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          x-description-zh-hant: 搜尋關鍵字（公司名稱、公司id、註冊號或社會統一信用代碼）
+      required:
+      - keyword
+      title: InModel
+      type: object
+    labels:
+      description_en: Enterprise abnormal operation information can be obtained by
+        company name (full company name required) or ID. The abnormal operation information
+        includes detailed information on fields such as the reasons and time for inclusion/removal
+        and the decision - making authority.
+      description_zh_hans: 可以通过公司名称（需公司全称）或ID获取企业经营异常信息，经营异常信息包括列入/移除原因、时间、做出决定机关等字段的详细信息。
+      description_zh_hant: 可以透過公司名稱（需公司全稱）或ID獲取企業經營異常資訊，經營異常資訊包括列入/移除原因、時間、做出決定機關等欄位的詳細資訊。
+      name_en: abnormal_operation
+      name_zh_hans: 异常操作
+      name_zh_hant: 異常操作
+    name: abnormal_operation
+    output_schema:
+      $defs:
+        AbnormalOperationItem:
+          description: '返回值字段       字段类型    字段说明    备注
+
+            removeDate  String  日期      移出日期
+
+            putReason   String  varchar(4091)   列入异常名录原因
+
+            putDepartment       String  varchar(200)    决定列入异常名录部门(作出决定机关)
+
+            removeDepartment    String  varchar(200)    移出部门
+
+            removeReason        String  varchar(4091)   移除异常名录原因
+
+            putDate     String  日期      列入日期'
+          properties:
+            putDate:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 列入日期
+              title: Putdate
+              x-description-en: Inclusion date
+              x-description-zh-hans: 列入日期
+              x-description-zh-hant: 列入日期
+            putDepartment:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 决定列入异常名录部门(作出决定机关)
+              title: Putdepartment
+              x-description-en: Department that decides to include in the abnormal
+                list (decision-making authority)
+              x-description-zh-hans: 决定列入异常名录部门(作出决定机关)
+              x-description-zh-hant: 決定列入異常名錄部門（作出決定機關）
+            putReason:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 列入异常名录原因
+              title: Putreason
+              x-description-en: Reasons for being included in the abnormal list
+              x-description-zh-hans: 列入异常名录原因
+              x-description-zh-hant: 列入異常名錄原因
+            removeDate:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 移出日期
+              title: Removedate
+              x-description-en: Removal date
+              x-description-zh-hans: 移出日期
+              x-description-zh-hant: 移出日期
+            removeDepartment:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 移出部门
+              title: Removedepartment
+              x-description-en: Remove from the department
+              x-description-zh-hans: 移出部门
+              x-description-zh-hant: 移出部門
+            removeReason:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 移除异常名录原因
+              title: Removereason
+              x-description-en: Reasons for removing from the abnormal list
+              x-description-zh-hans: 移除异常名录原因
+              x-description-zh-hant: 移除異常名錄原因
+          title: AbnormalOperationItem
+          type: object
+          x-description-en: 'Return value field, Field type, Field description, Remarks
+
+            removeDate, String, Date, Removal date
+
+            putReason, String, varchar(4091), Reason for inclusion in the abnormal
+            list
+
+            putDepartment, String, varchar(200), Department deciding to include in
+            the abnormal list (decision-making authority)
+
+            removeDepartment, String, varchar(200), Removal department
+
+            removeReason, String, varchar(4091), Reason for removal from the abnormal
+            list
+
+            putDate, String, Date, Inclusion date'
+          x-description-zh-hans: '返回值字段  字段类型  字段说明  备注
+
+            removeDate  字符串  日期  移出日期
+
+            putReason  字符串  varchar(4091)  列入异常名录原因
+
+            putDepartment  字符串  varchar(200)  决定列入异常名录部门(作出决定机关)
+
+            removeDepartment  字符串  varchar(200)  移出部门
+
+            removeReason  字符串  varchar(4091)  移除异常名录原因
+
+            putDate  字符串  日期  列入日期'
+          x-description-zh-hant: '返回值字段 字段類型 字段說明 備註
+
+            removeDate String 日期 移出日期
+
+            putReason String varchar(4091) 列入異常名錄原因
+
+            putDepartment String varchar(200) 決定列入異常名錄部門(作出決定機關)
+
+            removeDepartment String varchar(200) 移出部門
+
+            removeReason String varchar(4091) 移除異常名錄原因
+
+            putDate String 日期 列入日期'
+        AbnormalOperationResult:
+          description: '返回值字段       字段类型    字段说明    备注
+
+            total       Number  int(11) 总数
+
+            items       Array           新闻列表'
+          properties:
+            items:
+              default: []
+              description: 列表
+              items:
+                $ref: '#/$defs/AbnormalOperationItem'
+              title: Items
+              type: array
+              x-description-en: List
+              x-description-zh-hans: 列表
+              x-description-zh-hant: 列表
+            total:
+              default: 0
+              description: 总数
+              title: Total
+              type: integer
+              x-description-en: Total number
+              x-description-zh-hans: 总数
+              x-description-zh-hant: 總數
+          title: AbnormalOperationResult
+          type: object
+          x-description-en: 'Return value field, Field type, Field description, Remarks
+
+            total, Number (int(11)), Total number
+
+            items, Array, News list'
+          x-description-zh-hans: '返回值字段 字段类型 字段说明 备注
+
+            total Number int(11) 总数
+
+            items Array 新闻列表'
+          x-description-zh-hant: '返回值字段 字段類型 字段說明 備註
+
+            total Number int(11) 總數
+
+            items Array 新聞列表'
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/AbnormalOperationResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  change_log:
+    description: 可以通过公司名称（需公司全称）或ID获取企业变更记录，变更记录包括工商变更事项、变更前后信息等字段的详细信息。
+    func_name: change_log
+    input_schema:
+      properties:
+        keyword:
+          description: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          title: Keyword
+          type: string
+          x-description-en: Search keywords (company name, company ID, registration
+            number or unified social credit code)
+          x-description-zh-hans: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          x-description-zh-hant: 搜尋關鍵字（公司名稱、公司id、註冊號或社會統一信用代碼）
+        pageNum:
+          default: 1
+          description: 当前页数（默认第1页）
+          title: Pagenum
+          type: integer
+          x-description-en: Current page number (default is page 1)
+          x-description-zh-hans: 当前页数（默认第1页）
+          x-description-zh-hant: 當前頁數（預設第1頁）
+        pageSize:
+          default: 20
+          description: 每页条数（默认20条，最大20条）
+          title: Pagesize
+          type: integer
+          x-description-en: Items per page (default 20, maximum 20)
+          x-description-zh-hans: 每页条数（默认20条，最大20条）
+          x-description-zh-hant: 每頁條數（預設20條，最大20條）
+      required:
+      - keyword
+      title: InModel
+      type: object
+    labels:
+      description_en: Enterprise change records can be obtained by company name (full
+        company name required) or ID. The change records include detailed information
+        on fields such as industrial and commercial change items and information before
+        and after the change.
+      description_zh_hans: 可以通过公司名称（需公司全称）或ID获取企业变更记录，变更记录包括工商变更事项、变更前后信息等字段的详细信息。
+      description_zh_hant: 可以透過公司名稱（需公司全稱）或ID獲取企業變更記錄，變更記錄包括工商變更事項、變更前後資訊等欄位的詳細資訊。
+      name_en: change_log
+      name_zh_hans: 变更日志
+      name_zh_hant: 變更日誌
+    name: change_log
+    output_schema:
+      $defs:
+        ChangeLogItem:
+          description:
+          properties:
+            changeItem:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 变更事项
+              title: Changeitem
+              x-description-en: Matters of change
+              x-description-zh-hans: 变更事项
+              x-description-zh-hant: 變更事項
+            changeTime:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 变更时间
+              title: Changetime
+              x-description-en: Change time
+              x-description-zh-hans: 变更时间
+              x-description-zh-hant: 變更時間
+            contentAfter:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 变更后
+              title: Contentafter
+              x-description-en: After the change
+              x-description-zh-hans: 变更后
+              x-description-zh-hant: 變更後
+            contentBefore:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 变更前
+              title: Contentbefore
+              x-description-en: Before the change
+              x-description-zh-hans: 变更前
+              x-description-zh-hant: 變更前
+            createTime:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 创建时间
+              title: Createtime
+              x-description-en: Creation time
+              x-description-zh-hans: 创建时间
+              x-description-zh-hant: 創建時間
+          title: ChangeLogItem
+          type: object
+          x-description-en:
+          x-description-zh-hans:
+          x-description-zh-hant:
+        ChangeLogResult:
+          description:
+          properties:
+            items:
+              default: []
+              description: 列表
+              items:
+                $ref: '#/$defs/ChangeLogItem'
+              title: Items
+              type: array
+              x-description-en: List
+              x-description-zh-hans: 列表
+              x-description-zh-hant: 列表
+            total:
+              default: 0
+              description: 总数
+              title: Total
+              type: integer
+              x-description-en: Total number
+              x-description-zh-hans: 总数
+              x-description-zh-hant: 總數
+          title: ChangeLogResult
+          type: object
+          x-description-en:
+          x-description-zh-hans:
+          x-description-zh-hant:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ChangeLogResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  company_detail:
+    description: 可以通过公司名称（需公司全称）或ID获取企业基本信息和企业联系方式，包括公司名称或ID、类型、成立日期、电话、邮箱、网址等字段的详细信息。
+    func_name: company_detail
+    input_schema:
+      properties:
+        keyword:
+          description: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          title: Keyword
+          type: string
+          x-description-en: Search keywords (company name, company ID, registration
+            number, or unified social credit code)
+          x-description-zh-hans: 搜索关键字（公司名称、公司id、注册号或社会统一信用代码）
+          x-description-zh-hant: 搜尋關鍵字（公司名稱、公司id、註冊號或社會統一信用代碼）
+      required:
+      - keyword
+      title: InModel
+      type: object
+    labels:
+      description_en: You can obtain the basic information and contact details of
+        an enterprise through the company name (the full name is required) or ID.
+        The detailed information includes fields such as the company name or ID, type,
+        establishment date, phone number, email, and website.
+      description_zh_hans: 可以通过公司名称（需公司全称）或ID获取企业基本信息和企业联系方式，包括公司名称或ID、类型、成立日期、电话、邮箱、网址等字段的详细信息。
+      description_zh_hant: 可以透過公司名稱（需公司全稱）或ID獲取企業基本資訊和企業聯繫方式，包括公司名稱或ID、類型、成立日期、電話、郵箱、網址等欄位的詳細資訊。
+      name_en: company_detail
+      name_zh_hans: 公司详情
+      name_zh_hant: 公司詳情
+    name: company_detail
+    output_schema:
+      $defs:
+        CompanyDetailResult:
+          description: ""
+          properties:
+            actualCapital:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 实收注册资金
+              title: Actualcapital
+              x-description-en: Actually received registered capital
+              x-description-zh-hans: 实收注册资金
+              x-description-zh-hant: 實收註冊資金
+            actualCapitalCurrency:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 实收注册资本币种 人民币 美元 欧元 等
+              title: Actualcapitalcurrency
+              x-description-en: 'Currencies of actually received registered capital:
+                RMB, US dollar, euro, etc.'
+              x-description-zh-hans: 实收注册资本币种：人民币、美元、欧元等
+              x-description-zh-hant: 實收註冊資本幣種 人民幣 美元 歐元 等
+            alias:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 简称
+              title: Alias
+              x-description-en: Abbreviation
+              x-description-zh-hans: 简称
+              x-description-zh-hant: 簡稱
+            approvedTime:
+              default: ''
+              description: 核准时间
+              title: Approvedtime
+              type: string
+              x-description-en: Approval time
+              x-description-zh-hans: 核准时间
+              x-description-zh-hant: 核准時間
+            base:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 省份简称
+              title: Base
+              x-description-en: Abbreviations of provincial names
+              x-description-zh-hans: 省份简称
+              x-description-zh-hant: 省份簡稱
+            bondName:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 股票名
+              title: Bondname
+              x-description-en: Stock name
+              x-description-zh-hans: 股票名
+              x-description-zh-hant: 股票名
+            bondNum:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 股票号
+              title: Bondnum
+              x-description-en: Stock number
+              x-description-zh-hans: 股票号
+              x-description-zh-hant: 股票號
+            bondType:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 股票类型
+              title: Bondtype
+              x-description-en: Stock types
+              x-description-zh-hans: 股票类型
+              x-description-zh-hant: 股票類型
+            businessScope:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 经营范围
+              title: Businessscope
+              x-description-en: Scope of business
+              x-description-zh-hans: 经营范围
+              x-description-zh-hant: 經營範圍
+            cancelDate:
+              default: ''
+              description: 注销日期
+              title: Canceldate
+              type: string
+              x-description-en: Cancellation date
+              x-description-zh-hans: 注销日期
+              x-description-zh-hant: 註銷日期
+            cancelReason:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 注销原因
+              title: Cancelreason
+              x-description-en: Reasons for cancellation
+              x-description-zh-hans: 注销原因
+              x-description-zh-hant: 註銷原因
+            city:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 市
+              title: City
+              x-description-en: City; Municipality; Town (depending on the context,
+                "city" is the most common one to translate "市")
+              x-description-zh-hans: 市
+              x-description-zh-hant: 市
+            companyOrgType:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 企业类型
+              title: Companyorgtype
+              x-description-en: Enterprise type
+              x-description-zh-hans: 企业类型
+              x-description-zh-hant: 企業類型
+            creditCode:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 统一社会信用代码
+              title: Creditcode
+              x-description-en: Unified Social Credit Code
+              x-description-zh-hans: 统一社会信用代码
+              x-description-zh-hant: 統一社會信用代碼
+            district:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 区
+              title: District
+              x-description-en: District; area; zone
+              x-description-zh-hans: 区
+              x-description-zh-hant: 區
+            email:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 邮箱
+              title: Email
+              x-description-en: Email
+              x-description-zh-hans: 邮箱
+              x-description-zh-hant: 郵箱
+            estiblishTime:
+              default: ''
+              description: 成立日期
+              title: Estiblishtime
+              type: string
+              x-description-en: Date of establishment
+              x-description-zh-hans: 成立日期
+              x-description-zh-hant: 成立日期
+            fromTime:
+              default: ''
+              description: 经营开始时间
+              title: Fromtime
+              type: string
+              x-description-en: Business start time
+              x-description-zh-hans: 经营开始时间
+              x-description-zh-hant: 經營開始時間
+            historyNameList:
+              anyOf:
+              - items:
+                  type: string
+                type: array
+              - type: 'null'
+              default: null
+              description: 曾用名
+              title: Historynamelist
+              x-description-en: Former name
+              x-description-zh-hans: 曾用名
+              x-description-zh-hant: 曾用名
+            historyNames:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 曾用名
+              title: Historynames
+              x-description-en: Former name
+              x-description-zh-hans: 曾用名
+              x-description-zh-hant: 曾用名
+            id:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 企业id
+              title: Id
+              x-description-en: Enterprise ID
+              x-description-zh-hans: 企业ID
+              x-description-zh-hant: 企業ID
+            industry:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 行业
+              title: Industry
+              x-description-en: Industry
+              x-description-zh-hans: 行业
+              x-description-zh-hant: 行業
+            industryAll:
+              anyOf:
+              - $ref: '#/$defs/IndustryAll'
+              - type: 'null'
+              default: null
+              description: 国民经济行业分类
+              x-description-en: National economic industry classification
+              x-description-zh-hans: 国民经济行业分类
+              x-description-zh-hant: 國民經濟行業分類
+            isMicroEnt:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 是否是小微企业 0不是 1是
+              title: Ismicroent
+              x-description-en: 'Is it a small and micro enterprise? 0: No; 1: Yes'
+              x-description-zh-hans: 是否是小微企业 0不是 1是
+              x-description-zh-hant: 是否是小微企業 0不是 1是
+            legalPersonName:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 法人
+              title: Legalpersonname
+              x-description-en: Legal person
+              x-description-zh-hans: 法人
+              x-description-zh-hant: 法人
+            name:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 企业名
+              title: Name
+              x-description-en: Enterprise name
+              x-description-zh-hans: 企业名
+              x-description-zh-hant: 企業名
+            orgNumber:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 组织机构代码
+              title: Orgnumber
+              x-description-en: Organization code
+              x-description-zh-hans: 组织机构代码
+              x-description-zh-hant: 組織機構代碼
+            percentileScore:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 万分制
+              title: Percentilescore
+              x-description-en: Ten - thousandths system
+              x-description-zh-hans: 万分制
+              x-description-zh-hant: 萬分制
+            phoneNumber:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 企业联系方式
+              title: Phonenumber
+              x-description-en: Enterprise contact information
+              x-description-zh-hans: 企业联系方式
+              x-description-zh-hant: 企業聯繫方式
+            property3:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 英文名
+              title: Property3
+              x-description-en: English name
+              x-description-zh-hans: 英文名
+              x-description-zh-hant: 英文名稱
+            regCapital:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 注册资本
+              title: Regcapital
+              x-description-en: Registered capital
+              x-description-zh-hans: 注册资本
+              x-description-zh-hant: 註冊資本
+            regCapitalCurrency:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 注册资本币种 人民币 美元 欧元 等
+              title: Regcapitalcurrency
+              x-description-en: 'Registered capital currencies: RMB, US dollars, Euros,
+                etc.'
+              x-description-zh-hans: 注册资本币种：人民币、美元、欧元等
+              x-description-zh-hant: 註冊資本幣種 人民幣 美元 歐元 等
+            regInstitute:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 登记机关
+              title: Reginstitute
+              x-description-en: Registration authority
+              x-description-zh-hans: 登记机关
+              x-description-zh-hant: 登記機關
+            regLocation:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 注册地址
+              title: Reglocation
+              x-description-en: Registered address
+              x-description-zh-hans: 注册地址
+              x-description-zh-hant: 註冊地址
+            regNumber:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 注册号
+              title: Regnumber
+              x-description-en: Registration number
+              x-description-zh-hans: 注册号
+              x-description-zh-hant: 註冊號
+            regStatus:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 企业状态
+              title: Regstatus
+              x-description-en: Enterprise status
+              x-description-zh-hans: 企业状态
+              x-description-zh-hant: 企業狀態
+            revokeDate:
+              default: ''
+              description: 吊销日期
+              title: Revokedate
+              type: string
+              x-description-en: Revocation date
+              x-description-zh-hans: 吊销日期
+              x-description-zh-hant: 吊銷日期
+            revokeReason:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 吊销原因
+              title: Revokereason
+              x-description-en: Reason for revocation
+              x-description-zh-hans: 吊销原因
+              x-description-zh-hant: 吊銷原因
+            socialStaffNum:
+              default: 0
+              description: 参保人数
+              title: Socialstaffnum
+              type: integer
+              x-description-en: Number of insured people
+              x-description-zh-hans: 参保人数
+              x-description-zh-hant: 參保人數
+            staffNumRange:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 人员规模
+              title: Staffnumrange
+              x-description-en: Personnel scale
+              x-description-zh-hans: 人员规模
+              x-description-zh-hant: 人員規模
+            tags:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 企业标签
+              title: Tags
+              x-description-en: Enterprise tags
+              x-description-zh-hans: 企业标签
+              x-description-zh-hant: 企業標籤
+            taxNumber:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 纳税人识别号
+              title: Taxnumber
+              x-description-en: Taxpayer Identification Number
+              x-description-zh-hans: 纳税人识别号
+              x-description-zh-hant: 納稅人識別號
+            toTime:
+              default: ''
+              description: 经营结束时间
+              title: Totime
+              type: string
+              x-description-en: Business closing time
+              x-description-zh-hans: 经营结束时间
+              x-description-zh-hant: 營業結束時間
+            type:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 法人类型，1 人 2 公司
+              title: Type
+              x-description-en: 'Legal person types: 1. Individual; 2. Company'
+              x-description-zh-hans: 法人类型，1人 2公司
+              x-description-zh-hant: 法人類型，1 人 2 公司
+            updateTimes:
+              default: ''
+              description: 更新时间
+              title: Updatetimes
+              type: string
+              x-description-en: Update time
+              x-description-zh-hans: 更新时间
+              x-description-zh-hant: 更新時間
+            usedBondName:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 股票曾用名
+              title: Usedbondname
+              x-description-en: Former names of stocks
+              x-description-zh-hans: 股票曾用名
+              x-description-zh-hant: 股票曾用名
+            websiteList:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 网址
+              title: Websitelist
+              x-description-en: Website URL; Web address
+              x-description-zh-hans: 网址
+              x-description-zh-hant: 網址
+          title: CompanyDetailResult
+          type: object
+          x-description-en: ""
+          x-description-zh-hans: ""
+          x-description-zh-hant: ""
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        IndustryAll:
+          description:
+          properties:
+            category:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 国民经济行业分类门类
+              title: Category
+              x-description-en: Categories of sectors in the national economy
+              x-description-zh-hans: 国民经济行业分类门类
+              x-description-zh-hant: 國民經濟行業分類門類
+            categoryBig:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 国民经济行业分类大类
+              title: Categorybig
+              x-description-en: Major categories of the national economic industries
+              x-description-zh-hans: 国民经济行业分类大类
+              x-description-zh-hant: 國民經濟行業分類大類
+            categoryMiddle:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 国民经济行业分类中类
+              title: Categorymiddle
+              x-description-en: Medium categories in the Classification of National
+                Economic Industries
+              x-description-zh-hans: 国民经济行业分类中类
+              x-description-zh-hant: 國民經濟行業分類中類
+            categorySmall:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 国民经济行业分类小类
+              title: Categorysmall
+              x-description-en: Sub - categories of the national economic industry
+                classification
+              x-description-zh-hans: 国民经济行业分类小类
+              x-description-zh-hant: 國民經濟行業分類小類
+          title: IndustryAll
+          type: object
+          x-description-en: ''
+          x-description-zh-hans: ''
+          x-description-zh-hant: ''
+        OutModel:
+          $ref: '#/$defs/CompanyDetailResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  news:
+    description: 可以通过公司名称（需公司全称）或ID精确匹配获取新闻列表。
+    func_name: news
+    input_schema:
+      properties:
+        id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: null
+          description: 公司id（name和id其一为必填即可）
+          title: Id
+          x-description-en: Company ID (either name or ID is required)
+          x-description-zh-hans: 公司id（name和id其一为必填即可）
+          x-description-zh-hant: 公司ID（名稱和ID任一必填即可）
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: null
+          description: 公司名称（精确匹配、name和id其一为必填即可）
+          title: Name
+          x-description-en: Company name (Exact match. Either name or id is required.)
+          x-description-zh-hans: 公司名称（精确匹配、name和id其一为必填即可）
+          x-description-zh-hant: 公司名稱（精確匹配、name和id其中一項必填即可）
+        pageNum:
+          default: 1
+          description: 当前页数（默认第1页）
+          title: Pagenum
+          type: integer
+          x-description-en: Current page number (default is page 1)
+          x-description-zh-hans: 当前页数（默认第1页）
+          x-description-zh-hant: 當前頁數（預設第1頁）
+        pageSize:
+          default: 20
+          description: 每页条数（默认20条，最大20条）
+          title: Pagesize
+          type: integer
+          x-description-en: 'Number of items per page (default: 20, maximum: 20)'
+          x-description-zh-hans: 每页条数（默认20条，最大20条）
+          x-description-zh-hant: 每頁條數（預設20條，最大20條）
+      title: InModel
+      type: object
+    labels:
+      description_en: You can obtain the news list through an exact match using the
+        company name (the full company name is required) or the ID.
+      description_zh_hans: 可以通过公司名称（需公司全称）或ID精确匹配获取新闻列表。
+      description_zh_hant: 可以透過公司名稱（需公司全稱）或ID精準匹配獲取新聞列表。
+      name_en: news
+      name_zh_hans: 新闻
+      name_zh_hant: 新聞
+    name: news
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        NewsItem:
+          description: ""
+          properties:
+            abstracts:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 简介
+              title: Abstracts
+              x-description-en: Introduction
+              x-description-zh-hans: 简介
+              x-description-zh-hant: 簡介
+            docid:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 新闻唯一标识符
+              title: Docid
+              x-description-en: Unique identifier for news
+              x-description-zh-hans: 新闻唯一标识符
+              x-description-zh-hant: 新聞唯一識別符
+            emotion:
+              anyOf:
+              - type: integer
+              - type: 'null'
+              default: null
+              description: 情感分类（1-正面，0-中性，-1-负面）
+              title: Emotion
+              x-description-en: Sentiment classification (1 - positive, 0 - neutral,
+                -1 - negative)
+              x-description-zh-hans: 情感分类（1 - 正面，0 - 中性，-1 - 负面）
+              x-description-zh-hant: 情感分類（1-正面，0-中性，-1-負面）
+            rtm:
+              default: ''
+              description: 发布时间
+              title: Rtm
+              type: string
+              x-description-en: Release time
+              x-description-zh-hans: 发布时间
+              x-description-zh-hant: 發佈時間
+            tags:
+              anyOf:
+              - items:
+                  type: string
+                type: array
+              - type: 'null'
+              default: null
+              description: 标签
+              title: Tags
+              x-description-en: Label
+              x-description-zh-hans: 标签
+              x-description-zh-hant: 標籤
+            title:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 标题
+              title: Title
+              x-description-en: Title
+              x-description-zh-hans: 标题
+              x-description-zh-hant: 標題
+            uri:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 新闻url
+              title: Uri
+              x-description-en: News URL
+              x-description-zh-hans: 新闻url
+              x-description-zh-hant: 新聞url
+            website:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: null
+              description: 数据来源
+              title: Website
+              x-description-en: Data source
+              x-description-zh-hans: 数据来源
+              x-description-zh-hant: 數據來源
+          title: NewsItem
+          type: object
+          x-description-en: ''
+          x-description-zh-hans: ""
+          x-description-zh-hant: ""
+        NewsResult:
+          description: ''
+          properties:
+            items:
+              default: []
+              description: 新闻列表
+              items:
+                $ref: '#/$defs/NewsItem'
+              title: Items
+              type: array
+              x-description-en: News list
+              x-description-zh-hans: 新闻列表
+              x-description-zh-hant: 新聞列表
+            total:
+              default: 0
+              description: 总数
+              title: Total
+              type: integer
+              x-description-en: Total number
+              x-description-zh-hans: 总数
+              x-description-zh-hant: 總數
+          title: NewsResult
+          type: object
+          x-description-en:
+          x-description-zh-hans: ''
+          x-description-zh-hant: ''
+        OutModel:
+          $ref: '#/$defs/NewsResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

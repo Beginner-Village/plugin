@@ -1,0 +1,335 @@
+category: Entertainment
+config_schema:
+  properties:
+    app_key:
+      description: '申请说明: <https://work.open.taobao.com/workspace-home>'
+      title: App Key
+      type: string
+      x-description-en: 'Application instructions: <https://work.open.taobao.com/workspace-home>'
+      x-description-zh-hans: '申请说明: <https://work.open.taobao.com/workspace-home>'
+      x-description-zh-hant: '申請說明: <https://work.open.taobao.com/workspace-home>'
+    app_secret:
+      title: App Secret
+      type: string
+      x-hiagent-secret: true
+  required:
+  - app_key
+  - app_secret
+  title: InModel
+  type: object
+description: 用户通过输入页码和页大小这两个参数，可以访问淘票票的影片信息库，获取正在上映或即将上映的影片。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-taopiaopiao/hiagent_plugin_taopiaopiao/icon.png
+labels:
+  description_en: 'Users can access Taopiaopiao''s movie information library to obtain
+    information on currently showing or upcoming movies by inputting two parameters:
+    page number and page size.'
+  description_zh_hans: 用户通过输入页码和页大小这两个参数，可以访问淘票票的影片信息库，获取正在上映或即将上映的影片。
+  description_zh_hant: 用戶透過輸入頁碼和頁大小這兩個參數，可以訪問淘票票的影片資訊庫，獲取正在上映或即將上映的影片。
+  name_en: Taopiaopiao
+  name_zh_hans: 淘票票
+  name_zh_hant: 淘票票
+meta_version: v1
+metadata_path: 淘票票_metadata.yaml
+name: 淘票票
+package_info:
+  name: hiagent_plugin_taopiaopiao
+  version: ''
+tools:
+  GetMovieAndShow:
+    description: 获取正在上映/即将上映的影片/演出，注意：无法搜索过去的、已下映的影片。
+    func_name: GetMovieAndShow
+    input_schema:
+      properties:
+        page_index:
+          default: 1
+          description: 页码，从1开始
+          title: Page Index
+          type: integer
+          x-description-en: Page numbers, starting from 1
+          x-description-zh-hans: 页码，从1开始
+          x-description-zh-hant: 頁碼，從1開始
+        page_size:
+          default: 10
+          description: 页大小，取值范围[1-100]
+          title: Page Size
+          type: integer
+          x-description-en: Page size, the value range is [1-100].
+          x-description-zh-hans: 页大小，取值范围[1-100]
+          x-description-zh-hant: 頁大小，取值範圍[1-100]
+      title: InModel
+      type: object
+    labels:
+      description_en: 'Get currently showing/upcoming movies/shows. Note: You can''t
+        search for movies that are already out of theaters or in the past.'
+      description_zh_hans: 获取正在上映/即将上映的影片/演出，注意：无法搜索过去的、已下映的影片。
+      description_zh_hant: 獲取正在上映/即將上映的影片/演出，注意：無法搜尋過去的、已下映的影片。
+      name_en: GetMovieAndShow
+      name_zh_hans: 获取电影和节目
+      name_zh_hant: 取得電影與節目
+    name: GetMovieAndShow
+    output_schema:
+      $defs:
+        FilmOpenShowNowAndSoonGetResponse:
+          properties:
+            count:
+              default: 0
+              title: Count
+              type: integer
+            error_response:
+              default: null
+              title: Error Response
+              type: string
+            request_id:
+              default: ''
+              title: Request Id
+              type: string
+            return_code:
+              default: ''
+              title: Return Code
+              type: string
+            return_value:
+              $ref: '#/$defs/ReturnValue'
+              default: null
+          title: FilmOpenShowNowAndSoonGetResponse
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/FilmOpenShowNowAndSoonGetResponse'
+          title: OutModel
+        ReturnValue:
+          properties:
+            show:
+              default: []
+              items:
+                $ref: '#/$defs/Show'
+              title: Show
+              type: array
+          title: ReturnValue
+          type: object
+        Show:
+          properties:
+            background:
+              default: null
+              description: 背景图片
+              title: Background
+              type: string
+              x-description-en: Background picture
+              x-description-zh-hans: 背景图片
+              x-description-zh-hant: 背景圖片
+            company:
+              default: null
+              description: 厂商
+              title: Company
+              type: string
+              x-description-en: Manufacturer
+              x-description-zh-hans: 厂商
+              x-description-zh-hant: 廠商
+            country:
+              default: null
+              description: 国家
+              title: Country
+              type: string
+              x-description-en: Country
+              x-description-zh-hans: 国家
+              x-description-zh-hant: 國家
+            description:
+              default: null
+              description: 详情
+              title: Description
+              type: string
+              x-description-en: Details
+              x-description-zh-hans: 详情
+              x-description-zh-hant: 詳情
+            director:
+              default: null
+              description: 出品
+              title: Director
+              type: string
+              x-description-en: Produced by
+              x-description-zh-hans: 出品
+              x-description-zh-hant: 出品
+            duration:
+              default: null
+              description: 时长
+              title: Duration
+              type: integer
+              x-description-en: Duration
+              x-description-zh-hans: 时长
+              x-description-zh-hant: 時長
+            highlight:
+              default: null
+              description: 重点信息
+              title: Highlight
+              type: string
+              x-description-en: Key information
+              x-description-zh-hans: 重点信息
+              x-description-zh-hant: 重點資訊
+            language:
+              default: null
+              description: 语言
+              title: Language
+              type: string
+              x-description-en: Language
+              x-description-zh-hans: 语言
+              x-description-zh-hant: 語言
+            leader:
+              default: null
+              description: 导演
+              title: Leader
+              type: string
+              x-description-en: Director
+              x-description-zh-hans: 导演
+              x-description-zh-hant: 導演
+            name:
+              default: null
+              description: 片名
+              title: Name
+              type: string
+              x-description-en: Title of the film
+              x-description-zh-hans: 片名
+              x-description-zh-hant: 片名
+            name_en:
+              default: null
+              description: 片名
+              title: Name En
+              type: string
+              x-description-en: Title of the film
+              x-description-zh-hans: 片名
+              x-description-zh-hant: 片名
+            open_day:
+              default: null
+              description: 上映日期
+              title: Open Day
+              type: string
+              x-description-en: Release date
+              x-description-zh-hans: 上映日期
+              x-description-zh-hant: 上映日期
+            poster:
+              default: null
+              description: 海报
+              title: Poster
+              type: string
+              x-description-en: Poster
+              x-description-zh-hans: 海报
+              x-description-zh-hant: 海報
+            remark:
+              default: null
+              description: 评分
+              title: Remark
+              type: string
+              x-description-en: Rating
+              x-description-zh-hans: 评分
+              x-description-zh-hant: 評分
+            show_code:
+              default: null
+              description: 影片CODE
+              title: Show Code
+              type: string
+              x-description-en: Film CODE
+              x-description-zh-hans: 影片代码
+              x-description-zh-hant: 影片編碼
+            show_id:
+              default: null
+              description: 影片ID
+              title: Show Id
+              type: string
+              x-description-en: Film ID
+              x-description-zh-hans: 影片ID
+              x-description-zh-hant: 影片ID
+            show_mark:
+              default: null
+              description: 影片标记
+              title: Show Mark
+              type: string
+              x-description-en: Film marking
+              x-description-zh-hans: 影片标记
+              x-description-zh-hant: 影片標記
+            show_versions:
+              $ref: '#/$defs/ShowVersion'
+              default: null
+              description: 影片版本
+              x-description-en: Film version
+              x-description-zh-hans: 影片版本
+              x-description-zh-hant: 影片版本
+            status:
+              default: null
+              description: 状态， 1为正常
+              title: Status
+              type: string
+              x-description-en: 'Status: 1 means normal.'
+              x-description-zh-hans: 状态， 1为正常
+              x-description-zh-hant: 狀態， 1為正常
+            trailer_list:
+              $ref: '#/$defs/TrailerList'
+              default: null
+              description: 海报
+              x-description-en: Poster
+              x-description-zh-hans: 海报
+              x-description-zh-hant: 海報
+            type:
+              default: null
+              description: 影片类型
+              title: Type
+              type: string
+              x-description-en: Film type
+              x-description-zh-hans: 影片类型
+              x-description-zh-hant: 影片類型
+          title: Show
+          type: object
+        ShowVersion:
+          properties:
+            string:
+              items:
+                type: string
+              title: String
+              type: array
+          required:
+          - string
+          title: ShowVersion
+          type: object
+        TrailerList:
+          properties:
+            string:
+              default: []
+              items:
+                type: string
+              title: String
+              type: array
+            type:
+              default: null
+              title: Type
+              type: string
+          title: TrailerList
+          type: object
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

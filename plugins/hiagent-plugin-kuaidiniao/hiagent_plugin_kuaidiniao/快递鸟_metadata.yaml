@@ -1,0 +1,281 @@
+category: Logistics
+config_schema:
+  properties:
+    app_id:
+      description: '申请说明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      title: App Id
+      type: string
+      x-description-en: 'Application instructions: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      x-description-zh-hans: '申请说明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      x-description-zh-hant: '申請說明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+    app_key:
+      description: '申请说明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      title: App Key
+      type: string
+      x-description-en: 'Application instructions: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      x-description-zh-hans: '申请说明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      x-description-zh-hant: '申請說明: https://www.yuque.com/kdnjishuzhichi/tcyzry/rseipuo10h6dktqv'
+      x-hiagent-secret: true
+  required:
+  - app_id
+  - app_key
+  title: InModel
+  type: object
+description: 国内快递查询，根据快递单号查询快递状态。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-kuaidiniao/hiagent_plugin_kuaidiniao/icon.png
+labels:
+  description_en: Domestic express delivery query. Check the status of your express delivery by entering the tracking number.
+  description_zh_hans: 国内快递查询，根据快递单号查询快递状态。
+  description_zh_hant: 國內快遞查詢，根據快遞單號查詢快遞狀態。
+  name_en: KDniao
+  name_zh_hans: 快递鸟
+  name_zh_hant: 快遞鳥
+meta_version: v1
+metadata_path: 快递鸟_metadata.yaml
+name: 快递鸟
+package_info:
+  name: hiagent_plugin_kuaidiniao
+  version: ''
+tools:
+  ExpressDelivery:
+    description: 根据快递单号查询快递状态，返回值为空代表未查到快递信息，请检查快递单号是否正确
+    func_name: ExpressDelivery
+    input_schema:
+      properties:
+        CustomerName:
+          default: ''
+          description: 寄件人或收件人手机号后四位，查询顺丰快递必填
+          title: Customername
+          type: string
+          x-description-en: The last four digits of the sender's or recipient's mobile
+            phone number, required for SF Express delivery query.
+          x-description-zh-hans: 寄件人或收件人手机号后四位，查询顺丰快递必填
+          x-description-zh-hant: 寄件人或收件人手機號後四位，查詢順豐快遞必填
+        LogisticCode:
+          description: 快递单号
+          title: 快递单号
+          type: string
+          x-description-en: Express tracking number
+          x-description-zh-hans: 快递单号
+          x-description-zh-hant: 快遞單號
+      required:
+      - LogisticCode
+      title: InModel
+      type: object
+    labels:
+      description_en: Query the status of an express delivery using the tracking number.
+        A null return value means no delivery information was found. Please check
+        if the tracking number is correct.
+      description_zh_hans: 根据快递单号查询快递状态，返回值为空代表未查到快递信息，请检查快递单号是否正确
+      description_zh_hant: 根據快遞單號查詢快遞狀態，返回值為空代表未查到快遞資訊，請檢查快遞單號是否正確
+      name_en: ExpressDelivery
+      name_zh_hans: 快递查询
+      name_zh_hant: 快遞查詢
+    name: ExpressDelivery
+    output_schema:
+      $defs:
+        ExpressQueryResult:
+          description: 快递查询结果
+          properties:
+            EBusinessID:
+              default: ''
+              title: 用户ID
+              type: string
+            Location:
+              default: ''
+              title: 当前所在城市
+              type: string
+            LogisticCode:
+              default: ''
+              title: 快递单号
+              type: string
+            Reason:
+              anyOf:
+              - type: string
+              - type: 'null'
+              default: ''
+              title: 失败原因
+            ShipperCode:
+              default: ''
+              title: 快递公司编码
+              type: string
+            State:
+              default: ''
+              description: 0-暂无轨迹信息 1-已揽收 2-在途中 3-签收 4-问题件 5-转寄 6-清关
+              title: 普通物流状态
+              type: string
+              x-description-en: 0 - No tracking information available yet. 1 - Package
+                has been picked up. 2 - In transit. 3 - Delivered and signed for.
+                4 - Problematic package. 5 - Forwarded. 6 - Going through customs.
+              x-description-zh-hans: 0-暂无轨迹信息 1-已揽收 2-在途中 3-签收 4-问题件 5-转寄 6-清关
+              x-description-zh-hant: 0 - 暫無軌跡資訊 1 - 已攬收 2 - 在途中 3 - 簽收 4 - 問題件 5 -
+                轉寄 6 - 清關
+            StateEx:
+              default: ''
+              description: "0-暂无轨迹信息\n1-已揽收\n2-在途中\n 201-到达派件城市\n 204-到达转运中心\n 205-到达派件网点\n\
+                \ 206-寄件网点发件\n 202-派件中\n 211-已放入快递柜或驿站\n3-已签收\n 301-正常签收\n 302-轨迹异常后最终签收\n\
+                \ 304-代收签收\n 311-快递柜或驿站签收\n4-问题件\n 401-发货无信息\n 402-超时未签收\n 403-超时未更新\n\
+                \ 404-拒收(退件)\n 405-派件异常\n 406-退货签收\n 407-退货未签收\n 412-快递柜或驿站超时未取\n\
+                \ 413-单号已拦截\n 414-破损\n 415-客户取消发货\n 416-无法联系\n 417-配送延迟\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收货地址不详细\n 421-收件人电话错误\n 422-错分件\n 423-超区件\n5-转寄\n\
+                6-清关\n 601-待清关\n 602-清关中\n 603-已清关\n 604-清关异常\n10-待揽件"
+              title: 物流状态编码
+              type: string
+              x-description-en: "0 - No shipping information available yet\n1 - Package\
+                \ picked up\n2 - In transit\n 201 - Arrived at the delivery city\n\
+                \ 204 - Arrived at the transfer center\n 205 - Arrived at the delivery\
+                \ outlet\n 206 - Sent from the sender's outlet\n 202 - Out for delivery\n\
+                \ 211 - Placed in the express locker or station\n3 - Delivered\n 301\
+                \ - Normally signed for\n 302 - Finally signed for after abnormal\
+                \ tracking\n 304 - Signed for by a proxy\n 311 - Signed for at the\
+                \ express locker or station\n4 - Problematic package\n 401 - No shipping\
+                \ information after dispatch\n 402 - Not signed for within the time\
+                \ limit\n 403 - Tracking not updated for a long time\n 404 - Rejected\
+                \ (returned)\n 405 - Abnormal delivery\n 406 - Return received\n 407\
+                \ - Return not received\n 412 - Not picked up from the express locker\
+                \ or station within the time limit\n 413 - Tracking number intercepted\n\
+                \ 414 - Damaged\n 415 - Sender canceled dispatch\n 416 - Unable to\
+                \ contact\n 417 - Delivery delayed\n 418 - Package picked up\n 419\
+                \ - Redelivered\n 420 - Receiving address not detailed\n 421 - Recipient's\
+                \ phone number incorrect\n 422 - Misrouted package\n 423 - Out-of-service\
+                \ area package\n5 - Forwarded\n6 - Customs clearance\n 601 - Awaiting\
+                \ customs clearance\n 602 - Under customs clearance\n 603 - Customs\
+                \ clearance completed\n 604 - Abnormal customs clearance\n10 - Awaiting\
+                \ pickup"
+              x-description-zh-hans: "0-暂无轨迹信息\n1-已揽收\n2-在途中\n 201-到达派件城市\n 204-到达转运中心\n\
+                \ 205-到达派件网点\n 206-寄件网点发件\n 202-派件中\n 211-已放入快递柜或驿站\n3-已签收\n 301-正常签收\n\
+                \ 302-轨迹异常后最终签收\n 304-代收签收\n 311-快递柜或驿站签收\n4-问题件\n 401-发货无信息\n 402-超时未签收\n\
+                \ 403-超时未更新\n 404-拒收(退件)\n 405-派件异常\n 406-退货签收\n 407-退货未签收\n 412-快递柜或驿站超时未取\n\
+                \ 413-单号已拦截\n 414-破损\n 415-客户取消发货\n 416-无法联系\n 417-配送延迟\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收货地址不详细\n 421-收件人电话错误\n 422-错分件\n 423-超区件\n5-转寄\n\
+                6-清关\n 601-待清关\n 602-清关中\n 603-已清关\n 604-清关异常\n10-待揽件"
+              x-description-zh-hant: "0-暫無軌跡資訊\n1-已攬收\n2-在途中\n 201-到達派件城市\n 204-到達轉運中心\n\
+                \ 205-到達派件網點\n 206-寄件網點發件\n 202-派件中\n 211-已放入快遞櫃或驛站\n3-已簽收\n 301-正常簽收\n\
+                \ 302-軌跡異常後最終簽收\n 304-代收簽收\n 311-快遞櫃或驛站簽收\n4-問題件\n 401-發貨無資訊\n 402-超時未簽收\n\
+                \ 403-超時未更新\n 404-拒收(退件)\n 405-派件異常\n 406-退貨簽收\n 407-退貨未簽收\n 412-快遞櫃或驛站超時未取\n\
+                \ 413-單號已攔截\n 414-破損\n 415-客戶取消發貨\n 416-無法聯繫\n 417-配送延遲\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收貨地址不詳細\n 421-收件人電話錯誤\n 422-錯分件\n 423-超區件\n5-轉寄\n\
+                6-清關\n 601-待清關\n 602-清關中\n 603-已清關\n 604-清關異常\n10-待攬件"
+            Success:
+              default: false
+              title: 成功与否(true/false)
+              type: boolean
+            Traces:
+              default: []
+              items:
+                $ref: '#/$defs/TraceInfo'
+              title: 物流轨迹信息
+              type: array
+          title: ExpressQueryResult
+          type: object
+          x-description-en: Express delivery query result
+          x-description-zh-hans: 快递查询结果
+          x-description-zh-hant: 快遞查詢結果
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          $ref: '#/$defs/ExpressQueryResult'
+          title: OutModel
+        TraceInfo:
+          description: 物流轨迹信息
+          properties:
+            AcceptStation:
+              default: ''
+              title: 轨迹描述
+              type: string
+            AcceptTime:
+              default: ''
+              title: 轨迹发生时间
+              type: string
+            Action:
+              default: ''
+              description: "0-暂无轨迹信息\n1-已揽收\n2-在途中\n 201-到达派件城市\n 204-到达转运中心\n 205-到达派件网点\n\
+                \ 206-寄件网点发件\n 202-派件中\n 211-已放入快递柜或驿站\n3-已签收\n 301-正常签收\n 302-轨迹异常后最终签收\n\
+                \ 304-代收签收\n 311-快递柜或驿站签收\n4-问题件\n 401-发货无信息\n 402-超时未签收\n 403-超时未更新\n\
+                \ 404-拒收(退件)\n 405-派件异常\n 406-退货签收\n 407-退货未签收\n 412-快递柜或驿站超时未取\n\
+                \ 413-单号已拦截\n 414-破损\n 415-客户取消发货\n 416-无法联系\n 417-配送延迟\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收货地址不详细\n 421-收件人电话错误\n 422-错分件\n 423-超区件\n5-转寄\n\
+                6-清关\n 601-待清关\n 602-清关中\n 603-已清关\n 604-清关异常\n10-待揽件"
+              title: 物流状态编码
+              type: string
+              x-description-en: "0 - No delivery track information available yet\n\
+                1 - Package has been picked up\n2 - In transit\n 201 - Arrived at\
+                \ the destination city for delivery\n 204 - Arrived at the transfer\
+                \ center\n 205 - Arrived at the local delivery outlet\n 206 - Dispatched\
+                \ from the sender's outlet\n 202 - Out for delivery\n 211 - Placed\
+                \ in the express locker or delivery station\n3 - Package has been\
+                \ signed for\n 301 - Normally signed for\n 302 - Finally signed for\
+                \ after abnormal track\n 304 - Signed for by a proxy\n 311 - Signed\
+                \ for at the express locker or delivery station\n4 - Problematic package\n\
+                \ 401 - No shipping information\n 402 - Not signed for within the\
+                \ time limit\n 403 - Track not updated within the time limit\n 404\
+                \ - Refused (returned)\n 405 - Abnormal delivery\n 406 - Return package\
+                \ signed for\n 407 - Return package not signed for\n 412 - Not picked\
+                \ up from the express locker or delivery station within the time limit\n\
+                \ 413 - Tracking number has been intercepted\n 414 - Damaged\n 415\
+                \ - Sender canceled the shipment\n 416 - Unable to contact the recipient\n\
+                \ 417 - Delivery delayed\n 418 - Package retrieved\n 419 - Redelivered\n\
+                \ 420 - Receiving address is not detailed\n 421 - Recipient's phone\
+                \ number is incorrect\n 422 - Mis-sorted package\n 423 - Out-of-service\
+                \ area package\n5 - Forwarded\n6 - Customs clearance\n 601 - Pending\
+                \ customs clearance\n 602 - Under customs clearance\n 603 - Customs\
+                \ clearance completed\n 604 - Abnormal customs clearance\n10 - Pending\
+                \ pickup"
+              x-description-zh-hans: "0-暂无轨迹信息\n1-已揽收\n2-在途中\n 201-到达派件城市\n 204-到达转运中心\n\
+                \ 205-到达派件网点\n 206-寄件网点发件\n 202-派件中\n 211-已放入快递柜或驿站\n3-已签收\n 301-正常签收\n\
+                \ 302-轨迹异常后最终签收\n 304-代收签收\n 311-快递柜或驿站签收\n4-问题件\n 401-发货无信息\n 402-超时未签收\n\
+                \ 403-超时未更新\n 404-拒收(退件)\n 405-派件异常\n 406-退货签收\n 407-退货未签收\n 412-快递柜或驿站超时未取\n\
+                \ 413-单号已拦截\n 414-破损\n 415-客户取消发货\n 416-无法联系\n 417-配送延迟\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收货地址不详细\n 421-收件人电话错误\n 422-错分件\n 423-超区件\n5-转寄\n\
+                6-清关\n 601-待清关\n 602-清关中\n 603-已清关\n 604-清关异常\n10-待揽件"
+              x-description-zh-hant: "0-暫無軌跡資訊\n1-已攬收\n2-在途中\n 201-到達派件城市\n 204-到達轉運中心\n\
+                \ 205-到達派件網點\n 206-寄件網點發件\n 202-派件中\n 211-已放入快遞櫃或驛站\n3-已簽收\n 301-正常簽收\n\
+                \ 302-軌跡異常後最終簽收\n 304-代收簽收\n 311-快遞櫃或驛站簽收\n4-問題件\n 401-發貨無資訊\n 402-超時未簽收\n\
+                \ 403-超時未更新\n 404-拒收(退件)\n 405-派件異常\n 406-退貨簽收\n 407-退貨未簽收\n 412-快遞櫃或驛站超時未取\n\
+                \ 413-單號已攔截\n 414-破損\n 415-客戶取消發貨\n 416-無法聯繫\n 417-配送延遲\n 418-快件取出\n\
+                \ 419-重新派送\n 420-收貨地址不詳細\n 421-收件人電話錯誤\n 422-錯分件\n 423-超區件\n5-轉寄\n\
+                6-清關\n 601-待清關\n 602-清關中\n 603-已清關\n 604-清關異常\n10-待攬件"
+            Location:
+              default: ''
+              title: 历史节点所在城市
+              type: string
+            Remark:
+              default: ''
+              title: 物流备注
+              type: string
+          title: TraceInfo
+          type: object
+          x-description-en: Logistics tracking information
+          x-description-zh-hans: 物流轨迹信息
+          x-description-zh-hant: 物流軌跡資訊
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

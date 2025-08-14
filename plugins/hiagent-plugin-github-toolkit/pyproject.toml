@@ -1,0 +1,25 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-github-toolkit"
+version = "0.2.12"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_github_toolkit/icon.png",
+  "hiagent_plugin_github_toolkit/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_github_toolkit:GithubToolkitPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pygithub = "^2.5.0"
+langchain-community = "^0.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"GithubToolkit" = "hiagent_plugin_github_toolkit:GithubToolkitPlugin"

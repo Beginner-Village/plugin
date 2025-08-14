@@ -1,0 +1,391 @@
+category: Productivity
+config_schema: {}
+description: 利用 jsonpath_ng 处理 JSON 内容的工具
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-json-process/hiagent_plugin_json_process/icon.png
+labels:
+  description_en: A tool for processing JSON content using jsonpath_ng.
+  description_zh_hans: 利用 jsonpath_ng 处理 JSON 内容的工具
+  description_zh_hant: 利用 jsonpath_ng 處理 JSON 內容的工具
+  name_en: JSON processing
+  name_zh_hans: json处理
+  name_zh_hant: JSON處理
+meta_version: v1
+metadata_path: json处理_metadata.yaml
+name: json处理
+package_info:
+  name: hiagent_plugin_json_process
+  version: ''
+tools:
+  delete:
+    description: 一个删除 JSON 内容的工具
+    func_name: delete
+    input_schema:
+      properties:
+        content:
+          description: JSON文件内容
+          title: Content
+          type: string
+          x-description-en: JSON file content
+          x-description-zh-hans: JSON文件内容
+          x-description-zh-hant: JSON檔案內容
+        ensure_ascii:
+          default: false
+          description: 确保输出的 JSON 是 ASCII 编码
+          title: Ensure Ascii
+          type: boolean
+          x-description-en: Ensure that the output JSON is in ASCII encoding.
+          x-description-zh-hans: 确保输出的 JSON 是 ASCII 编码
+          x-description-zh-hant: 確保輸出的 JSON 是 ASCII 編碼
+        query:
+          description: 用于定位元素的 JSONPath 查询
+          title: Query
+          type: string
+          x-description-en: JSONPath query used to locate the element
+          x-description-zh-hans: 用于定位元素的 JSONPath 查询
+          x-description-zh-hant: 用於定位元素的 JSONPath 查詢
+      required:
+      - query
+      - content
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for deleting JSON content
+      description_zh_hans: 一个删除 JSON 内容的工具
+      description_zh_hant: 一個刪除 JSON 內容的工具
+      name_en: delete
+      name_zh_hans: 删除
+      name_zh_hant: 刪除
+    name: delete
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  insert:
+    description: 一个插入 JSON 内容的工具
+    func_name: insert
+    input_schema:
+      properties:
+        content:
+          description: JSON文件内容
+          title: Content
+          type: string
+          x-description-en: Content of the JSON file
+          x-description-zh-hans: JSON文件内容
+          x-description-zh-hant: JSON檔案內容
+        create_path:
+          default: false
+          description: 是否创建路径
+          title: Create Path
+          type: boolean
+          x-description-en: Whether to create a path?
+          x-description-zh-hans: 是否创建路径
+          x-description-zh-hant: 是否創建路徑
+        ensure_ascii:
+          default: false
+          description: 确保输出的 JSON 是 ASCII 编码
+          title: Ensure Ascii
+          type: boolean
+          x-description-en: Ensure that the output JSON is in ASCII encoding.
+          x-description-zh-hans: 确保输出的 JSON 是 ASCII 编码
+          x-description-zh-hant: 確保輸出的 JSON 是 ASCII 編碼
+        new_value:
+          description: 插入的新值
+          title: New Value
+          type: string
+          x-description-en: The newly inserted value
+          x-description-zh-hans: 插入的新值
+          x-description-zh-hant: 插入的新值
+        query:
+          description: 用于定位元素的 JSONPath 查询
+          title: Query
+          type: string
+          x-description-en: JSONPath query used to locate the element
+          x-description-zh-hans: 用于定位元素的 JSONPath 查询
+          x-description-zh-hant: 用於定位元素的 JSONPath 查詢
+        value_decode:
+          default: false
+          description: 是否将值解码为 JSON 对象
+          title: Value Decode
+          type: boolean
+          x-description-en: Whether to decode the value into a JSON object
+          x-description-zh-hans: 是否将值解码为 JSON 对象
+          x-description-zh-hant: 是否將值解碼為 JSON 物件
+      required:
+      - query
+      - content
+      - new_value
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for inserting JSON content
+      description_zh_hans: 一个插入 JSON 内容的工具
+      description_zh_hant: 一個插入 JSON 內容的工具
+      name_en: insert
+      name_zh_hans: 插入
+      name_zh_hant: 插入
+    name: insert
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  parse:
+    description: 一个解析JSON对象的工具
+    func_name: parse
+    input_schema:
+      properties:
+        content:
+          description: JSON文件内容
+          title: Content
+          type: string
+          x-description-en: JSON file content
+          x-description-zh-hans: JSON文件内容
+          x-description-zh-hant: JSON檔案內容
+        ensure_ascii:
+          default: false
+          description: 确保输出的 JSON 是 ASCII 编码
+          title: Ensure Ascii
+          type: boolean
+          x-description-en: Ensure that the output JSON is in ASCII encoding.
+          x-description-zh-hans: 确保输出的 JSON 是 ASCII 编码
+          x-description-zh-hant: 確保輸出的 JSON 是 ASCII 編碼
+        json_filter:
+          description: 需要解析的 JSON 字段
+          title: Json Filter
+          type: string
+          x-description-en: JSON fields to be parsed
+          x-description-zh-hans: 需要解析的 JSON 字段
+          x-description-zh-hant: 需要解析的 JSON 欄位
+      required:
+      - json_filter
+      - content
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for parsing JSON objects
+      description_zh_hans: 一个解析JSON对象的工具
+      description_zh_hant: 一個解析JSON物件的工具
+      name_en: parse
+      name_zh_hans: 解析
+      name_zh_hant: 解析
+    name: parse
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  replace:
+    description: 一个替换 JSON 内容的工具
+    func_name: replace
+    input_schema:
+      properties:
+        content:
+          description: JSON文件内容
+          title: Content
+          type: string
+          x-description-en: Content of the JSON file
+          x-description-zh-hans: JSON文件内容
+          x-description-zh-hant: JSON檔案內容
+        ensure_ascii:
+          default: false
+          description: 确保输出的 JSON 是 ASCII 编码
+          title: Ensure Ascii
+          type: boolean
+          x-description-en: Ensure that the output JSON is in ASCII encoding.
+          x-description-zh-hans: 确保输出的 JSON 是 ASCII 编码
+          x-description-zh-hant: 確保輸出的 JSON 是 ASCII 編碼
+        query:
+          description: 用于定位元素的 JSONPath 查询
+          title: Query
+          type: string
+          x-description-en: JSONPath query used to locate the element
+          x-description-zh-hans: 用于定位元素的 JSONPath 查询
+          x-description-zh-hant: 用於定位元素的 JSONPath 查詢
+        replace_model:
+          default: value
+          description: '替换模式: key: 键替换, value: 值替换, pattern: 字符串替换'
+          enum:
+          - key
+          - value
+          - pattern
+          title: Replace Model
+          type: string
+          x-description-en: 'Replacement mode: key: key replacement, value: value
+            replacement, pattern: string replacement'
+          x-description-zh-hans: '替换模式: key: 键替换, value: 值替换, pattern: 字符串替换'
+          x-description-zh-hant: '替換模式: key: 鍵替換, value: 值替換, pattern: 字串替換'
+        replace_pattern:
+          default: ''
+          description: 待替换字符串
+          title: Replace Pattern
+          type: string
+          x-description-en: String to be replaced
+          x-description-zh-hans: 待替换字符串
+          x-description-zh-hant: 待替換字符串
+        replace_value:
+          description: 替换值
+          title: Replace Value
+          type: string
+          x-description-en: Replace values
+          x-description-zh-hans: 替换值
+          x-description-zh-hant: 替換值
+        value_decode:
+          default: false
+          description: 是否将值解码为 JSON 对象
+          title: Value Decode
+          type: boolean
+          x-description-en: Whether to decode the value into a JSON object
+          x-description-zh-hans: 是否将值解码为 JSON 对象
+          x-description-zh-hant: 是否將值解碼為 JSON 物件
+      required:
+      - query
+      - content
+      - replace_value
+      title: InModel
+      type: object
+    labels:
+      description_en: A tool for replacing JSON content
+      description_zh_hans: 一个替换 JSON 内容的工具
+      description_zh_hant: 一個替換 JSON 內容的工具
+      name_en: replace
+      name_zh_hans: 替换
+      name_zh_hant: 替換
+    name: replace
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

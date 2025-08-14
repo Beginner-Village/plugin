@@ -1,0 +1,29 @@
+[tool.poetry]
+authors = []
+name = "hiagent-plugin-yahoo-finance"
+version = "0.2.0"
+description = ""
+package-mode = true
+include = [
+  "hiagent_plugin_yahoo_finance/icon.png",
+  "hiagent_plugin_yahoo_finance/*_metadata.yaml",
+]
+
+[tool.poetry.scripts]
+gen_metadata = 'hiagent_plugin_yahoo_finance:YahooPlugin._gen_metadata'
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.28.1"
+pydantic = "^2.10.2"
+yfinance = "^0.2.50"
+
+[tool.poetry.group.dev.dependencies]
+hiagent_plugin_sdk = { path = "../../hiagent-plugin-sdk" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."hiagent.plugins"]
+"雅虎财经" = "hiagent_plugin_yahoo_finance:YahooPlugin"

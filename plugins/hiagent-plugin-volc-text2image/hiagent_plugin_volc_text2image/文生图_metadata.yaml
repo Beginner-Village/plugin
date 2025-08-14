@@ -1,0 +1,157 @@
+category: ImageProcessing
+config_schema:
+  properties:
+    access_key:
+      description: '申请链接: https://console.volcengine.com/iam/keymanage/'
+      title: Access Key
+      type: string
+      x-description-en: 'Application link: https://console.volcengine.com/iam/keymanage/'
+      x-description-zh-hans: '申请链接: https://console.volcengine.com/iam/keymanage/'
+      x-description-zh-hant: '申請連結: https://console.volcengine.com/iam/keymanage/'
+    secret_key:
+      description: '申请链接: https://console.volcengine.com/iam/keymanage/'
+      title: Secret Key
+      type: string
+      x-description-en: 'Application link: https://console.volcengine.com/iam/keymanage/'
+      x-description-zh-hans: '申请链接: https://console.volcengine.com/iam/keymanage/'
+      x-description-zh-hant: '申請連結: https://console.volcengine.com/iam/keymanage/'
+      x-hiagent-secret: true
+  required:
+  - access_key
+  - secret_key
+  title: InModel
+  type: object
+description: 根据文本描述生成图像，单次仅支持生成一张图片
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-volc-text2image/hiagent_plugin_volc_text2image/icon.png
+labels:
+  description_en: Generate an image based on the text description. Only one image
+    can be generated at a time.
+  description_zh_hans: 根据文本描述生成图像，单次仅支持生成一张图片
+  description_zh_hant: 根據文本描述生成圖像，單次僅支援生成一張圖片
+  name_en: Text-to-image generation
+  name_zh_hans: 文生图
+  name_zh_hant: 文生圖
+meta_version: v1
+metadata_path: 文生图_metadata.yaml
+name: 文生图
+package_info:
+  name: hiagent_plugin_volc_text2image
+  version: ''
+tools:
+  text2image:
+    description: 通过文字描述生成图片，一次只能生成一张图片。
+    func_name: text2image
+    input_schema:
+      properties:
+        height:
+          default: 512
+          description: 生成图像的高，取值范围[256-768]
+          maximum: 768
+          minimum: 256
+          title: Height
+          type: integer
+          x-description-en: The height of the generated image, with a value range
+            of [256-768].
+          x-description-zh-hans: 生成图像的高，取值范围[256-768]
+          x-description-zh-hant: 生成圖像的高，取值範圍[256-768]
+        prompt:
+          description: 用于生成图像的提示词 ，中英文均可输入
+          title: 提示词
+          type: string
+          x-description-en: Prompt words for generating images. You can input them
+            in either Chinese or English.
+          x-description-zh-hans: 用于生成图像的提示词，中英文均可输入
+          x-description-zh-hant: 用於生成圖像的提示詞，中英文均可輸入
+        use_sr:
+          default: false
+          description: 内置的超分功能，开启后可将上述宽高均乘以2返回，此参数打开后延迟会有增加
+          title: Use Sr
+          type: boolean
+          x-description-en: The built-in super-resolution function, when enabled,
+            can return the above width and height multiplied by 2. Enabling this parameter
+            will increase the latency.
+          x-description-zh-hans: 内置的超分功能，开启后可将上述宽高均乘以2返回，此参数打开后延迟会有增加
+          x-description-zh-hant: 內置的超分功能，開啟後可將上述寬高均乘以2返回，此參數打開後延遲會有增加
+        width:
+          default: 512
+          description: 生成图像的宽，取值范围[256-768]
+          maximum: 768
+          minimum: 256
+          title: Width
+          type: integer
+          x-description-en: The width of the generated image, with a value range of
+            [256 - 768].
+          x-description-zh-hans: 生成图像的宽，取值范围[256-768]
+          x-description-zh-hant: 生成圖像的寬，取值範圍[256-768]
+      required:
+      - prompt
+      title: InModel
+      type: object
+    labels:
+      description_en: Generate an image based on text description, and only one image
+        can be generated at a time.
+      description_zh_hans: 通过文字描述生成图片，一次只能生成一张图片。
+      description_zh_hant: 透過文字描述生成圖片，一次只能生成一張圖片。
+      name_en: text2image
+      name_zh_hans: 生成图片
+      name_zh_hant: 生成圖片
+    name: text2image
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        ImageResult:
+          description: 插件返回内容
+          properties:
+            image_url:
+              title: Image Url
+              type: string
+            pe_result:
+              default: ''
+              title: Pe Result
+              type: string
+            rephraser_result:
+              default: ''
+              title: Rephraser Result
+              type: string
+          required:
+          - image_url
+          title: ImageResult
+          type: object
+          x-description-en: Plugin return content
+          x-description-zh-hans: 插件返回内容
+          x-description-zh-hant: 插件返回內容
+        OutModel:
+          $ref: '#/$defs/ImageResult'
+          title: OutModel
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
