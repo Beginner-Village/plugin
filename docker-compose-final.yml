@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # Redis 服务 - 作为任务队列和缓存
+  redis:
+    image: redis:7-alpine
+    container_name: hiagent-redis
+    ports:
+      - "26379:6379"  # 映射到不同端口避免冲突
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    restart: unless-stopped
+    networks:
+      - hiagent-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # API 服务 - FastAPI HTTP 接口服务
+  api:
+    image: luzhipeng728/hiagent-plugin-runtime:latest
+    container_name: hiagent-api
+    ports:
+      - "8500:8000"  # 映射到 8500 端口
+    environment:
+      - CONFIG=/app/config.yaml
+      - SERVICE_TYPE=api
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./extensions:/app/extensions:rw
+      - ./config.yaml:/app/config.yaml:ro
+      - ./docker-config.yaml:/app/docker-config.yaml:ro
+      - plugin_storage:/tmp/hiagent_storage:rw
+      - ./logs:/app/logs:rw
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - hiagent-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Worker 服务 - 后台任务处理进程
+  worker:
+    image: luzhipeng728/hiagent-plugin-runtime:latest
+    container_name: hiagent-worker
+    environment:
+      - CONFIG=/app/config.yaml
+      - SERVICE_TYPE=worker
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./extensions:/app/extensions:rw
+      - ./config.yaml:/app/config.yaml:ro
+      - ./docker-config.yaml:/app/docker-config.yaml:ro
+      - plugin_storage:/tmp/hiagent_storage:rw
+      - ./logs:/app/logs:rw
+    depends_on:
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - hiagent-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import redis; redis.Redis(host='redis', port=6379).ping()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# 网络配置
+networks:
+  hiagent-network:
+    driver: bridge
+    name: hiagent-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+# 卷配置
+volumes:
+  # Redis 数据持久化
+  redis_data:
+    driver: local
+    name: hiagent_redis_data
+  
+  # 插件存储持久化
+  plugin_storage:
+    driver: local
+    name: hiagent_plugin_storage
