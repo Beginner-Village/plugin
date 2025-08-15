@@ -80,8 +80,8 @@ logs/
 
 # Local development
 # extensions/
-local-config.yaml
-start_service.py
+# local-config.yaml
+# start_service.py
 
 # Database
 *.db
@@ -89,8 +89,8 @@ start_service.py
 *.sqlite3
 
 # Docker volumes
-redis_data/
-plugin_storage/
+# redis_data/
+# plugin_storage/
 
 # Temporary documentation
-HiAgent_Plugin_Runtime_Guide.md
+# HiAgent_Plugin_Runtime_Guide.md

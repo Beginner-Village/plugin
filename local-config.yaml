@@ -1,0 +1,33 @@
+version: 0.1.0
+max_subprocess: 10
+log_level: INFO
+
+# Redis配置 - 使用Docker容器
+redis:
+  cluster_type: "single"
+  host: "localhost:6379"  # 修复格式问题
+  port: 6379
+
+# 存储配置
+storage:
+  backend: "local_path"
+  local_path:
+    base_dir: /tmp/hiagent_storage
+
+# 插件扩展路径
+extensions_path: "/Users/luzhipeng/Downloads/download/app/extensions"
+
+# 本地下载包文件路径  
+local_storage_path: "/tmp/hiagent_storage"
+
+# Worker作业超时时间
+worker_job_timeout: 180
+
+# 包管理配置
+package:
+  index_url: "https://pypi.org/simple"
+  
+# 日志配置
+logger:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

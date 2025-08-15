@@ -1,74 +1,70 @@
-# 使用Python 3.11官方镜像
+# HiAgent Plugin Runtime Complete Image
+# 基于 Python 3.11 官方镜像构建完整的插件运行时环境
 FROM python:3.11-slim
 
 # 设置环境变量
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    SERVICE_TYPE=api
 
 # 安装系统依赖
 RUN apt-get update && apt-get install -y \
     curl \
     build-essential \
     git \
+    wget \
+    redis-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
 WORKDIR /app
 
-# 先复制SDK相关文件，确保完整性
-COPY hiagent-plugin-sdk/ ./hiagent-plugin-sdk/
-RUN ls -la hiagent-plugin-sdk/hiagent_plugin_sdk/ && \
-    if [ -d "hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/" ]; then \
-        ls -la hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/; \
-    else \
-        echo "WARNING: extensions目录不存在，手动创建完整extensions模块"; \
-        mkdir -p hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage; \
-        \
-        printf 'from hiagent_plugin_sdk.extensions.redis_cfg import Config, load\n\ndef setup_ssrf_proxy_env():\n    """Setup SSRF proxy environment"""\n    pass\n\ndef setup_logger(logger_config):\n    """Setup logger configuration"""\n    import logging\n    level = getattr(logger_config, "level", "INFO")\n    fmt = getattr(logger_config, "format", "%%(asctime)s - %%(name)s - %%(levelname)s - %%(message)s")\n    logging.basicConfig(level=getattr(logging, level, logging.INFO), format=fmt)\n' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/__init__.py; \
-        \
-        printf 'class OpenAIConfig:\n    rpm = 5\n\nclass RedisConfig:\n    def get_redis_client(self):\n        import redis\n        return redis.Redis(host="redis", port=6379, db=0)\n\nclass LoggerConfig:\n    level = "INFO"\n    format = "%%(asctime)s - %%(name)s - %%(levelname)s - %%(message)s"\n\nclass Config:\n    openai = OpenAIConfig()\n    redis = RedisConfig()\n    logger = LoggerConfig()\n    \n    def model_dump_json(self, indent=None):\n        return \'{"config": "dummy"}\' \n\ndef load():\n    return Config()\n' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/redis_cfg.py; \
-        \
-        echo 'class OpenAIConfig: pass' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/openai_cfg.py; \
-        \
-        echo 'class StorageConfig: pass' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage_cfg.py; \
-        \
-        echo '' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage/__init__.py; \
-        echo 'class BaseStorage: pass' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage/base.py; \
-        echo 'class LocalStorage: pass' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage/local.py; \
-        \
-        echo "已创建基础extensions模块"; \
-    fi
+# 复制依赖文件
+COPY requirements.txt pyproject.toml ./
 
-# 复制依赖文件并安装
-COPY requirements.txt ./
+# 升级 pip 并安装 Python 依赖
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# 安装SDK（开发模式，确保所有文件都被包含）
+# 复制并安装 SDK
+COPY hiagent-plugin-sdk/ ./hiagent-plugin-sdk/
 RUN cd hiagent-plugin-sdk && \
     pip install -e . && \
-    cd .. && \
-    python -c "import hiagent_plugin_sdk.extensions; print('SDK extensions loaded successfully')"
+    cd ..
 
 # 复制应用代码
 COPY app/ ./app/
-COPY main.py worker.py ./
+COPY main.py worker.py start_service.py ./
+
+# 复制部署脚本
 COPY deploy/ ./deploy/
 
+# 复制配置文件
+COPY config.yaml docker-config.yaml ./
+COPY config-example.yaml ./
+
 # 创建必要的目录
-RUN mkdir -p /app/extensions /tmp/hiagent_storage
+RUN mkdir -p /app/extensions /tmp/hiagent_storage /app/logs
 
-# 设置权限
-RUN chmod +x deploy/entrypoint.sh
+# 设置执行权限
+RUN chmod +x deploy/entrypoint.sh deploy/deploy.sh deploy/install.sh
 
-# 验证安装
-RUN python -c "from hiagent_plugin_sdk.extensions import Config; print('SDK验证成功')" && \
+# 验证 SDK 安装
+RUN python -c "from hiagent_plugin_sdk import __version__; print(f'SDK version: {__version__}')" && \
     python -c "from app.config import load; print('应用配置加载成功')"
 
 # 暴露端口
 EXPOSE 8000
 
-# 使用entrypoint脚本启动
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD if [ "$SERVICE_TYPE" = "api" ]; then \
+            curl -f http://localhost:8000/ping || exit 1; \
+        else \
+            python -c "import redis; redis.Redis(host='redis', port=6379).ping()" || exit 1; \
+        fi
+
+# 设置容器启动命令
 ENTRYPOINT ["deploy/entrypoint.sh"]

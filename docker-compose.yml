@@ -1,14 +1,15 @@
+version: '3.8'
+
 services:
+  # Redis 服务 - 作为任务队列和缓存
   redis:
     image: redis:7-alpine
     container_name: hiagent-redis
-    # Redis仅内部访问，不暴露端口到宿主机
-    # 如需外部访问Redis，可取消注释并修改端口
-    # ports:
-    #   - "16379:6379"
+    ports:
+      - "6379:6379"  # 暴露端口便于开发调试
     volumes:
       - redis_data:/data
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     restart: unless-stopped
     networks:
       - hiagent-network
@@ -17,20 +18,32 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+  # API 服务 - FastAPI HTTP 接口服务
   api:
-    # build: .  # 暂时禁用本地构建
-    image: luzhipeng728/hiagent-plugin-runtime:api-latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: hiagent-plugin-runtime:latest
     container_name: hiagent-api
     ports:
       - "8000:8000"
     environment:
       - CONFIG=/app/config.yaml
       - SERVICE_TYPE=api
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
     volumes:
-      - ./extensions:/app/extensions
-      - ./config.yaml:/app/config.yaml
-      - plugin_storage:/tmp/hiagent_storage
+      - ./extensions:/app/extensions:rw
+      - ./config.yaml:/app/config.yaml:ro
+      - ./docker-config.yaml:/app/docker-config.yaml:ro
+      - plugin_storage:/tmp/hiagent_storage:rw
+      - ./logs:/app/logs:rw
     depends_on:
       redis:
         condition: service_healthy
@@ -42,31 +55,74 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+  # Worker 服务 - 后台任务处理进程
   worker:
-    # build: .  # 暂时禁用本地构建
-    image: luzhipeng728/hiagent-plugin-runtime:worker-latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: hiagent-plugin-runtime:latest
     container_name: hiagent-worker
     environment:
       - CONFIG=/app/config.yaml
       - SERVICE_TYPE=worker
+      - PYTHONPATH=/app
+      - LOG_LEVEL=INFO
     volumes:
-      - ./extensions:/app/extensions
-      - ./config.yaml:/app/config.yaml
-      - plugin_storage:/tmp/hiagent_storage
+      - ./extensions:/app/extensions:rw
+      - ./config.yaml:/app/config.yaml:ro
+      - ./docker-config.yaml:/app/docker-config.yaml:ro
+      - plugin_storage:/tmp/hiagent_storage:rw
+      - ./logs:/app/logs:rw
     depends_on:
       redis:
+        condition: service_healthy
+      api:
         condition: service_healthy
     restart: unless-stopped
     networks:
       - hiagent-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import redis; redis.Redis(host='redis', port=6379).ping()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+# 网络配置
 networks:
   hiagent-network:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
 
+# 卷配置
 volumes:
+  # Redis 数据持久化
   redis_data:
     driver: local
+    driver_opts:
+      type: none
+      device: ./data/redis
+      o: bind
+  
+  # 插件存储持久化
   plugin_storage:
     driver: local
+    driver_opts:
+      type: none
+      device: ./data/storage
+      o: bind
