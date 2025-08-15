@@ -280,6 +280,32 @@ status-final:
 logs-final:
 	docker-compose -f docker-compose-final.yml logs -f
 
+# 使用简化版本的 compose 文件（解决网络冲突）
+up-simple:
+	@echo "🚀 Starting HiAgent Plugin Runtime with simplified configuration..."
+	docker-compose -f docker-compose-simple.yml up -d
+	@echo "⏳ Waiting for services to be ready..."
+	@sleep 10
+	@make status-simple
+
+down-simple:
+	@echo "🛑 Stopping simplified configuration services..."
+	docker-compose -f docker-compose-simple.yml down
+
+status-simple:
+	@echo "📊 Simplified Configuration Service Status:"
+	@docker-compose -f docker-compose-simple.yml ps
+	@echo ""
+	@echo "🏥 Health Checks:"
+	@docker inspect hiagent-api --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/API: /' || echo "API: not running"
+	@docker inspect hiagent-worker --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/Worker: /' || echo "Worker: not running"
+	@docker inspect hiagent-redis --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/Redis: /' || echo "Redis: not running"
+
+logs-simple:
+	docker-compose -f docker-compose-simple.yml logs -f
+
+restart-simple: down-simple up-simple
+
 # 原有测试命令保留
 test_app:
 	@poetry run pytest ./tests

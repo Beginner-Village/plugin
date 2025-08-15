@@ -103,10 +103,6 @@ networks:
   hiagent-network:
     driver: bridge
     name: hiagent-network
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.20.0.0/16
 
 # 卷配置
 volumes:
