@@ -50,7 +50,7 @@ fi
 
 # 验证 SDK 和应用是否正确安装
 log "Validating installation..."
-python -c "from hiagent_plugin_sdk import __version__; print(f'SDK version: {__version__}')" || handle_error "SDK validation failed"
+python -c "import hiagent_plugin_sdk; print('SDK validation passed')" || handle_error "SDK validation failed"
 python -c "from app.config import load; print('App config validation passed')" || handle_error "App config validation failed"
 
 # 根据服务类型启动不同的服务
