@@ -6,7 +6,7 @@ services:
     image: redis:7-alpine
     container_name: hiagent-redis
     ports:
-      - "6379:6379"  # 暴露端口便于开发调试
+      - "26379:6379"  # 暴露端口便于开发调试
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
