@@ -6,11 +6,82 @@ IMAGE_NAME = hiagent-plugin-runtime
 IMAGE_TAG = latest
 COMPOSE_FILE = docker-compose.yml
 
-# 构建镜像
+# 构建镜像 (本地架构)
 build:
 	@echo "🔨 Building HiAgent Plugin Runtime image..."
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 	@echo "✅ Build completed!"
+
+# 构建 x86/amd64 镜像 (适用于 ARM Mac)
+build-x86:
+	@echo "🔨 Building x86/amd64 HiAgent Plugin Runtime image on ARM Mac..."
+	docker buildx build --platform linux/amd64 -t $(IMAGE_NAME):$(IMAGE_TAG)-amd64 .
+	@echo "✅ x86/amd64 build completed!"
+
+# 使用正确代理构建 x86 镜像
+build-x86-with-proxy:
+	@echo "🔨 Building x86 image with correct proxy settings..."
+	@echo "🌐 Using proxy: http://127.0.0.1:10902"
+	export https_proxy=http://127.0.0.1:10902 && \
+	export http_proxy=http://127.0.0.1:10902 && \
+	export all_proxy=socks5://127.0.0.1:10021 && \
+	docker buildx build --platform linux/amd64 \
+		--build-arg https_proxy=http://127.0.0.1:10902 \
+		--build-arg http_proxy=http://127.0.0.1:10902 \
+		--build-arg all_proxy=socks5://127.0.0.1:10021 \
+		-t $(IMAGE_NAME):$(IMAGE_TAG)-amd64 .
+	@echo "✅ Proxy-enabled x86 build completed!"
+
+# 构建简化版 x86 镜像 (网络受限环境)
+build-x86-simple:
+	@echo "🔨 Building simple x86/amd64 image for network-restricted environments..."
+	env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY \
+	docker buildx build --platform linux/amd64 -f Dockerfile.simple -t $(IMAGE_NAME):$(IMAGE_TAG)-amd64-simple .
+	@echo "✅ Simple x86/amd64 build completed!"
+
+# 无代理构建 (解决网络代理问题)
+build-x86-no-proxy:
+	@echo "🔨 Building x86 image without proxy..."
+	@echo "🌐 Temporarily disabling proxy settings for Docker build"
+	env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
+	docker buildx build --platform linux/amd64 --no-cache -t $(IMAGE_NAME):$(IMAGE_TAG)-amd64 .
+	@echo "✅ No-proxy x86 build completed!"
+
+# 最小化构建 (完全避免网络问题)
+build-x86-minimal:
+	@echo "🔨 Building minimal x86 image (no network dependencies)..."
+	@echo "📦 Using pure Python base image without system packages"
+	docker buildx build --platform linux/amd64 -f Dockerfile.minimal -t $(IMAGE_NAME):$(IMAGE_TAG)-amd64-minimal .
+	@echo "✅ Minimal x86 build completed!"
+
+# 快速构建 (轻量级依赖)
+build-x86-fast:
+	@echo "🚀 Building fast x86 image (lightweight dependencies)..."
+	@echo "📦 Using minimal system packages for faster build"
+	export https_proxy=http://127.0.0.1:10902 && \
+	export http_proxy=http://127.0.0.1:10902 && \
+	export all_proxy=socks5://127.0.0.1:10021 && \
+	docker buildx build --platform linux/amd64 -f Dockerfile.fast -t $(IMAGE_NAME):$(IMAGE_TAG)-amd64-fast .
+	@echo "✅ Fast x86 build completed!"
+
+# 构建多平台镜像 (x86 + ARM)
+build-multi:
+	@echo "🔨 Building multi-platform HiAgent Plugin Runtime image..."
+	docker buildx build --platform linux/amd64,linux/arm64 -t $(IMAGE_NAME):$(IMAGE_TAG) .
+	@echo "✅ Multi-platform build completed!"
+
+# 构建并推送多平台镜像到仓库
+build-push:
+	@echo "🔨 Building and pushing multi-platform image..."
+	docker buildx build --platform linux/amd64,linux/arm64 -t $(IMAGE_NAME):$(IMAGE_TAG) --push .
+	@echo "✅ Multi-platform build and push completed!"
+
+# 设置 Docker Buildx (首次使用需要)
+setup-buildx:
+	@echo "🔧 Setting up Docker Buildx for cross-platform builds..."
+	docker buildx create --name multiarch --driver docker-container --use
+	docker buildx inspect --bootstrap
+	@echo "✅ Buildx setup completed!"
 
 # 启动所有服务
 up: build
@@ -20,13 +91,29 @@ up: build
 	@sleep 10
 	@make status
 
+# 启动 x86 架构服务 (适用于 ARM Mac 运行 x86 镜像)
+up-x86: build-x86
+	@echo "🚀 Starting x86 HiAgent Plugin Runtime services..."
+	docker-compose -f docker-compose-x86.yml up -d
+	@echo "⏳ Waiting for services to be ready..."
+	@sleep 10
+	@make status-x86
+
 # 停止所有服务
 down:
 	@echo "🛑 Stopping HiAgent Plugin Runtime services..."
 	docker-compose -f $(COMPOSE_FILE) down
 
+# 停止 x86 架构服务
+down-x86:
+	@echo "🛑 Stopping x86 HiAgent Plugin Runtime services..."
+	docker-compose -f docker-compose-x86.yml down
+
 # 重启服务
 restart: down up
+
+# 重启 x86 架构服务
+restart-x86: down-x86 up-x86
 
 # 清理资源
 clean:
@@ -55,6 +142,16 @@ logs-redis:
 status:
 	@echo "📊 Service Status:"
 	@docker-compose -f $(COMPOSE_FILE) ps
+	@echo ""
+	@echo "🏥 Health Checks:"
+	@docker inspect hiagent-api --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/API: /' || echo "API: not running"
+	@docker inspect hiagent-worker --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/Worker: /' || echo "Worker: not running"
+	@docker inspect hiagent-redis --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/Redis: /' || echo "Redis: not running"
+
+# 检查 x86 架构服务状态
+status-x86:
+	@echo "📊 x86 Service Status:"
+	@docker-compose -f docker-compose-x86.yml ps
 	@echo ""
 	@echo "🏥 Health Checks:"
 	@docker inspect hiagent-api --format='{{.State.Health.Status}}' 2>/dev/null | sed 's/^/API: /' || echo "API: not running"
@@ -122,10 +219,19 @@ help:
 	@echo "HiAgent Plugin Runtime Management Commands:"
 	@echo ""
 	@echo "🔨 Build & Deployment:"
-	@echo "  make build       - Build Docker image"
+	@echo "  make build       - Build Docker image (local architecture)"
+	@echo "  make build-x86   - Build x86/amd64 image on ARM Mac"
+	@echo "  make build-x86-with-proxy - Build x86 image with correct proxy (port 10902)"
+	@echo "  make build-x86-no-proxy - Build x86 image without proxy (fix network issues)"
+	@echo "  make build-multi - Build multi-platform image (x86 + ARM)"
+	@echo "  make build-push  - Build and push multi-platform image"
+	@echo "  make setup-buildx- Setup Docker Buildx (run once)"
 	@echo "  make up          - Start all services"
+	@echo "  make up-x86      - Start x86 services on ARM Mac"
 	@echo "  make down        - Stop all services"
+	@echo "  make down-x86    - Stop x86 services"
 	@echo "  make restart     - Restart all services"
+	@echo "  make restart-x86 - Restart x86 services"
 	@echo "  make dev         - Start in development mode (API + Redis only)"
 	@echo ""
 	@echo "📊 Monitoring:"
