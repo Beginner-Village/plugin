@@ -50,8 +50,8 @@ RUN mkdir -p /app/extensions /tmp/hiagent_storage /app/logs
 # 设置执行权限
 RUN chmod +x deploy/entrypoint.sh deploy/deploy.sh deploy/install.sh
 
-# 验证 SDK 安装
-RUN python -c "from hiagent_plugin_sdk import __version__; print(f'SDK version: {__version__}')" && \
+# 验证 SDK 和应用安装
+RUN python -c "import hiagent_plugin_sdk; print('SDK 验证成功')" && \
     python -c "from app.config import load; print('应用配置加载成功')"
 
 # 暴露端口
