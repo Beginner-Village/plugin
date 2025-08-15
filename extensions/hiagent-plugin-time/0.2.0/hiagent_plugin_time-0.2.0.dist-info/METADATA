@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: hiagent-plugin-time
+Version: 0.2.0
+Summary: 
+Author: lujinghao
+Author-email: lujinghao@bytedance.com
+Requires-Python: >=3.11,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Dist: pytz (>=2024.2,<2025.0)

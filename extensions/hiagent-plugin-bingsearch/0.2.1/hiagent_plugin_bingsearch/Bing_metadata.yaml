@@ -1,0 +1,174 @@
+category: WebSearch
+config_schema:
+  properties:
+    api_key:
+      description: '申请说明: <https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api>'
+      title: Api Key
+      type: string
+      x-description-en: 'Application instructions: <https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api>'
+      x-description-zh-hans: 申请说明：<https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api>
+      x-description-zh-hant: 申請說明：<https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api>
+      x-hiagent-secret: true
+    search_url:
+      default: https://api.bing.microsoft.com/v7.0/search
+      title: Search Url
+      type: string
+  required:
+  - api_key
+  title: InModel
+  type: object
+description: Bing Search
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-bingsearch/hiagent_plugin_bingsearch/icon.png
+labels:
+  description_en: 必应搜索
+  description_zh_hans: 必应搜索
+  description_zh_hant: 必應搜尋
+  name_en: Bing
+  name_zh_hans: 必应
+  name_zh_hant: 必應
+meta_version: v1
+metadata_path: Bing_metadata.yaml
+name: Bing
+package_info:
+  name: hiagent_plugin_bingsearch
+  version: ''
+tools:
+  search:
+    description: Search for the query on Bing.
+    func_name: search
+    input_schema:
+      properties:
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for the query on Bing.
+      description_zh_hans: 在必应上搜索该查询内容。
+      description_zh_hant: 在必应上搜索该查询内容。
+      name_en: search
+      name_zh_hans: 搜索
+      name_zh_hant: 搜尋
+    name: search
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []
+  search_results:
+    description: Search for the query on Bing and return the results.
+    func_name: search_results
+    input_schema:
+      properties:
+        num_results:
+          default: 10
+          title: Num Results
+          type: integer
+        query:
+          title: Query
+          type: string
+      required:
+      - query
+      title: InModel
+      type: object
+    labels:
+      description_en: Search for the query on Bing and return the results.
+      description_zh_hans: 在必应上搜索该查询内容并返回结果。
+      description_zh_hant: 在 Bing 上搜尋該查詢並返回結果。
+      name_en: search_results
+      name_zh_hans: 搜索结果
+      name_zh_hant: 搜尋結果
+    name: search_results
+    output_schema:
+      $defs:
+        BingSearchResults:
+          properties:
+            link:
+              title: Link
+              type: string
+            snippet:
+              title: Snippet
+              type: string
+            title:
+              title: Title
+              type: string
+          required:
+          - snippet
+          - title
+          - link
+          title: BingSearchResults
+          type: object
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          items:
+            $ref: '#/$defs/BingSearchResults'
+          title: OutModel
+          type: array
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

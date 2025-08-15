@@ -1,0 +1,47 @@
+# 完整自包含镜像 - 包含所有依赖
+FROM python:3.11-slim
+
+# 设置环境变量
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONPATH=/app
+
+# 安装系统依赖
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制所有项目文件
+COPY . .
+
+# 安装Python依赖
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install -e ./hiagent-plugin-sdk
+
+# 创建必要的目录
+RUN mkdir -p /app/extensions /tmp/hiagent_storage
+
+# 设置权限
+RUN chmod +x deploy/entrypoint.sh
+
+# 创建默认配置（如果不存在）
+RUN if [ ! -f config.yaml ]; then \
+    printf 'version: 0.1.0\nmax_subprocess: 20\nlog_level: INFO\nredis:\n  cluster_type: "single"\n  host: "redis"\n  port: 6379\n  password: ""\n  db: 0\n  ssl: false\nstorage:\n  backend: "local_path"\n  local_path:\n    base_dir: /tmp/hiagent_storage\nextensions_path: "/app/extensions"\nlocal_storage_path: "/tmp/hiagent_storage"\nworker_job_timeout: 300\npackage:\n  index_url: "https://pypi.org/simple"\n  extra_index_url: ""\n  trusted_host: ""\nlogger:\n  level: INFO\n  format: "%%(asctime)s - %%(name)s - %%(levelname)s - %%(message)s"\n' > config.yaml; \
+fi
+
+# 验证安装
+RUN python -c "from hiagent_plugin_sdk.extensions import Config; print('SDK验证成功')" && \
+    python -c "from app.config import load; print('应用配置加载成功')"
+
+# 暴露端口
+EXPOSE 8000
+
+# 使用entrypoint脚本启动
+ENTRYPOINT ["deploy/entrypoint.sh"]

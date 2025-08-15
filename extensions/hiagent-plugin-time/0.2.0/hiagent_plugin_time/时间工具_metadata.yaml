@@ -1,0 +1,79 @@
+category: Productivity
+config_schema: {}
+description: 一个用于获取当前时间的工具。
+icon: file:///Users/bytedance/Desktop/code.byted.org/plugin-runtime/plugins/hiagent-plugin-time/hiagent_plugin_time/icon.png
+labels:
+  description_en: A tool for getting the current time.
+  description_zh_hans: 一个用于获取当前时间的工具。
+  description_zh_hant: 一個用於獲取當前時間的工具。
+  name_en: Time tool
+  name_zh_hans: 时间工具
+  name_zh_hant: 時間工具
+meta_version: v1
+metadata_path: 时间工具_metadata.yaml
+name: 时间工具
+package_info:
+  name: hiagent_plugin_time
+  version: ''
+tools:
+  current_time:
+    description: 获取当前时间
+    func_name: current_time
+    input_schema:
+      properties:
+        timezone:
+          default: UTC
+          description: '标准时区, 默认为UTC, 比如: Asia/Shanghai'
+          title: Timezone
+          type: string
+          x-description-en: Standard time zone, defaulting to UTC, e.g., Asia/Shanghai
+          x-description-zh-hans: 标准时区，默认为UTC，比如：Asia/Shanghai
+          x-description-zh-hant: 標準時區，預設為UTC，例如：Asia/Shanghai
+      title: InModel
+      type: object
+    labels:
+      description_en: Get the current time
+      description_zh_hans: 获取当前时间
+      description_zh_hant: 獲取當前時間
+      name_en: current_time
+      name_zh_hans: 当前时间
+      name_zh_hant: 目前時間
+    name: current_time
+    output_schema:
+      $defs:
+        HttpError:
+          properties:
+            code:
+              title: Code
+              type: string
+            data:
+              anyOf:
+              - type: object
+              - type: 'null'
+              default: null
+              title: Data
+            http_code:
+              default: 500
+              title: Http Code
+              type: integer
+            message:
+              title: Message
+              type: string
+          required:
+          - code
+          - message
+          title: HttpError
+          type: object
+        OutModel:
+          title: OutModel
+          type: string
+      properties:
+        data:
+          $ref: '#/$defs/OutModel'
+          default: null
+        error:
+          $ref: '#/$defs/HttpError'
+          default: null
+      title: OutputRespModel
+      type: object
+    runtime_features: []

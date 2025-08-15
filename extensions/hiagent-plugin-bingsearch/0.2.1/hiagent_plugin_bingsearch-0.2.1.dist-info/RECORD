@@ -1,0 +1,12 @@
+../../bin/gen_metadata,sha256=9HISoA08oa6W89z--rh4ZafXEFawX2EjKV5tDi6mNPQ,305
+hiagent_plugin_bingsearch-0.2.1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+hiagent_plugin_bingsearch-0.2.1.dist-info/METADATA,sha256=0VjvW67o3O9PU2VN2CJqDB-1grABfdIf18jIsmIwngw,361
+hiagent_plugin_bingsearch-0.2.1.dist-info/RECORD,,
+hiagent_plugin_bingsearch-0.2.1.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+hiagent_plugin_bingsearch-0.2.1.dist-info/WHEEL,sha256=Nq82e9rUAnEjt98J6MlVmMCZb-t9cYE2Ir1kpBmnWfs,88
+hiagent_plugin_bingsearch-0.2.1.dist-info/direct_url.json,sha256=zyfTObO50Dqpbbp9RWGQcPI8TPBOJo3R9lkKMJUOTZw,299
+hiagent_plugin_bingsearch-0.2.1.dist-info/entry_points.txt,sha256=ISwlUekzLL6-iIafJhoy4_fKPOjIoGjWK0DHFUp2gB4,156
+hiagent_plugin_bingsearch/Bing_metadata.yaml,sha256=4qnhGpT55LwWm_rhQzlAD0Sp7npjwJyHyBOszgGJP2I,4762
+hiagent_plugin_bingsearch/__init__.py,sha256=RGZ9uDiDziftQ4joopviE0uNzwIGZBUapf-aPCpUVoI,1895
+hiagent_plugin_bingsearch/__pycache__/__init__.cpython-311.pyc,,
+hiagent_plugin_bingsearch/icon.png,sha256=VtydnyERB57z2aYJzEItBPaja0MIEPZZ-9_5t6zA8PY,6876

@@ -1,0 +1,6 @@
+[console_scripts]
+gen_metadata=hiagent_plugin_bingsearch:BingSearchPlugin._gen_metadata
+
+[hiagent.plugins]
+Bing=hiagent_plugin_bingsearch:BingSearchPlugin
+

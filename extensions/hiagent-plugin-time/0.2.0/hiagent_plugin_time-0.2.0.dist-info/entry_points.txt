@@ -1,0 +1,6 @@
+[console_scripts]
+gen_metadata=hiagent_plugin_time:TimePlugin._gen_metadata
+
+[hiagent.plugins]
+时间工具=hiagent_plugin_time:TimePlugin
+

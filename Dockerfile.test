@@ -1,0 +1,27 @@
+# 测试用简化Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# 创建最小的extensions模块来测试
+RUN mkdir -p hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/storage
+
+# 创建__init__.py
+RUN echo 'from hiagent_plugin_sdk.extensions.redis_cfg import Config, load' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/__init__.py
+
+# 创建redis_cfg.py (使用printf确保正确的Python格式)  
+RUN printf 'class OpenAIConfig:\n    rpm = 5\n\nclass Config:\n    openai = OpenAIConfig()\n\ndef load():\n    return Config()\n' > hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/redis_cfg.py
+
+# 验证创建的文件
+RUN cat hiagent-plugin-sdk/hiagent_plugin_sdk/extensions/redis_cfg.py
+
+# 测试Python导入
+RUN cd hiagent-plugin-sdk && python -c "
+import sys
+sys.path.insert(0, '.')
+from hiagent_plugin_sdk.extensions import load
+config = load()
+print('Config loaded successfully:', config.openai.rpm)
+"
+
+CMD ["echo", "测试完成"]

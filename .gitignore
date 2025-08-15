@@ -79,7 +79,7 @@ Thumbs.db
 logs/
 
 # Local development
-extensions/
+# extensions/
 local-config.yaml
 start_service.py
 
